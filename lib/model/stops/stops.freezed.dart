@@ -23,8 +23,8 @@ mixin _$Stops {
   String get id => throw _privateConstructorUsedError;
   String get stopId => throw _privateConstructorUsedError; // 1
   String get stopName => throw _privateConstructorUsedError; // 3
-  String get stopLat => throw _privateConstructorUsedError; // 5
-  String get stopLon => throw _privateConstructorUsedError;
+  double get stopLat => throw _privateConstructorUsedError; // 5
+  double get stopLon => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -40,8 +40,8 @@ abstract class $StopsCopyWith<$Res> {
       {String id,
       String stopId,
       String stopName,
-      String stopLat,
-      String stopLon});
+      double stopLat,
+      double stopLon});
 }
 
 /// @nodoc
@@ -79,11 +79,11 @@ class _$StopsCopyWithImpl<$Res, $Val extends Stops>
       stopLat: null == stopLat
           ? _value.stopLat
           : stopLat // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       stopLon: null == stopLon
           ? _value.stopLon
           : stopLon // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
     ) as $Val);
   }
 }
@@ -98,8 +98,8 @@ abstract class _$$_StopsCopyWith<$Res> implements $StopsCopyWith<$Res> {
       {String id,
       String stopId,
       String stopName,
-      String stopLat,
-      String stopLon});
+      double stopLat,
+      double stopLon});
 }
 
 /// @nodoc
@@ -133,11 +133,11 @@ class __$$_StopsCopyWithImpl<$Res> extends _$StopsCopyWithImpl<$Res, _$_Stops>
       stopLat: null == stopLat
           ? _value.stopLat
           : stopLat // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       stopLon: null == stopLon
           ? _value.stopLon
           : stopLon // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
     ));
   }
 }
@@ -149,8 +149,8 @@ class _$_Stops implements _Stops {
       {this.id = '',
       this.stopId = '',
       this.stopName = '',
-      this.stopLat = '',
-      this.stopLon = ''});
+      this.stopLat = 0,
+      this.stopLon = 0});
 
   factory _$_Stops.fromJson(Map<String, dynamic> json) =>
       _$$_StopsFromJson(json);
@@ -168,11 +168,11 @@ class _$_Stops implements _Stops {
 // 3
   @override
   @JsonKey()
-  final String stopLat;
+  final double stopLat;
 // 5
   @override
   @JsonKey()
-  final String stopLon;
+  final double stopLon;
 
   @override
   String toString() {
@@ -216,8 +216,8 @@ abstract class _Stops implements Stops {
       {final String id,
       final String stopId,
       final String stopName,
-      final String stopLat,
-      final String stopLon}) = _$_Stops;
+      final double stopLat,
+      final double stopLon}) = _$_Stops;
 
   factory _Stops.fromJson(Map<String, dynamic> json) = _$_Stops.fromJson;
 
@@ -228,9 +228,9 @@ abstract class _Stops implements Stops {
   @override // 1
   String get stopName;
   @override // 3
-  String get stopLat;
+  double get stopLat;
   @override // 5
-  String get stopLon;
+  double get stopLon;
   @override
   @JsonKey(ignore: true)
   _$$_StopsCopyWith<_$_Stops> get copyWith =>
