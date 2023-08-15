@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>246460877578-1eco84bdgeggupo3tc7c7rrnvgnkk21e.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.246460877578-1eco84bdgeggupo3tc7c7rrnvgnkk21e</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDIy-5SmVFzj3ejr5K-pvCrzbkSm62FSmg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>246460877578</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.bussApp</string>
+	<key>PROJECT_ID</key>
+	<string>bussapp-598d3</string>
+	<key>STORAGE_BUCKET</key>
+	<string>bussapp-598d3.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:246460877578:ios:93342d548a8f8038af88f3</string>
+</dict>
+</plist>

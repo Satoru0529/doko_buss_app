@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "246460877578",
+    "project_id": "bussapp-598d3",
+    "storage_bucket": "bussapp-598d3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:246460877578:android:50c54dcda8c93e0baf88f3",
+        "android_client_info": {
+          "package_name": "com.example.buss_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "246460877578-p6abcr5qvkdju8kttg821l9pa2vm40e5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApLEcvHusF5hF5JWd6YAOs3lSqKmMUUkc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "246460877578-p6abcr5qvkdju8kttg821l9pa2vm40e5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "246460877578-1eco84bdgeggupo3tc7c7rrnvgnkk21e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bussApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
