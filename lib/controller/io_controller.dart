@@ -1,7 +1,9 @@
-import 'package:buss_app/models/stops.dart';
+
 import 'package:buss_app/repository/firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../model/stops.dart';
 
 part 'io_controller.g.dart';
 
@@ -22,7 +24,6 @@ class IoController extends _$IoController {
         stopName: element.split(',')[2],
         stopLat: element.split(',')[4],
         stopLon: element.split(',')[5],
-        zoneId: element.split(',')[6],
       );
       await stopsRef.doc().set(newStop);
     });

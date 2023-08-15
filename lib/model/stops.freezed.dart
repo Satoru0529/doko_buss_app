@@ -20,11 +20,11 @@ Stops _$StopsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Stops {
+  String get id => throw _privateConstructorUsedError;
   String get stopId => throw _privateConstructorUsedError; // 1
   String get stopName => throw _privateConstructorUsedError; // 3
   String get stopLat => throw _privateConstructorUsedError; // 5
-  String get stopLon => throw _privateConstructorUsedError; // 6
-  String get zoneId => throw _privateConstructorUsedError;
+  String get stopLon => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,11 +37,11 @@ abstract class $StopsCopyWith<$Res> {
       _$StopsCopyWithImpl<$Res, Stops>;
   @useResult
   $Res call(
-      {String stopId,
+      {String id,
+      String stopId,
       String stopName,
       String stopLat,
-      String stopLon,
-      String zoneId});
+      String stopLon});
 }
 
 /// @nodoc
@@ -57,13 +57,17 @@ class _$StopsCopyWithImpl<$Res, $Val extends Stops>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? stopId = null,
     Object? stopName = null,
     Object? stopLat = null,
     Object? stopLon = null,
-    Object? zoneId = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       stopId: null == stopId
           ? _value.stopId
           : stopId // ignore: cast_nullable_to_non_nullable
@@ -79,10 +83,6 @@ class _$StopsCopyWithImpl<$Res, $Val extends Stops>
       stopLon: null == stopLon
           ? _value.stopLon
           : stopLon // ignore: cast_nullable_to_non_nullable
-              as String,
-      zoneId: null == zoneId
-          ? _value.zoneId
-          : zoneId // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -95,11 +95,11 @@ abstract class _$$_StopsCopyWith<$Res> implements $StopsCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String stopId,
+      {String id,
+      String stopId,
       String stopName,
       String stopLat,
-      String stopLon,
-      String zoneId});
+      String stopLon});
 }
 
 /// @nodoc
@@ -111,13 +111,17 @@ class __$$_StopsCopyWithImpl<$Res> extends _$StopsCopyWithImpl<$Res, _$_Stops>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? stopId = null,
     Object? stopName = null,
     Object? stopLat = null,
     Object? stopLon = null,
-    Object? zoneId = null,
   }) {
     return _then(_$_Stops(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       stopId: null == stopId
           ? _value.stopId
           : stopId // ignore: cast_nullable_to_non_nullable
@@ -134,10 +138,6 @@ class __$$_StopsCopyWithImpl<$Res> extends _$StopsCopyWithImpl<$Res, _$_Stops>
           ? _value.stopLon
           : stopLon // ignore: cast_nullable_to_non_nullable
               as String,
-      zoneId: null == zoneId
-          ? _value.zoneId
-          : zoneId // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -146,15 +146,18 @@ class __$$_StopsCopyWithImpl<$Res> extends _$StopsCopyWithImpl<$Res, _$_Stops>
 @JsonSerializable()
 class _$_Stops implements _Stops {
   const _$_Stops(
-      {this.stopId = '',
+      {this.id = '',
+      this.stopId = '',
       this.stopName = '',
       this.stopLat = '',
-      this.stopLon = '',
-      this.zoneId = ''});
+      this.stopLon = ''});
 
   factory _$_Stops.fromJson(Map<String, dynamic> json) =>
       _$$_StopsFromJson(json);
 
+  @override
+  @JsonKey()
+  final String id;
   @override
   @JsonKey()
   final String stopId;
@@ -170,14 +173,10 @@ class _$_Stops implements _Stops {
   @override
   @JsonKey()
   final String stopLon;
-// 6
-  @override
-  @JsonKey()
-  final String zoneId;
 
   @override
   String toString() {
-    return 'Stops(stopId: $stopId, stopName: $stopName, stopLat: $stopLat, stopLon: $stopLon, zoneId: $zoneId)';
+    return 'Stops(id: $id, stopId: $stopId, stopName: $stopName, stopLat: $stopLat, stopLon: $stopLon)';
   }
 
   @override
@@ -185,18 +184,18 @@ class _$_Stops implements _Stops {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Stops &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.stopId, stopId) || other.stopId == stopId) &&
             (identical(other.stopName, stopName) ||
                 other.stopName == stopName) &&
             (identical(other.stopLat, stopLat) || other.stopLat == stopLat) &&
-            (identical(other.stopLon, stopLon) || other.stopLon == stopLon) &&
-            (identical(other.zoneId, zoneId) || other.zoneId == zoneId));
+            (identical(other.stopLon, stopLon) || other.stopLon == stopLon));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, stopId, stopName, stopLat, stopLon, zoneId);
+      Object.hash(runtimeType, id, stopId, stopName, stopLat, stopLon);
 
   @JsonKey(ignore: true)
   @override
@@ -214,14 +213,16 @@ class _$_Stops implements _Stops {
 
 abstract class _Stops implements Stops {
   const factory _Stops(
-      {final String stopId,
+      {final String id,
+      final String stopId,
       final String stopName,
       final String stopLat,
-      final String stopLon,
-      final String zoneId}) = _$_Stops;
+      final String stopLon}) = _$_Stops;
 
   factory _Stops.fromJson(Map<String, dynamic> json) = _$_Stops.fromJson;
 
+  @override
+  String get id;
   @override
   String get stopId;
   @override // 1
@@ -230,8 +231,6 @@ abstract class _Stops implements Stops {
   String get stopLat;
   @override // 5
   String get stopLon;
-  @override // 6
-  String get zoneId;
   @override
   @JsonKey(ignore: true)
   _$$_StopsCopyWith<_$_Stops> get copyWith =>
