@@ -19,8 +19,8 @@ class HomePage extends ConsumerWidget {
                 itemBuilder: (context, index) {
                   final marker = markers[index];
                   return ListTile(
-                    title: Text(marker.name),
-                  );
+                      //title: Text(marker.name),
+                      );
                 });
           }),
     );

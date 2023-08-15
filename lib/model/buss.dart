@@ -13,8 +13,8 @@ class Buss with _$Buss {
   const factory Buss({
     @Default('') String id,
     @Default('') String name,
-    @Default(0) double latitude,
-    @Default(0) double longitude,
+    @Default(0) double stopLat,
+    @Default(0) double stopLon,
   }) = _Buss;
 
   factory Buss.fromJson(Map<String, Object?> json) => _$BussFromJson(json);
