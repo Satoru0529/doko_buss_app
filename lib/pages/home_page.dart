@@ -1,3 +1,4 @@
+import 'package:buss_app/controller/io_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -6,8 +7,22 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final textNotifier = ref.watch(ioControllerProvider.notifier);
     return Scaffold(
-      body: Container(),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  textNotifier.loadAsset(context);
+                },
+                child: const Text('Text'),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

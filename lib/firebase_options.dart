@@ -2,7 +2,7 @@
 // ignore_for_file: lines_longer_than_80_chars, avoid_classes_with_only_static_members
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
-    show defaultTargetPlatform, kIsWeb, TargetPlatform;
+    show TargetPlatform, defaultTargetPlatform, kIsWeb;
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -42,6 +42,7 @@ class DefaultFirebaseOptions {
           'DefaultFirebaseOptions have not been configured for linux - '
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
+      // ignore: no_default_cases
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
@@ -63,7 +64,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '246460877578',
     projectId: 'bussapp-598d3',
     storageBucket: 'bussapp-598d3.appspot.com',
-    iosClientId: '246460877578-1eco84bdgeggupo3tc7c7rrnvgnkk21e.apps.googleusercontent.com',
+    iosClientId:
+        '246460877578-1eco84bdgeggupo3tc7c7rrnvgnkk21e.apps.googleusercontent.com',
     iosBundleId: 'com.example.bussApp',
   );
 }
