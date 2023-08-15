@@ -11,7 +11,7 @@ final mapControllerProvider = Provider<GoogleMapController?>((ref) {
 
 final cameraPositionProvider = Provider<CameraPosition>((ref) {
   return const CameraPosition(
-    target: LatLng(34.70263531930244, 135.49718441206556),
+    target: LatLng(38.7812934, 140.2464705),
     zoom: 13,
   );
 });

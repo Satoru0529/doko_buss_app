@@ -22,8 +22,8 @@ Buss _$BussFromJson(Map<String, dynamic> json) {
 mixin _$Buss {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  double get latitude => throw _privateConstructorUsedError;
-  double get longitude => throw _privateConstructorUsedError;
+  double get stopLat => throw _privateConstructorUsedError;
+  double get stopLon => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +35,7 @@ abstract class $BussCopyWith<$Res> {
   factory $BussCopyWith(Buss value, $Res Function(Buss) then) =
       _$BussCopyWithImpl<$Res, Buss>;
   @useResult
-  $Res call({String id, String name, double latitude, double longitude});
+  $Res call({String id, String name, double stopLat, double stopLon});
 }
 
 /// @nodoc
@@ -53,8 +53,8 @@ class _$BussCopyWithImpl<$Res, $Val extends Buss>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? latitude = null,
-    Object? longitude = null,
+    Object? stopLat = null,
+    Object? stopLon = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -65,13 +65,13 @@ class _$BussCopyWithImpl<$Res, $Val extends Buss>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      latitude: null == latitude
-          ? _value.latitude
-          : latitude // ignore: cast_nullable_to_non_nullable
+      stopLat: null == stopLat
+          ? _value.stopLat
+          : stopLat // ignore: cast_nullable_to_non_nullable
               as double,
-      longitude: null == longitude
-          ? _value.longitude
-          : longitude // ignore: cast_nullable_to_non_nullable
+      stopLon: null == stopLon
+          ? _value.stopLon
+          : stopLon // ignore: cast_nullable_to_non_nullable
               as double,
     ) as $Val);
   }
@@ -83,7 +83,7 @@ abstract class _$$_BussCopyWith<$Res> implements $BussCopyWith<$Res> {
       __$$_BussCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, double latitude, double longitude});
+  $Res call({String id, String name, double stopLat, double stopLon});
 }
 
 /// @nodoc
@@ -97,8 +97,8 @@ class __$$_BussCopyWithImpl<$Res> extends _$BussCopyWithImpl<$Res, _$_Buss>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? latitude = null,
-    Object? longitude = null,
+    Object? stopLat = null,
+    Object? stopLon = null,
   }) {
     return _then(_$_Buss(
       id: null == id
@@ -109,13 +109,13 @@ class __$$_BussCopyWithImpl<$Res> extends _$BussCopyWithImpl<$Res, _$_Buss>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      latitude: null == latitude
-          ? _value.latitude
-          : latitude // ignore: cast_nullable_to_non_nullable
+      stopLat: null == stopLat
+          ? _value.stopLat
+          : stopLat // ignore: cast_nullable_to_non_nullable
               as double,
-      longitude: null == longitude
-          ? _value.longitude
-          : longitude // ignore: cast_nullable_to_non_nullable
+      stopLon: null == stopLon
+          ? _value.stopLon
+          : stopLon // ignore: cast_nullable_to_non_nullable
               as double,
     ));
   }
@@ -125,7 +125,7 @@ class __$$_BussCopyWithImpl<$Res> extends _$BussCopyWithImpl<$Res, _$_Buss>
 @JsonSerializable()
 class _$_Buss with DiagnosticableTreeMixin implements _Buss {
   const _$_Buss(
-      {this.id = '', this.name = '', this.latitude = 0, this.longitude = 0});
+      {this.id = '', this.name = '', this.stopLat = 0, this.stopLon = 0});
 
   factory _$_Buss.fromJson(Map<String, dynamic> json) => _$$_BussFromJson(json);
 
@@ -137,14 +137,14 @@ class _$_Buss with DiagnosticableTreeMixin implements _Buss {
   final String name;
   @override
   @JsonKey()
-  final double latitude;
+  final double stopLat;
   @override
   @JsonKey()
-  final double longitude;
+  final double stopLon;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Buss(id: $id, name: $name, latitude: $latitude, longitude: $longitude)';
+    return 'Buss(id: $id, name: $name, stopLat: $stopLat, stopLon: $stopLon)';
   }
 
   @override
@@ -154,8 +154,8 @@ class _$_Buss with DiagnosticableTreeMixin implements _Buss {
       ..add(DiagnosticsProperty('type', 'Buss'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('latitude', latitude))
-      ..add(DiagnosticsProperty('longitude', longitude));
+      ..add(DiagnosticsProperty('stopLat', stopLat))
+      ..add(DiagnosticsProperty('stopLon', stopLon));
   }
 
   @override
@@ -165,15 +165,13 @@ class _$_Buss with DiagnosticableTreeMixin implements _Buss {
             other is _$_Buss &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.latitude, latitude) ||
-                other.latitude == latitude) &&
-            (identical(other.longitude, longitude) ||
-                other.longitude == longitude));
+            (identical(other.stopLat, stopLat) || other.stopLat == stopLat) &&
+            (identical(other.stopLon, stopLon) || other.stopLon == stopLon));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, latitude, longitude);
+  int get hashCode => Object.hash(runtimeType, id, name, stopLat, stopLon);
 
   @JsonKey(ignore: true)
   @override
@@ -193,8 +191,8 @@ abstract class _Buss implements Buss {
   const factory _Buss(
       {final String id,
       final String name,
-      final double latitude,
-      final double longitude}) = _$_Buss;
+      final double stopLat,
+      final double stopLon}) = _$_Buss;
 
   factory _Buss.fromJson(Map<String, dynamic> json) = _$_Buss.fromJson;
 
@@ -203,9 +201,9 @@ abstract class _Buss implements Buss {
   @override
   String get name;
   @override
-  double get latitude;
+  double get stopLat;
   @override
-  double get longitude;
+  double get stopLon;
   @override
   @JsonKey(ignore: true)
   _$$_BussCopyWith<_$_Buss> get copyWith => throw _privateConstructorUsedError;
