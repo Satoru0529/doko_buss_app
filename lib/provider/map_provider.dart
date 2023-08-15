@@ -11,13 +11,13 @@ final mapControllerProvider = Provider<GoogleMapController?>((ref) {
 
 final cameraPositionProvider = Provider<CameraPosition>((ref) {
   return CameraPosition(
-    target: const LatLng(34.70263531930244, 135.49718441206556),
+    target: const LatLng(38.7812934, 140.2464705),
     zoom: 13,
   );
 });
 
 final markersStreamProvider = StreamProvider<List<Buss>>((ref) {
-  final collection = FirebaseFirestore.instance.collection('bussLocation');
+  final collection = FirebaseFirestore.instance.collection('stops');
   final stream = collection.snapshots().map(
         (snapshot) => snapshot.docs.map((doc) {
           final data = doc.data();

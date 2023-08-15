@@ -27,7 +27,7 @@ class StartPage extends ConsumerWidget {
             return Set<Marker>.of(markerData.map((buss) {
               return Marker(
                 markerId: MarkerId(buss.id),
-                position: LatLng(buss.latitude, buss.longitude),
+                position: LatLng(buss.stopLat, buss.stopLon),
                 infoWindow: InfoWindow(
                   title: 'Bus ID: ${buss.id}',
                 ),
