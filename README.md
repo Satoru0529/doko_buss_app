@@ -9,3 +9,7 @@
 - perf: パフォーマンス向上関連
 - test: テスト関連
 - chore: ビルド、補助ツール、ライブラリ関連
+
+# fvm の導入
+ - flutter ver 3.10.6
+ - dart ver 3.0.6
