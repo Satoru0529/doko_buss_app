@@ -2,7 +2,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'stops.freezed.dart';
 part 'stops.g.dart';
-
 @freezed
 class Stops with _$Stops {
   const factory Stops({

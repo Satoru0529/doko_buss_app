@@ -24,12 +24,12 @@ class StartPage extends ConsumerWidget {
         markers: markers.when(
           data: (markerData) {
             return Set<Marker>.of(
-              markerData.map((buss) {
+              markerData.map((stop) {
                 return Marker(
-                  markerId: MarkerId(buss.id),
-                  position: LatLng(buss.stopLat, buss.stopLon),
+                  markerId: MarkerId(stop.id),
+                  position: LatLng(stop.stopLat, stop.stopLon),
                   infoWindow: InfoWindow(
-                    title: buss.stopName,
+                    title: stop.stopName,
                   ),
                 );
               }),
