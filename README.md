@@ -13,3 +13,12 @@
 # fvm の導入
  - flutter ver 3.10.6
  - dart ver 3.0.6
+
+# 導入パッケージ
+- dep
+  - flutter_riverpod
+
+- dev_dep
+  - build_runner
+  - flutter_lints
+  - pedantic_mono
