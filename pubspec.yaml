@@ -6,10 +6,12 @@ version: 1.0.0+1
 environment:
   sdk: '>=3.0.6 <4.0.0'
 dependencies:
-  flutter:
-    sdk: flutter
 
   cupertino_icons: ^1.0.2
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.3.6
+
 
 dev_dependencies:
   flutter_test:
