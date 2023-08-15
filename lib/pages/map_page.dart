@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,8 +9,9 @@ class StartPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var mapController = ref.watch(mapControllerProvider);
+    GoogleMapController? mapController = ref.watch(mapControllerProvider);
     final initialCameraPosition = ref.watch(cameraPositionProvider);
+    final markers = ref.watch(markersStreamProvider);
 
     return Scaffold(
       body: GoogleMap(
@@ -22,6 +22,21 @@ class StartPage extends ConsumerWidget {
         zoomControlsEnabled: false,
         initialCameraPosition: initialCameraPosition,
         minMaxZoomPreference: MinMaxZoomPreference(11, 20),
+        markers: markers.when(
+          data: (markerData) {
+            return Set<Marker>.of(markerData.map((buss) {
+              return Marker(
+                markerId: MarkerId(buss.id),
+                position: LatLng(buss.latitude, buss.longitude),
+                infoWindow: InfoWindow(
+                  title: 'Bus ID: ${buss.id}',
+                ),
+              );
+            }));
+          },
+          loading: () => {}, // You can show a loading indicator here if needed
+          error: (_, __) => {}, // You can handle error state here if needed
+        ),
       ),
     );
   }
