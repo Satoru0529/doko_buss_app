@@ -6,7 +6,7 @@ part of 'io_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$ioControllerHash() => r'1c2f6738599a0fc228777c66021dcf01465cc3ef';
+String _$ioControllerHash() => r'7e50f44458bd7fe4833b13d0b04e286e0b6026e2';
 
 /// See also [IoController].
 @ProviderFor(IoController)
