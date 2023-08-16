@@ -14,6 +14,7 @@ dependencies:
     sdk: flutter
   flutter_riverpod: ^2.3.6
   freezed_annotation: ^2.4.1
+  geocoding: ^2.1.0
   geolocator: ^9.0.2
   google_maps_flutter: ^2.2.8
   json_annotation: ^4.8.1

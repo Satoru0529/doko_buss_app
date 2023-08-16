@@ -9,19 +9,17 @@ class StartPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var mapController = ref.watch(mapControllerProvider);
-    final initialCameraPosition = ref.watch(cameraPositionProvider);
     final markers = ref.watch(markersStreamProvider);
 
     return Scaffold(
       body: GoogleMap(
-        onMapCreated: (controller) {
-          mapController = controller;
-        },
+        onMapCreated: (GoogleMapController controller) {},
+        initialCameraPosition: CameraPosition(
+          target: LatLng(37.7749, -122.4194),
+          zoom: 12.0,
+        ),
         myLocationEnabled: true,
-        myLocationButtonEnabled: true,
         zoomControlsEnabled: false,
-        initialCameraPosition: initialCameraPosition,
         minMaxZoomPreference: const MinMaxZoomPreference(11, 20),
         markers: markers.when(
           data: (markerData) {
@@ -39,8 +37,8 @@ class StartPage extends ConsumerWidget {
               ),
             );
           },
-          loading: () => {}, // You can show a loading indicator here if needed
-          error: (_, __) => {}, // You can handle error state here if needed
+          loading: () => {},
+          error: (_, __) => {},
         ),
       ),
     );
