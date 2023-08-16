@@ -1,3 +1,4 @@
+import 'package:buss_app/utils/text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -19,11 +20,20 @@ class IoController extends _$IoController {
         .loadString('sakegawa_gtfs/stops.txt');
     assets!.split('\n').forEach(
       (element) async {
+        final noBlankName =
+            TextUtils.removeUnnecessaryBlankLines(element.split(',')[2]);
+        final preBiGramList = [];
+        preBiGramList.add(noBlankName);
+        final biGramList = TextUtils.tokenize(preBiGramList);
+
+        final biGramMap = {for (var e in biGramList) e: true};
+
         final newStop = Stops(
           stopId: element.split(',')[0],
           stopName: element.split(',')[2],
           stopLat: double.parse(element.split(',')[4]),
           stopLon: double.parse(element.split(',')[5]),
+          biGramMap: biGramMap,
         );
         await stopsRef.doc().set(newStop);
       },

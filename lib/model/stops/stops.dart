@@ -10,7 +10,9 @@ class Stops with _$Stops {
     @Default('') String stopId, // 1
     @Default('') String stopName, // 3
     @Default(0) double stopLat, // 5
-    @Default(0) double stopLon, // 6
+    @Default(0) double stopLon,
+    // ignore: strict_raw_type
+    @Default({'': ''}) Map biGramMap,
   }) = _Stops;
 
   factory Stops.fromJson(Map<String, dynamic> json) => _$StopsFromJson(json);
