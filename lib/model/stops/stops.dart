@@ -1,3 +1,5 @@
+// ignore_for_file: strict_raw_type
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'stops.freezed.dart';
@@ -20,6 +22,9 @@ class Stops with _$Stops {
 
     /// バス停の経度
     @Default(0) double stopLon,
+
+    /// バス停名の bi-gram
+    @Default({'': ''}) Map biGramMap,
   }) = _Stops;
 
   factory Stops.fromJson(Map<String, dynamic> json) => _$StopsFromJson(json);
