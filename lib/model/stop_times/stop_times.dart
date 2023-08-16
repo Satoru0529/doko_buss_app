@@ -9,6 +9,7 @@ class StopTimes with _$StopTimes {
   const factory StopTimes({
     required String id,
   }) = _StopTimes;
-  
-  factory StopTimes.fromJson(Map<String, dynamic> json) => _$StopTimesFromJson(json);
+
+  factory StopTimes.fromJson(Map<String, dynamic> json) =>
+      _$StopTimesFromJson(json);
 }
