@@ -18,6 +18,8 @@ class StartPage extends ConsumerWidget {
         onMapCreated: (controller) {
           mapController = controller;
         },
+        myLocationEnabled: true,
+        myLocationButtonEnabled: true,
         zoomControlsEnabled: false,
         initialCameraPosition: initialCameraPosition,
         minMaxZoomPreference: const MinMaxZoomPreference(11, 20),
