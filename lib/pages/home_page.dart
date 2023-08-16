@@ -15,7 +15,7 @@ class HomePage extends ConsumerWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  textNotifier.loadAsset(context);
+                  textNotifier.loadAssetTrips(context);
                 },
                 child: const Text('Text'),
               ),
