@@ -1,4 +1,21 @@
 include: package:pedantic_mono/analysis_options.yaml
 
+analyzer:
+  strong-mode:
+
+  exclude:
+    - lib/**.g.dart
+    - lib/**.freezed.dart
+
+  errors:
+    # Remi の推奨設定
+    # https://github.com/dart-lang/sdk/issues/46844
+    # https://github.com/rrousselGit/freezed/issues/488
+    # freezed モデルの invalid_annotation_target の警告を消す目的
+    invalid_annotation_target: ignore
+    lines_longer_than_80_chars: ignore
+    flutter_style_todos: ignore
+    unused_local_variable: false
+
 linter:
   rules:
