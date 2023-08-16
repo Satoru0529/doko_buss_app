@@ -16,9 +16,15 @@
 
 # 導入パッケージ
 - dep
-  - flutter_riverpod
+  - cloud_firestore: ^4.8.4
+  - firebase_core: ^2.15.0
+  - flutter_riverpod ^2.3.6
+  - freezed_annotation: ^2.4.1
+  - google_maps_flutter: ^2.2.8
+  - json_annotation: ^4.8.1
 
 - dev_dep
   - build_runner
-  - flutter_lints
+  - freezed
+  - json_serializable
   - pedantic_mono
