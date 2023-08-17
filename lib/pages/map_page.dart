@@ -1,3 +1,4 @@
+import 'package:buss_app/provider/text_editing_controller_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -12,19 +13,26 @@ class StartPage extends ConsumerWidget {
     var mapController = ref.watch(mapControllerProvider);
     final initialCameraPosition = ref.watch(cameraPositionProvider);
     final markers = ref.watch(markersStreamProvider);
+    final searchEditingController = ref.watch(searchTextEditingController);
 
     return DefaultTabController(
       length: 2,
       child: SafeArea(
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(50),
+            preferredSize: const Size.fromHeight(75),
             child: AppBar(
               backgroundColor: Colors.black45,
               bottom: const TabBar(
                 tabs: <Widget>[
-                  Tab(icon: Icon(Icons.search)),
-                  Tab(icon: Icon(Icons.map)),
+                  Tab(
+                    icon: Icon(Icons.search),
+                    text: 'バス停検索',
+                  ),
+                  Tab(
+                    icon: Icon(Icons.map),
+                    text: '路線検索',
+                  ),
                 ],
               ),
             ),
@@ -60,25 +68,34 @@ class StartPage extends ConsumerWidget {
                       {}, // You can handle error state here if needed
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 60,
                 child: TabBarView(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.fromLTRB(0, 5, 5, 0),
-                      child: TextField(
-                        maxLength: 50,
+                      padding: const EdgeInsets.all(4),
+                      child: TextFormField(
                         decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(),
-                          fillColor: Colors.white54,
+                          hintText: 'テキスト検索(2文字以上入力)',
+                          // suffixIcon:
                           filled: true,
-                          icon: Icon(Icons.search),
-                          hintText: 'バス停の名前を入れてね',
+                          isDense: true,
+                          fillColor: const Color.fromARGB(248, 231, 235, 241),
+                          prefixIcon: const Icon(Icons.search),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
+                        controller: searchEditingController,
+                        onChanged: (text) async {
+                          if (text.isNotEmpty) {
+                          } else {}
+                        },
+                        cursorColor: Colors.grey,
                       ),
                     ),
-                    Text(
+                    const Text(
                       'サッカー',
                       style: TextStyle(fontSize: 32),
                     ),
