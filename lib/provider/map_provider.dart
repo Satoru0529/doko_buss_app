@@ -23,7 +23,7 @@ final cameraPositionProvider = Provider<CameraPosition>(
 final markersStreamProvider = StreamProvider<List<Stops>>(
   (ref) {
     /// stops コレクションのドキュメントを全て取得
-    final collection = FirebaseFirestore.instance.collection('stops');
+    final collection = FirebaseFirestore.instance.collection('stop_low');
 
     /// CollectionReference 型で受け取った値を、Stream<List<Stops>> 型で返す
     return collection.snapshots().map(
