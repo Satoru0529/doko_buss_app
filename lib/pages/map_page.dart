@@ -1,3 +1,4 @@
+import 'package:buss_app/provider/search/search_provider.dart';
 import 'package:buss_app/provider/text_editing_controller_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,13 +15,15 @@ class StartPage extends ConsumerWidget {
     final initialCameraPosition = ref.watch(cameraPositionProvider);
     final markers = ref.watch(markersStreamProvider);
     final searchEditingController = ref.watch(searchTextEditingController);
+    final searchList = ref.watch(searchNotifierProvider);
+    final searchNotifier = ref.watch(searchNotifierProvider.notifier);
 
     return DefaultTabController(
       length: 2,
       child: SafeArea(
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(75),
+            preferredSize: const Size.fromHeight(105),
             child: AppBar(
               backgroundColor: Colors.black45,
               bottom: const TabBar(
@@ -69,31 +72,59 @@ class StartPage extends ConsumerWidget {
                 ),
               ),
               SizedBox(
-                height: 60,
+                height: 110,
                 child: TabBarView(
                   physics: const NeverScrollableScrollPhysics(),
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(4),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'テキスト検索(2文字以上入力)',
-                          // suffixIcon:
-                          filled: true,
-                          isDense: true,
-                          fillColor: const Color.fromARGB(248, 231, 235, 241),
-                          prefixIcon: const Icon(Icons.search),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText: 'テキスト検索(2文字以上入力)',
+                              // suffixIcon:
+                              filled: true,
+                              isDense: true,
+                              fillColor:
+                                  const Color.fromARGB(248, 231, 235, 241),
+                              prefixIcon: const Icon(Icons.search),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            controller: searchEditingController,
+                            onChanged: (text) async {
+                              await searchNotifier.searchStop(text);
+                            },
+                            cursorColor: Colors.grey,
                           ),
                         ),
-                        controller: searchEditingController,
-                        onChanged: (text) async {
-                          if (text.isNotEmpty) {
-                          } else {}
-                        },
-                        cursorColor: Colors.grey,
-                      ),
+                        searchList.when(
+                          loading: () => const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                          error: (error, stackTrace) => Center(
+                            child: Text(error.toString()),
+                          ),
+                          data: (list) {
+                            if (list.isEmpty) {
+                              return const SizedBox();
+                            }
+                            return ListView.separated(
+                              separatorBuilder: (_, __) =>
+                                  const SizedBox(height: 4),
+                              itemCount: list.length,
+                              itemBuilder: (context, index) {
+                                final stop = list[index];
+                                return ListTile(
+                                  title: Text(stop.stopName),
+                                );
+                              },
+                            );
+                          },
+                        )
+                      ],
                     ),
                     const Text(
                       'サッカー',
