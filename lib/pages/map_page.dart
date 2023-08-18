@@ -1,8 +1,12 @@
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../provider/location_provider.dart';
 import '../provider/map_provider.dart';
 import '../provider/search/search_provider.dart';
 import '../provider/text_editing_controller_provider.dart';
@@ -12,12 +16,41 @@ class StartPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var mapController = ref.watch(mapControllerProvider);
-    final initialCameraPosition = ref.watch(cameraPositionProvider);
     final markers = ref.watch(markersStreamProvider);
     final searchEditingController = ref.watch(searchTextEditingController);
     final searchList = ref.watch(searchNotifierProvider);
     final searchNotifier = ref.watch(searchNotifierProvider.notifier);
+
+    final mapControllerCompleter = Completer<GoogleMapController>();
+    Position? position;
+
+    Future<void> onMapCreated(GoogleMapController controller) async {
+      mapControllerCompleter.complete(controller);
+    }
+
+    // 位置データを取得し、カメラを移動させるメソッド
+    Future<void> fetchLocationDataAndMoveCamera(WidgetRef ref) async {
+      position = await ref.refresh(locationProvider.future);
+      final mapController = await mapControllerCompleter.future;
+      final latitude = position?.latitude;
+      final longitude = position?.longitude;
+      if (latitude == null || longitude == null) {
+        return;
+      }
+      await mapController.moveCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(latitude, longitude),
+            zoom: 16,
+          ),
+        ),
+      );
+    }
+
+    // ウィジェットが初めてビルドされた後にこのメソッドを呼び出す
+    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+      await fetchLocationDataAndMoveCamera(ref);
+    });
 
     return DefaultTabController(
       length: 2,
@@ -44,12 +77,17 @@ class StartPage extends ConsumerWidget {
           body: Stack(
             children: [
               GoogleMap(
-                onMapCreated: (controller) {
-                  mapController = controller;
-                },
+                onMapCreated: onMapCreated,
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(
+                    position?.latitude ?? 36,
+                    position?.longitude ?? 140,
+                  ),
+                  zoom: 16,
+                ),
+                myLocationEnabled: true,
                 zoomControlsEnabled: false,
-                initialCameraPosition: initialCameraPosition,
-                minMaxZoomPreference: const MinMaxZoomPreference(11, 20),
+                mapToolbarEnabled: false,
                 markers: markers.when(
                   data: (markerData) {
                     return Set<Marker>.of(
@@ -66,8 +104,7 @@ class StartPage extends ConsumerWidget {
                       ),
                     );
                   },
-                  loading: () =>
-                      {}, // You can show a loading indicator here if needed
+                  loading: () => {},
                   error: (_, __) =>
                       {}, // You can handle error state here if needed
                 ),
