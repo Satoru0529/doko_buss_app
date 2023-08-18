@@ -1,11 +1,11 @@
 import 'dart:async';
 
+import 'package:buss_app/provider/latlng/latlng_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../provider/location_provider.dart';
 import '../provider/map_provider.dart';
 import '../provider/search/search_provider.dart';
 import '../provider/text_editing_controller_provider.dart';
@@ -19,6 +19,8 @@ class StartPage extends ConsumerWidget {
     final searchEditingController = ref.watch(searchTextEditingController);
     final searchList = ref.watch(searchNotifierProvider);
     final searchNotifier = ref.watch(searchNotifierProvider.notifier);
+    final location = ref.watch(latLngNotifierProvider);
+    final latLngNotifier = ref.watch(latLngNotifierProvider.notifier);
 
     final mapControllerCompleter = Completer<GoogleMapController>();
     Position? position;
@@ -26,30 +28,6 @@ class StartPage extends ConsumerWidget {
     Future<void> onMapCreated(GoogleMapController controller) async {
       mapControllerCompleter.complete(controller);
     }
-
-    // 位置データを取得し、カメラを移動させるメソッド
-    Future<void> fetchLocationDataAndMoveCamera(WidgetRef ref) async {
-      position = await ref.refresh(locationProvider.future);
-      final mapController = await mapControllerCompleter.future;
-      final latitude = position?.latitude;
-      final longitude = position?.longitude;
-      if (latitude == null || longitude == null) {
-        return;
-      }
-      await mapController.moveCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            target: LatLng(latitude, longitude),
-            zoom: 16,
-          ),
-        ),
-      );
-    }
-
-    // ウィジェットが初めてビルドされた後にこのメソッドを呼び出す
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await fetchLocationDataAndMoveCamera(ref);
-    });
 
     return DefaultTabController(
       length: 2,
@@ -75,37 +53,47 @@ class StartPage extends ConsumerWidget {
           ),
           body: Stack(
             children: [
-              GoogleMap(
-                onMapCreated: onMapCreated,
-                initialCameraPosition: CameraPosition(
-                  target: LatLng(
-                    position?.latitude ?? 36,
-                    position?.longitude ?? 140,
-                  ),
-                  zoom: 16,
+              location.when(
+                loading: () => const Center(
+                  child: CircularProgressIndicator(),
                 ),
-                myLocationEnabled: true,
-                mapToolbarEnabled: false,
-                markers: markers.when(
-                  data: (markerData) {
-                    return Set<Marker>.of(
-                      markerData.map(
-                        (stop) {
-                          return Marker(
-                            markerId: MarkerId(stop.id),
-                            position: LatLng(stop.stopLat, stop.stopLon),
-                            infoWindow: InfoWindow(
-                              title: stop.stopName,
-                            ),
-                          );
-                        },
+                error: (error, stackTrace) => Center(
+                  child: Text(error.toString()),
+                ),
+                data: (position) {
+                  return GoogleMap(
+                    onMapCreated: onMapCreated,
+                    initialCameraPosition: CameraPosition(
+                      target: LatLng(
+                        position?.latitude ?? 36,
+                        position?.longitude ?? 140,
                       ),
-                    );
-                  },
-                  loading: () => {},
-                  error: (_, __) =>
-                      {}, // You can handle error state here if needed
-                ),
+                      zoom: 16,
+                    ),
+                    myLocationEnabled: true,
+                    mapToolbarEnabled: false,
+                    markers: markers.when(
+                      data: (markerData) {
+                        return Set<Marker>.of(
+                          markerData.map(
+                            (stop) {
+                              return Marker(
+                                markerId: MarkerId(stop.id),
+                                position: LatLng(stop.stopLat, stop.stopLon),
+                                infoWindow: InfoWindow(
+                                  title: stop.stopName,
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      loading: () => {},
+                      error: (_, __) =>
+                          {}, // You can handle error state here if needed
+                    ),
+                  );
+                },
               ),
               ConstrainedBox(
                 constraints:
@@ -162,9 +150,7 @@ class StartPage extends ConsumerWidget {
                                       children: [
                                         ListTile(
                                           title: Text(stop.stopName),
-                                          onTap: () {
-                                            
-                                          },
+                                          onTap: () => latLngNotifier.searchPosition(stop),
                                         ),
                                       ],
                                     );
