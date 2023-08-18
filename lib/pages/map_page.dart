@@ -48,7 +48,7 @@ class StartPage extends ConsumerWidget {
     }
 
     // ウィジェットが初めてビルドされた後にこのメソッドを呼び出す
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
+    WidgetsBinding.instance?.addPostFrameCallback((_) async {
       await fetchLocationDataAndMoveCamera(ref);
     });
 
