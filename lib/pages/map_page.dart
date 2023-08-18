@@ -56,7 +56,7 @@ class StartPage extends ConsumerWidget {
       child: SafeArea(
         child: Scaffold(
           appBar: const PreferredSize(
-            preferredSize: Size.fromHeight(1000),
+            preferredSize: Size.fromHeight(500),
             child: ColoredBox(
               color: Color.fromARGB(244, 93, 91, 91),
               child: TabBar(
@@ -85,7 +85,6 @@ class StartPage extends ConsumerWidget {
                   zoom: 16,
                 ),
                 myLocationEnabled: true,
-                zoomControlsEnabled: false,
                 mapToolbarEnabled: false,
                 markers: markers.when(
                   data: (markerData) {
@@ -163,6 +162,9 @@ class StartPage extends ConsumerWidget {
                                       children: [
                                         ListTile(
                                           title: Text(stop.stopName),
+                                          onTap: () {
+                                            
+                                          },
                                         ),
                                       ],
                                     );
