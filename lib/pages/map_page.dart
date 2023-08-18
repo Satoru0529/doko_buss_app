@@ -22,11 +22,11 @@ class StartPage extends ConsumerWidget {
       length: 2,
       child: SafeArea(
         child: Scaffold(
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(105),
-            child: AppBar(
-              backgroundColor: Colors.black45,
-              bottom: const TabBar(
+          appBar: const PreferredSize(
+            preferredSize: Size.fromHeight(1000),
+            child: ColoredBox(
+              color: Color.fromARGB(244, 93, 91, 91),
+              child: TabBar(
                 tabs: <Widget>[
                   Tab(
                     icon: Icon(Icons.search),
@@ -71,15 +71,16 @@ class StartPage extends ConsumerWidget {
                       {}, // You can handle error state here if needed
                 ),
               ),
-              SizedBox(
-                height: 110,
+              ConstrainedBox(
+                constraints:
+                    const BoxConstraints(maxHeight: 400, minHeight: 100),
                 child: TabBarView(
                   physics: const NeverScrollableScrollPhysics(),
                   children: <Widget>[
                     Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(4),
+                          padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
                           child: TextFormField(
                             decoration: InputDecoration(
                               hintText: 'テキスト検索(2文字以上入力)',
@@ -100,28 +101,39 @@ class StartPage extends ConsumerWidget {
                             cursorColor: Colors.grey,
                           ),
                         ),
-                        searchList.when(
-                          loading: () => const Center(
-                            child: CircularProgressIndicator(),
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(
+                            minHeight: 50,
+                            maxHeight: 100,
                           ),
-                          error: (error, stackTrace) => Center(
-                            child: Text(error.toString()),
+                          child: searchList.when(
+                            loading: () => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                            error: (error, stackTrace) => Center(
+                              child: Text(error.toString()),
+                            ),
+                            data: (list) {
+                              if (list.isEmpty) {
+                                return const SizedBox();
+                              }
+                              return Card(
+                                child: ListView.builder(
+                                  itemCount: list.length,
+                                  itemBuilder: (context, index) {
+                                    final stop = list[index];
+                                    return Column(
+                                      children: [
+                                        ListTile(
+                                          title: Text(stop.stopName),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              );
+                            },
                           ),
-                          data: (list) {
-                            if (list.isEmpty) {
-                              return const SizedBox();
-                            }
-                            return ListView.builder(
-                              itemCount: list.length,
-                              itemBuilder: (context, index) {
-                                print(list.first.stopName);
-                                final stop = list[index];
-                                return ListTile(
-                                  title: Text(stop.stopName),
-                                );
-                              },
-                            );
-                          },
                         )
                       ],
                     ),
