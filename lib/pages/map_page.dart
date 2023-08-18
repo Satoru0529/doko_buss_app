@@ -150,7 +150,24 @@ class StartPage extends ConsumerWidget {
                                       children: [
                                         ListTile(
                                           title: Text(stop.stopName),
-                                          onTap: () => latLngNotifier.searchPosition(stop),
+                                          onTap: () async {
+                                            await latLngNotifier
+                                                .searchPosition(stop);
+                                            final controller =
+                                                await mapControllerCompleter
+                                                    .future;
+                                            await controller.animateCamera(
+                                              CameraUpdate.newCameraPosition(
+                                                CameraPosition(
+                                                  target: LatLng(
+                                                    stop.stopLat,
+                                                    stop.stopLon,
+                                                  ),
+                                                  zoom: 16,
+                                                ),
+                                              ),
+                                            );
+                                          },
                                         ),
                                       ],
                                     );
