@@ -1,7 +1,7 @@
-import 'package:buss_app/model/stop_low/stop_low.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../model/stops/stops.dart';
 import '../../utils/text_utils.dart';
 
 part 'search_provider.g.dart';
@@ -9,11 +9,11 @@ part 'search_provider.g.dart';
 @riverpod
 class SearchNotifier extends _$SearchNotifier {
   @override
-  FutureOr<List<StopLow>> build() {
+  FutureOr<List<Stops>> build() {
     return [];
   }
 
-  List<StopLow> searchStops = <StopLow>[];
+  List<Stops> searchStops = <Stops>[];
   List<String> biGramList = <String>[];
 
   Future<void> searchStop(String input) async {
@@ -32,7 +32,7 @@ class SearchNotifier extends _$SearchNotifier {
           biGramList = TextUtils.tokenize(words);
 
           /// テキスト検索where句を追加
-          Query query = FirebaseFirestore.instance.collection('stop_low');
+          Query query = FirebaseFirestore.instance.collection('stops');
           for (final word in biGramList) {
             query = query.where('biGramMap.$word', isEqualTo: true);
           }
@@ -41,7 +41,7 @@ class SearchNotifier extends _$SearchNotifier {
           final snap = await query.get();
           searchStops = snap.docs
               .map(
-                (doc) => StopLow.fromJson(doc.data()! as Map<String, dynamic>),
+                (doc) => Stops.fromJson(doc.data()! as Map<String, dynamic>),
               )
               .toList();
           state = AsyncValue.data(searchStops);
