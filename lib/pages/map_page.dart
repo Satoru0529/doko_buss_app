@@ -111,11 +111,10 @@ class StartPage extends ConsumerWidget {
                             if (list.isEmpty) {
                               return const SizedBox();
                             }
-                            return ListView.separated(
-                              separatorBuilder: (_, __) =>
-                                  const SizedBox(height: 4),
+                            return ListView.builder(
                               itemCount: list.length,
                               itemBuilder: (context, index) {
+                                print(list.first.stopName);
                                 final stop = list[index];
                                 return ListTile(
                                   title: Text(stop.stopName),
