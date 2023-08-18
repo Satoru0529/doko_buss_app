@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../model/stops/stops.dart';
+import '../../model/stop_low/stop_low.dart';
 import '../../utils/text_utils.dart';
 
 part 'search_provider.g.dart';
@@ -9,11 +9,12 @@ part 'search_provider.g.dart';
 @riverpod
 class SearchNotifier extends _$SearchNotifier {
   @override
-  FutureOr<List<Stops>> build() {
+  FutureOr<List<StopLow>> build() {
     return [];
   }
 
-  List<Stops> searchStops = <Stops>[];
+  // List<Stops> searchStops = <Stops>[];
+  List<StopLow> searchStops = <StopLow>[];
   List<String> biGramList = <String>[];
 
   Future<void> searchStop(String input) async {
@@ -41,7 +42,7 @@ class SearchNotifier extends _$SearchNotifier {
           final snap = await query.get();
           searchStops = snap.docs
               .map(
-                (doc) => Stops.fromJson(doc.data()! as Map<String, dynamic>),
+                (doc) => StopLow.fromJson(doc.data()! as Map<String, dynamic>),
               )
               .toList();
           state = AsyncValue.data(searchStops);
