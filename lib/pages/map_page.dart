@@ -1,10 +1,11 @@
-import 'package:buss_app/provider/search/search_provider.dart';
-import 'package:buss_app/provider/text_editing_controller_provider.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../provider/map_provider.dart';
+import '../provider/search/search_provider.dart';
+import '../provider/text_editing_controller_provider.dart';
 
 class StartPage extends ConsumerWidget {
   const StartPage({super.key});
