@@ -1,24 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../model/stops/stops.dart';
-
-final mapControllerProvider = Provider<GoogleMapController?>(
-  (ref) {
-    // GoogleMapControllerの初期化はStartPage内で行うため、ここではnullを返します
-    return null;
-  },
-);
-
-final cameraPositionProvider = Provider<CameraPosition>(
-  (ref) {
-    return const CameraPosition(
-      target: LatLng(38.7812934, 140.2464705),
-      zoom: 13,
-    );
-  },
-);
 
 final markersStreamProvider = StreamProvider<List<Stops>>(
   (ref) {
