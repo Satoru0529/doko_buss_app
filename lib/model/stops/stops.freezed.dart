@@ -20,11 +20,23 @@ Stops _$StopsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Stops {
+  /// Doc ID
   String get id => throw _privateConstructorUsedError;
-  String get stopId => throw _privateConstructorUsedError; // 1
-  String get stopName => throw _privateConstructorUsedError; // 3
-  double get stopLat => throw _privateConstructorUsedError; // 5
+
+  /// num_1 or num_2 (上り or 下り)
+  String get stopId => throw _privateConstructorUsedError;
+
+  /// バス停名
+  String get stopName => throw _privateConstructorUsedError;
+
+  /// バス停の緯度
+  double get stopLat => throw _privateConstructorUsedError;
+
+  /// バス停の経度
   double get stopLon => throw _privateConstructorUsedError;
+
+  /// バス停名の bi-gram
+  Map<dynamic, dynamic> get biGramMap => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,7 +53,8 @@ abstract class $StopsCopyWith<$Res> {
       String stopId,
       String stopName,
       double stopLat,
-      double stopLon});
+      double stopLon,
+      Map<dynamic, dynamic> biGramMap});
 }
 
 /// @nodoc
@@ -62,6 +75,7 @@ class _$StopsCopyWithImpl<$Res, $Val extends Stops>
     Object? stopName = null,
     Object? stopLat = null,
     Object? stopLon = null,
+    Object? biGramMap = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -84,6 +98,10 @@ class _$StopsCopyWithImpl<$Res, $Val extends Stops>
           ? _value.stopLon
           : stopLon // ignore: cast_nullable_to_non_nullable
               as double,
+      biGramMap: null == biGramMap
+          ? _value.biGramMap
+          : biGramMap // ignore: cast_nullable_to_non_nullable
+              as Map<dynamic, dynamic>,
     ) as $Val);
   }
 }
@@ -99,7 +117,8 @@ abstract class _$$_StopsCopyWith<$Res> implements $StopsCopyWith<$Res> {
       String stopId,
       String stopName,
       double stopLat,
-      double stopLon});
+      double stopLon,
+      Map<dynamic, dynamic> biGramMap});
 }
 
 /// @nodoc
@@ -116,6 +135,7 @@ class __$$_StopsCopyWithImpl<$Res> extends _$StopsCopyWithImpl<$Res, _$_Stops>
     Object? stopName = null,
     Object? stopLat = null,
     Object? stopLon = null,
+    Object? biGramMap = null,
   }) {
     return _then(_$_Stops(
       id: null == id
@@ -138,6 +158,10 @@ class __$$_StopsCopyWithImpl<$Res> extends _$StopsCopyWithImpl<$Res, _$_Stops>
           ? _value.stopLon
           : stopLon // ignore: cast_nullable_to_non_nullable
               as double,
+      biGramMap: null == biGramMap
+          ? _value._biGramMap
+          : biGramMap // ignore: cast_nullable_to_non_nullable
+              as Map<dynamic, dynamic>,
     ));
   }
 }
@@ -150,33 +174,53 @@ class _$_Stops implements _Stops {
       this.stopId = '',
       this.stopName = '',
       this.stopLat = 0,
-      this.stopLon = 0});
+      this.stopLon = 0,
+      final Map<dynamic, dynamic> biGramMap = const {'': ''}})
+      : _biGramMap = biGramMap;
 
   factory _$_Stops.fromJson(Map<String, dynamic> json) =>
       _$$_StopsFromJson(json);
 
+  /// Doc ID
   @override
   @JsonKey()
   final String id;
+
+  /// num_1 or num_2 (上り or 下り)
   @override
   @JsonKey()
   final String stopId;
-// 1
+
+  /// バス停名
   @override
   @JsonKey()
   final String stopName;
-// 3
+
+  /// バス停の緯度
   @override
   @JsonKey()
   final double stopLat;
-// 5
+
+  /// バス停の経度
   @override
   @JsonKey()
   final double stopLon;
 
+  /// バス停名の bi-gram
+  final Map<dynamic, dynamic> _biGramMap;
+
+  /// バス停名の bi-gram
+  @override
+  @JsonKey()
+  Map<dynamic, dynamic> get biGramMap {
+    if (_biGramMap is EqualUnmodifiableMapView) return _biGramMap;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_biGramMap);
+  }
+
   @override
   String toString() {
-    return 'Stops(id: $id, stopId: $stopId, stopName: $stopName, stopLat: $stopLat, stopLon: $stopLon)';
+    return 'Stops(id: $id, stopId: $stopId, stopName: $stopName, stopLat: $stopLat, stopLon: $stopLon, biGramMap: $biGramMap)';
   }
 
   @override
@@ -189,13 +233,15 @@ class _$_Stops implements _Stops {
             (identical(other.stopName, stopName) ||
                 other.stopName == stopName) &&
             (identical(other.stopLat, stopLat) || other.stopLat == stopLat) &&
-            (identical(other.stopLon, stopLon) || other.stopLon == stopLon));
+            (identical(other.stopLon, stopLon) || other.stopLon == stopLon) &&
+            const DeepCollectionEquality()
+                .equals(other._biGramMap, _biGramMap));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, stopId, stopName, stopLat, stopLon);
+  int get hashCode => Object.hash(runtimeType, id, stopId, stopName, stopLat,
+      stopLon, const DeepCollectionEquality().hash(_biGramMap));
 
   @JsonKey(ignore: true)
   @override
@@ -217,20 +263,35 @@ abstract class _Stops implements Stops {
       final String stopId,
       final String stopName,
       final double stopLat,
-      final double stopLon}) = _$_Stops;
+      final double stopLon,
+      final Map<dynamic, dynamic> biGramMap}) = _$_Stops;
 
   factory _Stops.fromJson(Map<String, dynamic> json) = _$_Stops.fromJson;
 
   @override
+
+  /// Doc ID
   String get id;
   @override
+
+  /// num_1 or num_2 (上り or 下り)
   String get stopId;
-  @override // 1
+  @override
+
+  /// バス停名
   String get stopName;
-  @override // 3
+  @override
+
+  /// バス停の緯度
   double get stopLat;
-  @override // 5
+  @override
+
+  /// バス停の経度
   double get stopLon;
+  @override
+
+  /// バス停名の bi-gram
+  Map<dynamic, dynamic> get biGramMap;
   @override
   @JsonKey(ignore: true)
   _$$_StopsCopyWith<_$_Stops> get copyWith =>
