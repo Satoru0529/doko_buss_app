@@ -22,6 +22,7 @@ class StartPage extends ConsumerWidget {
       mapControllerCompleter.complete(controller);
     }
 
+    // 位置データを取得し、カメラを移動させるメソッド
     Future<void> fetchLocationDataAndMoveCamera(WidgetRef ref) async {
       position = await ref.refresh(locationProvider.future);
       final mapController = await mapControllerCompleter.future;
@@ -40,6 +41,7 @@ class StartPage extends ConsumerWidget {
       );
     }
 
+    // ウィジェットが初めてビルドされた後にこのメソッドを呼び出す
     WidgetsBinding.instance?.addPostFrameCallback((_) async {
       await fetchLocationDataAndMoveCamera(ref);
     });
