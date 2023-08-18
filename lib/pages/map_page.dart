@@ -1,6 +1,6 @@
+
 import 'dart:async';
 
-import 'package:buss_app/provider/text_editing_controller_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
@@ -8,6 +8,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../provider/location_provider.dart';
 import '../provider/map_provider.dart';
+import '../provider/search/search_provider.dart';
+import '../provider/text_editing_controller_provider.dart';
 
 class StartPage extends ConsumerWidget {
   const StartPage({super.key});
@@ -16,6 +18,8 @@ class StartPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final markers = ref.watch(markersStreamProvider);
     final searchEditingController = ref.watch(searchTextEditingController);
+    final searchList = ref.watch(searchNotifierProvider);
+    final searchNotifier = ref.watch(searchNotifierProvider.notifier);
 
     final mapControllerCompleter = Completer<GoogleMapController>();
     Position? position;
@@ -52,11 +56,11 @@ class StartPage extends ConsumerWidget {
       length: 2,
       child: SafeArea(
         child: Scaffold(
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(75),
-            child: AppBar(
-              backgroundColor: Colors.black45,
-              bottom: const TabBar(
+          appBar: const PreferredSize(
+            preferredSize: Size.fromHeight(1000),
+            child: ColoredBox(
+              color: Color.fromARGB(244, 93, 91, 91),
+              child: TabBar(
                 tabs: <Widget>[
                   Tab(
                     icon: Icon(Icons.search),
@@ -105,32 +109,71 @@ class StartPage extends ConsumerWidget {
                       {}, // You can handle error state here if needed
                 ),
               ),
-              SizedBox(
-                height: 60,
+              ConstrainedBox(
+                constraints:
+                    const BoxConstraints(maxHeight: 400, minHeight: 100),
                 child: TabBarView(
                   physics: const NeverScrollableScrollPhysics(),
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(4),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'テキスト検索(2文字以上入力)',
-                          // suffixIcon:
-                          filled: true,
-                          isDense: true,
-                          fillColor: const Color.fromARGB(248, 231, 235, 241),
-                          prefixIcon: const Icon(Icons.search),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText: 'テキスト検索(2文字以上入力)',
+                              // suffixIcon:
+                              filled: true,
+                              isDense: true,
+                              fillColor:
+                                  const Color.fromARGB(248, 231, 235, 241),
+                              prefixIcon: const Icon(Icons.search),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            controller: searchEditingController,
+                            onChanged: (text) async {
+                              await searchNotifier.searchStop(text);
+                            },
+                            cursorColor: Colors.grey,
                           ),
                         ),
-                        controller: searchEditingController,
-                        onChanged: (text) async {
-                          if (text.isNotEmpty) {
-                          } else {}
-                        },
-                        cursorColor: Colors.grey,
-                      ),
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(
+                            minHeight: 50,
+                            maxHeight: 100,
+                          ),
+                          child: searchList.when(
+                            loading: () => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                            error: (error, stackTrace) => Center(
+                              child: Text(error.toString()),
+                            ),
+                            data: (list) {
+                              if (list.isEmpty) {
+                                return const SizedBox();
+                              }
+                              return Card(
+                                child: ListView.builder(
+                                  itemCount: list.length,
+                                  itemBuilder: (context, index) {
+                                    final stop = list[index];
+                                    return Column(
+                                      children: [
+                                        ListTile(
+                                          title: Text(stop.stopName),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                        )
+                      ],
                     ),
                     const Text(
                       'サッカー',
