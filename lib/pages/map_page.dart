@@ -1,11 +1,8 @@
-import 'dart:async';
-
-import 'package:buss_app/provider/latlng/latlng_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../provider/latlng/latlng_provider.dart';
 import '../provider/map_provider.dart';
 import '../provider/search/search_provider.dart';
 import '../provider/text_editing_controller_provider.dart';
@@ -21,13 +18,6 @@ class StartPage extends ConsumerWidget {
     final searchNotifier = ref.watch(searchNotifierProvider.notifier);
     final location = ref.watch(latLngNotifierProvider);
     final latLngNotifier = ref.watch(latLngNotifierProvider.notifier);
-
-    final mapControllerCompleter = Completer<GoogleMapController>();
-    Position? position;
-
-    Future<void> onMapCreated(GoogleMapController controller) async {
-      mapControllerCompleter.complete(controller);
-    }
 
     return DefaultTabController(
       length: 2,
@@ -62,7 +52,9 @@ class StartPage extends ConsumerWidget {
                 ),
                 data: (position) {
                   return GoogleMap(
-                    onMapCreated: onMapCreated,
+                    onMapCreated: (controller) {
+                      mapController = controller;
+                    },
                     initialCameraPosition: CameraPosition(
                       target: LatLng(
                         position?.latitude ?? 36,
@@ -151,22 +143,9 @@ class StartPage extends ConsumerWidget {
                                         ListTile(
                                           title: Text(stop.stopName),
                                           onTap: () async {
+                                            /// latLngNotifier に選択したバス停の位置情報を渡す
                                             await latLngNotifier
                                                 .searchPosition(stop);
-                                            final controller =
-                                                await mapControllerCompleter
-                                                    .future;
-                                            await controller.animateCamera(
-                                              CameraUpdate.newCameraPosition(
-                                                CameraPosition(
-                                                  target: LatLng(
-                                                    stop.stopLat,
-                                                    stop.stopLon,
-                                                  ),
-                                                  zoom: 16,
-                                                ),
-                                              ),
-                                            );
                                           },
                                         ),
                                       ],
