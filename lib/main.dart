@@ -12,7 +12,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await Future(() async {
-    LocationPermission permission = await Geolocator.checkPermission();
+    final permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       await Geolocator.requestPermission();
     }

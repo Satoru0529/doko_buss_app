@@ -1,7 +1,7 @@
-import 'package:buss_app/model/stop_low/stop_low.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../model/stop_low/stop_low.dart';
 import '../../utils/text_utils.dart';
 
 part 'search_provider.g.dart';
@@ -13,6 +13,7 @@ class SearchNotifier extends _$SearchNotifier {
     return [];
   }
 
+  // List<Stops> searchStops = <Stops>[];
   List<StopLow> searchStops = <StopLow>[];
   List<String> biGramList = <String>[];
 
