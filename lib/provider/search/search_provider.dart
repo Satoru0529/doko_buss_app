@@ -33,7 +33,7 @@ class SearchNotifier extends _$SearchNotifier {
           biGramList = TextUtils.tokenize(words);
 
           /// テキスト検索where句を追加
-          Query query = FirebaseFirestore.instance.collection('stops');
+          Query query = FirebaseFirestore.instance.collection('stop_low');
           for (final word in biGramList) {
             query = query.where('biGramMap.$word', isEqualTo: true);
           }
