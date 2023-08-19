@@ -30,8 +30,7 @@ class TextUtils {
   static String hira2kata(String text) {
     return text.replaceAllMapped(
       RegExp(r'[\u3041-\u3096]'),
-      (Match match) =>
-          String.fromCharCode(match.group(0)!.codeUnitAt(0) + 0x60),
+      (match) => String.fromCharCode(match.group(0)!.codeUnitAt(0) + 0x60),
     );
   }
 
@@ -132,7 +131,7 @@ class TextUtils {
     final pattern = RegExp(kanaMap.keys.join('|'));
     return text.replaceAllMapped(
       pattern,
-      (Match match) => '${kanaMap[match.group(0)]}',
+      (match) => '${kanaMap[match.group(0)]}',
     );
   }
 
