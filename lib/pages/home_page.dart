@@ -1,6 +1,7 @@
-import 'package:buss_app/controller/io_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../controller/io_controller.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -15,7 +16,7 @@ class HomePage extends ConsumerWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  textNotifier.loadAssetTrips(context);
+                  textNotifier.loadAssetTripsRoutes(context);
                 },
                 child: const Text('Text'),
               ),
