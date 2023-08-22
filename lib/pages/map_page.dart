@@ -1,3 +1,4 @@
+import 'package:buss_app/provider/buss_route/buss_route_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -18,6 +19,7 @@ class StartPage extends ConsumerWidget {
     final searchNotifier = ref.watch(searchNotifierProvider.notifier);
     final location = ref.watch(latLngNotifierProvider);
     final latLngNotifier = ref.watch(latLngNotifierProvider.notifier);
+    final buss = ref.watch(bussRouteProviderProvider);
 
     return DefaultTabController(
       length: 2,

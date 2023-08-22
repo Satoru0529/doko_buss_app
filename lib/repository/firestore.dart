@@ -1,4 +1,6 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../model/trips/trips.dart';
 
 // import '../model/stop_times/stop_times.dart';
 // import '../model/stops/stops.dart';
@@ -15,7 +17,7 @@
 //           toFirestore: (value, _) => value.toJson(),
 //         );
 
-// final tripsRef = FirebaseFirestore.instance.collection('trips').withConverter(
-//       fromFirestore: (snapshot, _) => Trips.fromJson(snapshot.data()!),
-//       toFirestore: (value, _) => value.toJson(),
-//     );
+final tripsRef = FirebaseFirestore.instance.collection('trips').withConverter(
+      fromFirestore: (snapshot, _) => Trips.fromJson(snapshot.data()!),
+      toFirestore: (value, _) => value.toJson(),
+    );

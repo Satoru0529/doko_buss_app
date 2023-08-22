@@ -6,7 +6,7 @@ part of 'buss_route_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$bussRouteProviderHash() => r'f716a50eefe0aba617a4fd7f2f16ea15a353f521';
+String _$bussRouteProviderHash() => r'1f91d8fa2ccf995ed26530f87cb2dd78793b3c63';
 
 /// See also [BussRouteProvider].
 @ProviderFor(BussRouteProvider)
