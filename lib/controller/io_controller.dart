@@ -10,7 +10,9 @@ part 'io_controller.g.dart';
 @riverpod
 class IoController extends _$IoController {
   @override
-  Future<void> build() async {}
+  FutureOr<String?> build() async {
+    return null;
+  }
 
   String? assets;
   // Future<void> loadAssetStops(BuildContext context) async {
@@ -18,20 +20,20 @@ class IoController extends _$IoController {
   //       .loadString('sakegawa_gtfs/stops.txt');
   //   assets!.split('\n').forEach(
   //     (element) async {
-        // final noBlankName =
-        //     TextUtils.removeUnnecessaryBlankLines(element.split(',')[2]);
-        // final preBiGramList = <String>[];
-        // preBiGramList.add(noBlankName);
-        // final biGramList = TextUtils.tokenize(preBiGramList);
+  // final noBlankName =
+  //     TextUtils.removeUnnecessaryBlankLines(element.split(',')[2]);
+  // final preBiGramList = <String>[];
+  // preBiGramList.add(noBlankName);
+  // final biGramList = TextUtils.tokenize(preBiGramList);
 
-        // final biGramMap = {for (var e in biGramList) e: true};
+  // final biGramMap = {for (var e in biGramList) e: true};
 
   //       final newStop = Stops(
-          // stopId: element.split(',')[0],
-          // stopName: element.split(',')[2],
-          // stopLat: double.parse(element.split(',')[4]),
-          // stopLon: double.parse(element.split(',')[5]),
-          // biGramMap: biGramMap,
+  // stopId: element.split(',')[0],
+  // stopName: element.split(',')[2],
+  // stopLat: double.parse(element.split(',')[4]),
+  // stopLon: double.parse(element.split(',')[5]),
+  // biGramMap: biGramMap,
   //       );
   //       await stopsRef.doc().set(newStop);
   //     },
@@ -82,26 +84,30 @@ class IoController extends _$IoController {
   // }
 
   Future<void> loadAssetTripsRoutes(BuildContext context) async {
-    assets = await DefaultAssetBundle.of(context)
-        .loadString('sakegawa_gtfs/121002.txt');
-    assets!.split('\n').forEach(
-      (element) async {
-        final noBlankName =
-            TextUtils.removeUnnecessaryBlankLines(element.split(',')[2]);
-        final preBiGramList = <String>[];
-        preBiGramList.add(noBlankName);
-        final biGramList = TextUtils.tokenize(preBiGramList);
+    state = const AsyncValue.loading();
 
-        final biGramMap = {for (var e in biGramList) e: true};
-        final newRoutes = Stops(
-          stopId: element.split(',')[0],
-          stopName: element.split(',')[2],
-          stopLat: double.parse(element.split(',')[4]),
-          stopLon: double.parse(element.split(',')[5]),
-          biGramMap: biGramMap,
-        );
-        await tripsRef.doc().set(newRoutes);
-      },
-    );
+    await AsyncValue.guard(() async {
+      final preBiGramList = <String>[];
+      assets = await DefaultAssetBundle.of(context)
+          .loadString('sakegawa_gtfs/121002.txt');
+      assets!.split('\n').forEach(
+        (element) async {
+          final text = element.split(',')[2];
+          final noBlankName = TextUtils.removeUnnecessaryBlankLines(text);
+          preBiGramList.add(noBlankName);
+          final biGramList = TextUtils.tokenize(preBiGramList);
+          final biGramMap = {for (var e in biGramList) e: true};
+          final newRoutes = Stops(
+            stopId: element.split(',')[0],
+            stopName: text,
+            stopLat: double.parse(element.split(',')[4]),
+            stopLon: double.parse(element.split(',')[5]),
+            biGramMap: biGramMap,
+          );
+          await tripsRef.doc().set(newRoutes);
+        },
+      );
+      state = AsyncValue.data(assets);
+    });
   }
 }

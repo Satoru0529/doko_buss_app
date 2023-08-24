@@ -26,6 +26,10 @@ mixin _$Trips {
   String get tripHeadsign => throw _privateConstructorUsedError;
   int get directionId => throw _privateConstructorUsedError;
   int get jpPatternId => throw _privateConstructorUsedError;
+  @LatLngConverter()
+  LatLng get startPosition => throw _privateConstructorUsedError;
+  @LatLngConverter()
+  LatLng get endPosition => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,7 +47,9 @@ abstract class $TripsCopyWith<$Res> {
       String tripId,
       String tripHeadsign,
       int directionId,
-      int jpPatternId});
+      int jpPatternId,
+      @LatLngConverter() LatLng startPosition,
+      @LatLngConverter() LatLng endPosition});
 }
 
 /// @nodoc
@@ -65,6 +71,8 @@ class _$TripsCopyWithImpl<$Res, $Val extends Trips>
     Object? tripHeadsign = null,
     Object? directionId = null,
     Object? jpPatternId = null,
+    Object? startPosition = null,
+    Object? endPosition = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -91,6 +99,14 @@ class _$TripsCopyWithImpl<$Res, $Val extends Trips>
           ? _value.jpPatternId
           : jpPatternId // ignore: cast_nullable_to_non_nullable
               as int,
+      startPosition: null == startPosition
+          ? _value.startPosition
+          : startPosition // ignore: cast_nullable_to_non_nullable
+              as LatLng,
+      endPosition: null == endPosition
+          ? _value.endPosition
+          : endPosition // ignore: cast_nullable_to_non_nullable
+              as LatLng,
     ) as $Val);
   }
 }
@@ -107,7 +123,9 @@ abstract class _$$_TripsCopyWith<$Res> implements $TripsCopyWith<$Res> {
       String tripId,
       String tripHeadsign,
       int directionId,
-      int jpPatternId});
+      int jpPatternId,
+      @LatLngConverter() LatLng startPosition,
+      @LatLngConverter() LatLng endPosition});
 }
 
 /// @nodoc
@@ -125,6 +143,8 @@ class __$$_TripsCopyWithImpl<$Res> extends _$TripsCopyWithImpl<$Res, _$_Trips>
     Object? tripHeadsign = null,
     Object? directionId = null,
     Object? jpPatternId = null,
+    Object? startPosition = null,
+    Object? endPosition = null,
   }) {
     return _then(_$_Trips(
       id: null == id
@@ -151,6 +171,14 @@ class __$$_TripsCopyWithImpl<$Res> extends _$TripsCopyWithImpl<$Res, _$_Trips>
           ? _value.jpPatternId
           : jpPatternId // ignore: cast_nullable_to_non_nullable
               as int,
+      startPosition: null == startPosition
+          ? _value.startPosition
+          : startPosition // ignore: cast_nullable_to_non_nullable
+              as LatLng,
+      endPosition: null == endPosition
+          ? _value.endPosition
+          : endPosition // ignore: cast_nullable_to_non_nullable
+              as LatLng,
     ));
   }
 }
@@ -164,7 +192,9 @@ class _$_Trips with DiagnosticableTreeMixin implements _Trips {
       this.tripId = '',
       this.tripHeadsign = '',
       this.directionId = 0,
-      this.jpPatternId = 0});
+      this.jpPatternId = 0,
+      @LatLngConverter() this.startPosition = const LatLng(0, 0),
+      @LatLngConverter() this.endPosition = const LatLng(0, 0)});
 
   factory _$_Trips.fromJson(Map<String, dynamic> json) =>
       _$$_TripsFromJson(json);
@@ -187,10 +217,18 @@ class _$_Trips with DiagnosticableTreeMixin implements _Trips {
   @override
   @JsonKey()
   final int jpPatternId;
+  @override
+  @JsonKey()
+  @LatLngConverter()
+  final LatLng startPosition;
+  @override
+  @JsonKey()
+  @LatLngConverter()
+  final LatLng endPosition;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Trips(id: $id, routeId: $routeId, tripId: $tripId, tripHeadsign: $tripHeadsign, directionId: $directionId, jpPatternId: $jpPatternId)';
+    return 'Trips(id: $id, routeId: $routeId, tripId: $tripId, tripHeadsign: $tripHeadsign, directionId: $directionId, jpPatternId: $jpPatternId, startPosition: $startPosition, endPosition: $endPosition)';
   }
 
   @override
@@ -203,7 +241,9 @@ class _$_Trips with DiagnosticableTreeMixin implements _Trips {
       ..add(DiagnosticsProperty('tripId', tripId))
       ..add(DiagnosticsProperty('tripHeadsign', tripHeadsign))
       ..add(DiagnosticsProperty('directionId', directionId))
-      ..add(DiagnosticsProperty('jpPatternId', jpPatternId));
+      ..add(DiagnosticsProperty('jpPatternId', jpPatternId))
+      ..add(DiagnosticsProperty('startPosition', startPosition))
+      ..add(DiagnosticsProperty('endPosition', endPosition));
   }
 
   @override
@@ -219,13 +259,17 @@ class _$_Trips with DiagnosticableTreeMixin implements _Trips {
             (identical(other.directionId, directionId) ||
                 other.directionId == directionId) &&
             (identical(other.jpPatternId, jpPatternId) ||
-                other.jpPatternId == jpPatternId));
+                other.jpPatternId == jpPatternId) &&
+            (identical(other.startPosition, startPosition) ||
+                other.startPosition == startPosition) &&
+            (identical(other.endPosition, endPosition) ||
+                other.endPosition == endPosition));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, routeId, tripId, tripHeadsign, directionId, jpPatternId);
+  int get hashCode => Object.hash(runtimeType, id, routeId, tripId,
+      tripHeadsign, directionId, jpPatternId, startPosition, endPosition);
 
   @JsonKey(ignore: true)
   @override
@@ -248,7 +292,9 @@ abstract class _Trips implements Trips {
       final String tripId,
       final String tripHeadsign,
       final int directionId,
-      final int jpPatternId}) = _$_Trips;
+      final int jpPatternId,
+      @LatLngConverter() final LatLng startPosition,
+      @LatLngConverter() final LatLng endPosition}) = _$_Trips;
 
   factory _Trips.fromJson(Map<String, dynamic> json) = _$_Trips.fromJson;
 
@@ -264,6 +310,12 @@ abstract class _Trips implements Trips {
   int get directionId;
   @override
   int get jpPatternId;
+  @override
+  @LatLngConverter()
+  LatLng get startPosition;
+  @override
+  @LatLngConverter()
+  LatLng get endPosition;
   @override
   @JsonKey(ignore: true)
   _$$_TripsCopyWith<_$_Trips> get copyWith =>

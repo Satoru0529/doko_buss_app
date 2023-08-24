@@ -15,6 +15,7 @@ dependencies:
     sdk: flutter
   flutter_riverpod: ^2.3.6
   freezed_annotation: 
+  google_maps_flutter: ^2.2.8
   google_sign_in: ^6.1.4
   riverpod_annotation: ^2.1.1
   riverpod_generator: ^2.2.5

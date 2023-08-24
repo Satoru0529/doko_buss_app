@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../model/stops/stops.dart';
-import '../model/trips/trips.dart';
 
 // final stopsRef =
 //     FirebaseFirestore.instance.collection('stops').withConverter<Stops>(

@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import '../../utils/json_converter.dart';
 
 part 'trips.freezed.dart';
 part 'trips.g.dart';
@@ -13,6 +16,10 @@ class Trips with _$Trips {
     @Default('') String tripHeadsign,
     @Default(0) int directionId,
     @Default(0) int jpPatternId,
+    @LatLngConverter()
+    @Default(LatLng(0, 0)) LatLng startPosition,
+    @LatLngConverter()
+    @Default(LatLng(0, 0)) LatLng endPosition,
   }) = _Trips;
 
   factory Trips.fromJson(Map<String, dynamic> json) => _$TripsFromJson(json);

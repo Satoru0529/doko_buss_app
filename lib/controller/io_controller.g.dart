@@ -6,12 +6,12 @@ part of 'io_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$ioControllerHash() => r'2a838db00839f939f8168f13c7ec26ffcb7916a0';
+String _$ioControllerHash() => r'257e66438fc21f62bacdc7ff8364ae97d3290bf4';
 
 /// See also [IoController].
 @ProviderFor(IoController)
 final ioControllerProvider =
-    AutoDisposeAsyncNotifierProvider<IoController, void>.internal(
+    AutoDisposeAsyncNotifierProvider<IoController, String?>.internal(
   IoController.new,
   name: r'ioControllerProvider',
   debugGetCreateSourceHash:
@@ -20,6 +20,6 @@ final ioControllerProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$IoController = AutoDisposeAsyncNotifier<void>;
+typedef _$IoController = AutoDisposeAsyncNotifier<String?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member

@@ -8,6 +8,7 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final text = ref.watch(ioControllerProvider);
     final textNotifier = ref.watch(ioControllerProvider.notifier);
     return Scaffold(
       body: SafeArea(
@@ -20,6 +21,7 @@ class HomePage extends ConsumerWidget {
                 },
                 child: const Text('Text'),
               ),
+              Text(text.value ?? 'No Data'),
             ],
           ),
         ),

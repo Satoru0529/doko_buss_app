@@ -1,4 +1,3 @@
-stop_id,stop_code,stop_name,stop_desc,stop_lat,stop_lon,zone_id,stop_url,location_type,platform_code
 1_01,,羽根沢温泉,,38.8149131,140.1522235,1_01,,0,
 2_01,,温泉入口,,38.817924,140.160266,2_01,,0,
 3_01,,羽根沢本村,,38.8179613,140.1674221,3_01,,0,
@@ -24,4 +23,3 @@ stop_id,stop_code,stop_name,stop_desc,stop_lat,stop_lon,zone_id,stop_url,locatio
 23_01,,仲町,,38.7659254,140.2984703,23_01,,0,
 24_01,,新庄駅前,,38.7621931,140.3051613,24_01,,0,
 25_01,,県立病院前,,38.7585152,140.3019245,25_01,,0,
-
