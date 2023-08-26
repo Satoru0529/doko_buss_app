@@ -1,4 +1,4 @@
-import 'package:buss_app/provider/buss_route/buss_route_provider.dart';
+import 'package:buss_app/provider/polyline/polyline_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -19,7 +19,7 @@ class StartPage extends ConsumerWidget {
     final searchNotifier = ref.watch(searchNotifierProvider.notifier);
     final location = ref.watch(latLngNotifierProvider);
     final latLngNotifier = ref.watch(latLngNotifierProvider.notifier);
-    final buss = ref.watch(bussRouteProviderProvider);
+    final polyline = ref.watch(polylineProviderProvider(context));
 
     return DefaultTabController(
       length: 2,
@@ -66,6 +66,13 @@ class StartPage extends ConsumerWidget {
                     ),
                     myLocationEnabled: true,
                     mapToolbarEnabled: false,
+                    polylines: polyline.when(
+                      data: (polylineData) {
+                        return polylineData;
+                      },
+                      loading: () => {},
+                      error: (_, __) => {},
+                    ), // You can handle error state here if needed
                     markers: markers.when(
                       data: (markerData) {
                         return Set<Marker>.of(
