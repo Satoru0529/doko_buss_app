@@ -1,0 +1,2 @@
+agency_id,agency_name,agency_url,agency_timezone,agency_lang,agency_phone,agency_fare_url,agency_email
+6000020063665,鮭川村,http://www.vill.sakegawa.yamagata.jp/seikatsu/traffic/,Asia/Tokyo,ja,0233-55-2111,,
