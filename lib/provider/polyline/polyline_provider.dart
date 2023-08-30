@@ -11,7 +11,7 @@ part 'polyline_provider.g.dart';
 class PolylineProvider extends _$PolylineProvider {
   @override
   FutureOr<Set<Polyline>> build(BuildContext context) async {
-    await aa(context).then((value) => getRoutes(context));
+    await readStops(context).then((value) => getRoutes(context));
     return state.when(
       data: (data) => data,
       loading: () => {},
@@ -22,15 +22,15 @@ class PolylineProvider extends _$PolylineProvider {
   final String apiKey = 'AIzaSyCsi4yLKlnTJb74RpUMfDiXrgwfa_gvsXI';
   final List<Stops> stopList = [];
 
-  Future<void> aa(BuildContext context) async {
+  Future<void> readStops(BuildContext context) async {
     final preBiGramList = <String>[];
-    final assets = await DefaultAssetBundle.of(context)
-        .loadString('sakegawa_gtfs/121002.txt');
+    final assets =
+        await DefaultAssetBundle.of(context).loadString('edamitsu/arate.txt');
     assets.split('\n').forEach(
       (element) async {
         final newRoutes = Stops(
-          stopLat: double.parse(element.split(',')[4]),
-          stopLon: double.parse(element.split(',')[5]),
+          stopLat: double.parse(element.split(',')[2]),
+          stopLon: double.parse(element.split(',')[3]),
         );
         stopList.add(newRoutes);
       },
