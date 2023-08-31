@@ -1,9 +1,10 @@
+// ignore: avoid_classes_with_only_static_members
 class TextUtils {
   ///   - 冒頭の改行
   ///   - 途中に 3つ以上続く改行
   ///   - 末尾の改行
   /// を取り除く
-  String removeUnnecessaryBlankLines(String input) {
+  static String removeUnnecessaryBlankLines(String input) {
     final headBlankLines = RegExp(r'^\n+');
     final blankLines = RegExp(r'\n{3,}');
     final lastBlankLines = RegExp(r'\n+$');
@@ -179,9 +180,7 @@ class TextUtils {
 
   /// N-Gram
   static List<String> nGram(int n, String text) {
-    if (n < 1 || n == double.infinity) {
-      final exception = Exception('N must be greater than 0');
-    }
+    if (n < 1 || n == double.infinity) {}
 
     final nGrams = <String>[];
 

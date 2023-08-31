@@ -1,0 +1,2 @@
+"fare_id","price","currency_type","payment_method","transfers","agency_id"
+"200101","200.00","JPY","1","0","4290801009380"

@@ -4,7 +4,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../provider/latlng/latlng_provider.dart';
 import '../provider/map_provider.dart';
+import '../provider/polyline/polyline_provider.dart';
 import '../provider/search/search_provider.dart';
+import '../provider/stops/stops_notifier.dart';
 import '../provider/text_editing_controller_provider.dart';
 
 class StartPage extends ConsumerWidget {
@@ -13,11 +15,13 @@ class StartPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final markers = ref.watch(markersStreamProvider);
+    final stops = ref.watch(StopsNotifierProvider(context));
     final searchEditingController = ref.watch(searchTextEditingController);
     final searchList = ref.watch(searchNotifierProvider);
     final searchNotifier = ref.watch(searchNotifierProvider.notifier);
     final location = ref.watch(latLngNotifierProvider);
     final latLngNotifier = ref.watch(latLngNotifierProvider.notifier);
+    final polyline = ref.watch(polylineProviderProvider(context));
 
     return DefaultTabController(
       length: 2,
@@ -64,10 +68,17 @@ class StartPage extends ConsumerWidget {
                     ),
                     myLocationEnabled: true,
                     mapToolbarEnabled: false,
-                    markers: markers.when(
-                      data: (markerData) {
+                    polylines: polyline.when(
+                      data: (polylineData) {
+                        return polylineData;
+                      },
+                      loading: () => {},
+                      error: (_, __) => {},
+                    ), // You can handle error state here if needed
+                    markers: stops.when(
+                      data: (stops) {
                         return Set<Marker>.of(
-                          markerData.map(
+                          stops.map(
                             (stop) {
                               return Marker(
                                 markerId: MarkerId(stop.id),

@@ -1,0 +1,4 @@
+route_id,agency_id,route_short_name,route_long_name,route_desc,route_type,route_color,route_text_color
+10,6000020063665,,鮭川村村営バス　日下～真室川線,,3,,
+11,6000020063665,,鮭川村村営バス　大芦沢～豊里駅線,,3,,
+12,6000020063665,,鮭川村村営バス　羽根沢～新庄線,,3,,

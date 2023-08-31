@@ -1,0 +1,2 @@
+"agency_id","agency_name","agency_url","agency_timezone","agency_lang","agency_phone","agency_fare_url"
+"4290801009380","枝光地区おでかけ交通","https://www.city.kitakyushu.lg.jp/ken-to/file_0107.html","Asia/Tokyo","ja","093-661-5185",""

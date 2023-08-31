@@ -13,6 +13,12 @@ _$_Trips _$$_TripsFromJson(Map<String, dynamic> json) => _$_Trips(
       tripHeadsign: json['tripHeadsign'] as String? ?? '',
       directionId: json['directionId'] as int? ?? 0,
       jpPatternId: json['jpPatternId'] as int? ?? 0,
+      startPosition: json['startPosition'] == null
+          ? const LatLng(0, 0)
+          : const LatLngConverter().fromJson(json['startPosition'] as LatLng),
+      endPosition: json['endPosition'] == null
+          ? const LatLng(0, 0)
+          : const LatLngConverter().fromJson(json['endPosition'] as LatLng),
     );
 
 Map<String, dynamic> _$$_TripsToJson(_$_Trips instance) => <String, dynamic>{
@@ -22,4 +28,6 @@ Map<String, dynamic> _$$_TripsToJson(_$_Trips instance) => <String, dynamic>{
       'tripHeadsign': instance.tripHeadsign,
       'directionId': instance.directionId,
       'jpPatternId': instance.jpPatternId,
+      'startPosition': const LatLngConverter().toJson(instance.startPosition),
+      'endPosition': const LatLngConverter().toJson(instance.endPosition),
     };
