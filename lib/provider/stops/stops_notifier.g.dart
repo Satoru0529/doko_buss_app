@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'polyline_provider.dart';
+part of 'stops_notifier.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$polylineProviderHash() => r'f8c51e1c088321b692668d5e6972943566f44daf';
+String _$stopsNotifierHash() => r'0abf536ec7daa80be3354efded0a98e18ae9e994';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,36 +29,36 @@ class _SystemHash {
   }
 }
 
-abstract class _$PolylineProvider
-    extends BuildlessAutoDisposeAsyncNotifier<Set<Polyline>> {
+abstract class _$StopsNotifier
+    extends BuildlessAutoDisposeAsyncNotifier<Set<Marker>> {
   late final BuildContext context;
 
-  FutureOr<Set<Polyline>> build(
+  FutureOr<Set<Marker>> build(
     BuildContext context,
   );
 }
 
-/// See also [PolylineProvider].
-@ProviderFor(PolylineProvider)
-const polylineProviderProvider = PolylineProviderFamily();
+/// See also [StopsNotifier].
+@ProviderFor(StopsNotifier)
+const stopsNotifierProvider = StopsNotifierFamily();
 
-/// See also [PolylineProvider].
-class PolylineProviderFamily extends Family<AsyncValue<Set<Polyline>>> {
-  /// See also [PolylineProvider].
-  const PolylineProviderFamily();
+/// See also [StopsNotifier].
+class StopsNotifierFamily extends Family<AsyncValue<Set<Marker>>> {
+  /// See also [StopsNotifier].
+  const StopsNotifierFamily();
 
-  /// See also [PolylineProvider].
-  PolylineProviderProvider call(
+  /// See also [StopsNotifier].
+  StopsNotifierProvider call(
     BuildContext context,
   ) {
-    return PolylineProviderProvider(
+    return StopsNotifierProvider(
       context,
     );
   }
 
   @override
-  PolylineProviderProvider getProviderOverride(
-    covariant PolylineProviderProvider provider,
+  StopsNotifierProvider getProviderOverride(
+    covariant StopsNotifierProvider provider,
   ) {
     return call(
       provider.context,
@@ -77,33 +77,33 @@ class PolylineProviderFamily extends Family<AsyncValue<Set<Polyline>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'polylineProviderProvider';
+  String? get name => r'stopsNotifierProvider';
 }
 
-/// See also [PolylineProvider].
-class PolylineProviderProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    PolylineProvider, Set<Polyline>> {
-  /// See also [PolylineProvider].
-  PolylineProviderProvider(
+/// See also [StopsNotifier].
+class StopsNotifierProvider
+    extends AutoDisposeAsyncNotifierProviderImpl<StopsNotifier, Set<Marker>> {
+  /// See also [StopsNotifier].
+  StopsNotifierProvider(
     this.context,
   ) : super.internal(
-          () => PolylineProvider()..context = context,
-          from: polylineProviderProvider,
-          name: r'polylineProviderProvider',
+          () => StopsNotifier()..context = context,
+          from: stopsNotifierProvider,
+          name: r'stopsNotifierProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$polylineProviderHash,
-          dependencies: PolylineProviderFamily._dependencies,
+                  : _$stopsNotifierHash,
+          dependencies: StopsNotifierFamily._dependencies,
           allTransitiveDependencies:
-              PolylineProviderFamily._allTransitiveDependencies,
+              StopsNotifierFamily._allTransitiveDependencies,
         );
 
   final BuildContext context;
 
   @override
   bool operator ==(Object other) {
-    return other is PolylineProviderProvider && other.context == context;
+    return other is StopsNotifierProvider && other.context == context;
   }
 
   @override
@@ -115,8 +115,8 @@ class PolylineProviderProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 
   @override
-  FutureOr<Set<Polyline>> runNotifierBuild(
-    covariant PolylineProvider notifier,
+  FutureOr<Set<Marker>> runNotifierBuild(
+    covariant StopsNotifier notifier,
   ) {
     return notifier.build(
       context,
