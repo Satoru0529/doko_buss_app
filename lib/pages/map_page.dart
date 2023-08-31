@@ -1,4 +1,3 @@
-import 'package:buss_app/provider/stops/stops_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -7,6 +6,7 @@ import '../provider/latlng/latlng_provider.dart';
 import '../provider/map_provider.dart';
 import '../provider/polyline/polyline_provider.dart';
 import '../provider/search/search_provider.dart';
+import '../provider/stops/stops_notifier.dart';
 import '../provider/text_editing_controller_provider.dart';
 
 class StartPage extends ConsumerWidget {
