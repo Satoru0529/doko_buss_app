@@ -44,7 +44,6 @@ class PolylineProvider extends _$PolylineProvider {
       apiKey,
       PointLatLng(stopList.first.stopLat, stopList.first.stopLon),
       PointLatLng(stopList.last.stopLat, stopList.last.stopLon),
-      travelMode: TravelMode.walking,
       wayPoints: stopList
           .map(
             (e) => PolylineWayPoint(
@@ -68,7 +67,7 @@ class PolylineProvider extends _$PolylineProvider {
     final polyline = Polyline(
       polylineId: const PolylineId('Route'),
       color: Colors.blue,
-      width: 5,
+      width: 3,
       points: points,
     );
     await AsyncValue.guard(
