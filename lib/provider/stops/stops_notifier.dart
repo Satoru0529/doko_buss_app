@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../model/stops/stops.dart';
@@ -10,12 +9,12 @@ part 'stops_notifier.g.dart';
 @riverpod
 class StopsNotifier extends _$StopsNotifier {
   @override
-  FutureOr<Set<Marker>> build(BuildContext context) async {
+  FutureOr<List<Stops>> build(BuildContext context) async {
     await loadAssetStops(context);
     return state.when(
       data: (data) => data,
-      loading: () => {},
-      error: (_, __) => {},
+      loading: () => [],
+      error: (_, __) => [],
     );
   }
 
@@ -44,5 +43,6 @@ class StopsNotifier extends _$StopsNotifier {
         stops.add(newStop);
       },
     );
+    state = AsyncValue.data(stops);
   }
 }

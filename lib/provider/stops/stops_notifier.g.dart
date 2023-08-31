@@ -6,7 +6,7 @@ part of 'stops_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$stopsNotifierHash() => r'0abf536ec7daa80be3354efded0a98e18ae9e994';
+String _$stopsNotifierHash() => r'b7a05e873394e6157ef2b0c1771bd1fec3a75b34';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,10 +30,10 @@ class _SystemHash {
 }
 
 abstract class _$StopsNotifier
-    extends BuildlessAutoDisposeAsyncNotifier<Set<Marker>> {
+    extends BuildlessAutoDisposeAsyncNotifier<List<Stops>> {
   late final BuildContext context;
 
-  FutureOr<Set<Marker>> build(
+  FutureOr<List<Stops>> build(
     BuildContext context,
   );
 }
@@ -43,7 +43,7 @@ abstract class _$StopsNotifier
 const stopsNotifierProvider = StopsNotifierFamily();
 
 /// See also [StopsNotifier].
-class StopsNotifierFamily extends Family<AsyncValue<Set<Marker>>> {
+class StopsNotifierFamily extends Family<AsyncValue<List<Stops>>> {
   /// See also [StopsNotifier].
   const StopsNotifierFamily();
 
@@ -82,7 +82,7 @@ class StopsNotifierFamily extends Family<AsyncValue<Set<Marker>>> {
 
 /// See also [StopsNotifier].
 class StopsNotifierProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<StopsNotifier, Set<Marker>> {
+    extends AutoDisposeAsyncNotifierProviderImpl<StopsNotifier, List<Stops>> {
   /// See also [StopsNotifier].
   StopsNotifierProvider(
     this.context,
@@ -115,7 +115,7 @@ class StopsNotifierProvider
   }
 
   @override
-  FutureOr<Set<Marker>> runNotifierBuild(
+  FutureOr<List<Stops>> runNotifierBuild(
     covariant StopsNotifier notifier,
   ) {
     return notifier.build(

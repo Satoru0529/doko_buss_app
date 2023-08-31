@@ -1,3 +1,4 @@
+import 'package:buss_app/provider/stops/stops_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -14,6 +15,7 @@ class StartPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final markers = ref.watch(markersStreamProvider);
+    final stops = ref.watch(StopsNotifierProvider(context));
     final searchEditingController = ref.watch(searchTextEditingController);
     final searchList = ref.watch(searchNotifierProvider);
     final searchNotifier = ref.watch(searchNotifierProvider.notifier);
@@ -73,10 +75,10 @@ class StartPage extends ConsumerWidget {
                       loading: () => {},
                       error: (_, __) => {},
                     ), // You can handle error state here if needed
-                    markers: markers.when(
-                      data: (markerData) {
+                    markers: stops.when(
+                      data: (stops) {
                         return Set<Marker>.of(
-                          markerData.map(
+                          stops.map(
                             (stop) {
                               return Marker(
                                 markerId: MarkerId(stop.id),
