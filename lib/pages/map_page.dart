@@ -68,13 +68,18 @@ class StartPage extends ConsumerWidget {
                     ),
                     myLocationEnabled: true,
                     mapToolbarEnabled: false,
+
+                    /// ポリラインを表示
                     polylines: polyline.when(
                       data: (polylineData) {
                         return polylineData;
                       },
                       loading: () => {},
                       error: (_, __) => {},
-                    ), // You can handle error state here if needed
+                    ),
+
+                    /// マーカーを表示
+                    /// stops は edamitsu/stops.txt から取得したバス停のリスト
                     markers: stops.when(
                       data: (stops) {
                         return Set<Marker>.of(
@@ -92,12 +97,13 @@ class StartPage extends ConsumerWidget {
                         );
                       },
                       loading: () => {},
-                      error: (_, __) =>
-                          {}, // You can handle error state here if needed
+                      error: (_, __) => {},
                     ),
                   );
                 },
               ),
+
+              /// 検索バー
               ConstrainedBox(
                 constraints:
                     const BoxConstraints(maxHeight: 400, minHeight: 100),

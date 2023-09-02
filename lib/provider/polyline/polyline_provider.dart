@@ -11,7 +11,12 @@ part 'polyline_provider.g.dart';
 class PolylineProvider extends _$PolylineProvider {
   @override
   FutureOr<Set<Polyline>> build(BuildContext context) async {
-    await readStops(context).then((value) => getRoutes(context));
+    await readStopsArate(context).then(
+      (value) => readStopsEdamitsu(context).then(
+        (value) => getRoutes(),
+      ),
+    );
+
     return state.when(
       data: (data) => data,
       loading: () => {},
@@ -20,9 +25,10 @@ class PolylineProvider extends _$PolylineProvider {
   }
 
   final String apiKey = 'AIzaSyCsi4yLKlnTJb74RpUMfDiXrgwfa_gvsXI';
-  final List<Stops> stopList = [];
+  final List<Stops> stopListArate = [];
+  final List<Stops> stopListEdamitsu = [];
 
-  Future<void> readStops(BuildContext context) async {
+  Future<void> readStopsArate(BuildContext context) async {
     final preBiGramList = <String>[];
     final assets =
         await DefaultAssetBundle.of(context).loadString('edamitsu/arate.txt');
@@ -32,19 +38,34 @@ class PolylineProvider extends _$PolylineProvider {
           stopLat: double.parse(element.split(',')[2]),
           stopLon: double.parse(element.split(',')[3]),
         );
-        stopList.add(newRoutes);
+        stopListArate.add(newRoutes);
       },
     );
   }
 
-  Future<List<LatLng>> createPolyline(BuildContext context) async {
+  Future<void> readStopsEdamitsu(BuildContext context) async {
+    final preBiGramList = <String>[];
+    final assets = await DefaultAssetBundle.of(context)
+        .loadString('edamitsu/edamitsu.txt');
+    assets.split('\n').forEach(
+      (element) async {
+        final newRoutes = Stops(
+          stopLat: double.parse(element.split(',')[2]),
+          stopLon: double.parse(element.split(',')[3]),
+        );
+        stopListEdamitsu.add(newRoutes);
+      },
+    );
+  }
+
+  Future<List<LatLng>> createPolylineArate() async {
     final polylineCoordinates = <LatLng>[];
     final polylinePoints = PolylinePoints();
     final result = await polylinePoints.getRouteBetweenCoordinates(
       apiKey,
-      PointLatLng(stopList.first.stopLat, stopList.first.stopLon),
-      PointLatLng(stopList.last.stopLat, stopList.last.stopLon),
-      wayPoints: stopList
+      PointLatLng(stopListArate.first.stopLat, stopListArate.first.stopLon),
+      PointLatLng(stopListArate.last.stopLat, stopListArate.last.stopLon),
+      wayPoints: stopListArate
           .map(
             (e) => PolylineWayPoint(
               location: '${e.stopLat},${e.stopLon}',
@@ -61,18 +82,53 @@ class PolylineProvider extends _$PolylineProvider {
     return polylineCoordinates;
   }
 
-  Future<void> getRoutes(BuildContext context) async {
-    var points = <LatLng>[];
-    points = await createPolyline(context);
+  Future<List<LatLng>> createPolylineEdamitsu() async {
+    final polylineCoordinates = <LatLng>[];
+    final polylinePoints = PolylinePoints();
+    final result = await polylinePoints.getRouteBetweenCoordinates(
+      apiKey,
+      PointLatLng(
+        stopListEdamitsu.first.stopLat,
+        stopListEdamitsu.first.stopLon,
+      ),
+      PointLatLng(stopListEdamitsu.last.stopLat, stopListEdamitsu.last.stopLon),
+      wayPoints: stopListEdamitsu
+          .map(
+            (e) => PolylineWayPoint(
+              location: '${e.stopLat},${e.stopLon}',
+            ),
+          )
+          .toList(),
+    );
+
+    if (result.points.isNotEmpty) {
+      for (final point in result.points) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      }
+    }
+    return polylineCoordinates;
+  }
+
+  Future<void> getRoutes() async {
+    var pointsArate = <LatLng>[];
+    pointsArate = await createPolylineArate();
     final polyline = Polyline(
-      polylineId: const PolylineId('Route'),
+      polylineId: const PolylineId('Arate'),
       color: Colors.blue,
+      width: 5,
+      points: pointsArate,
+    );
+    var pointsEdamitsu = <LatLng>[];
+    pointsEdamitsu = await createPolylineEdamitsu();
+    final polyline2 = Polyline(
+      polylineId: const PolylineId('Edamitsu'),
+      color: Colors.red,
       width: 3,
-      points: points,
+      points: pointsEdamitsu,
     );
     await AsyncValue.guard(
       () async {
-        state = AsyncValue.data({polyline});
+        state = AsyncValue.data({polyline, polyline2});
       },
     );
   }
