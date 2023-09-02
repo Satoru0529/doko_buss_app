@@ -123,7 +123,7 @@ class StartPage extends ConsumerWidget {
                             ),
                             controller: searchEditingController,
                             onChanged: (text) async {
-                              await searchNotifier.searchStop(text);
+                              await searchNotifier.searchStop(text, context);
                             },
                             cursorColor: Colors.grey,
                           ),
