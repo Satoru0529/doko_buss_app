@@ -11,7 +11,8 @@ part 'polyline_provider.g.dart';
 class PolylineProvider extends _$PolylineProvider {
   @override
   FutureOr<Set<Polyline>> build(BuildContext context) async {
-    await readStops(context).then((value) => getRoutes(context));
+    await getRoutes();
+
     return state.when(
       data: (data) => data,
       loading: () => {},
@@ -20,31 +21,32 @@ class PolylineProvider extends _$PolylineProvider {
   }
 
   final String apiKey = 'AIzaSyCsi4yLKlnTJb74RpUMfDiXrgwfa_gvsXI';
-  final List<Stops> stopList = [];
+  final List<Stops> stopListArate = [];
+  final List<Stops> stopListEdamitsu = [];
 
-  Future<void> readStops(BuildContext context) async {
+  Future<void> readStops(BuildContext context, String file, List<Stops> stops) async {
     final preBiGramList = <String>[];
-    final assets =
-        await DefaultAssetBundle.of(context).loadString('edamitsu/arate.txt');
+    final assets = await DefaultAssetBundle.of(context).loadString(file);
     assets.split('\n').forEach(
       (element) async {
         final newRoutes = Stops(
           stopLat: double.parse(element.split(',')[2]),
           stopLon: double.parse(element.split(',')[3]),
         );
-        stopList.add(newRoutes);
+        stops.add(newRoutes);
       },
     );
   }
 
-  Future<List<LatLng>> createPolyline(BuildContext context) async {
+  Future<List<LatLng>> createPolyline(String file, List<Stops> stops) async {
+    await readStops(context, file, stops);
     final polylineCoordinates = <LatLng>[];
     final polylinePoints = PolylinePoints();
     final result = await polylinePoints.getRouteBetweenCoordinates(
       apiKey,
-      PointLatLng(stopList.first.stopLat, stopList.first.stopLon),
-      PointLatLng(stopList.last.stopLat, stopList.last.stopLon),
-      wayPoints: stopList
+      PointLatLng(stops.first.stopLat, stops.first.stopLon),
+      PointLatLng(stops.last.stopLat, stops.last.stopLon),
+      wayPoints: stops
           .map(
             (e) => PolylineWayPoint(
               location: '${e.stopLat},${e.stopLon}',
@@ -61,18 +63,29 @@ class PolylineProvider extends _$PolylineProvider {
     return polylineCoordinates;
   }
 
-  Future<void> getRoutes(BuildContext context) async {
-    var points = <LatLng>[];
-    points = await createPolyline(context);
-    final polyline = Polyline(
-      polylineId: const PolylineId('Route'),
+  Future<void> getRoutes() async {
+    /// 荒手ルートの路線図
+    var pointsArate = <LatLng>[];
+    pointsArate = await createPolyline('edamitsu/arate.txt', stopListArate);
+    final polylineArate = Polyline(
+      polylineId: const PolylineId('Arate'),
       color: Colors.blue,
+      width: 5,
+      points: pointsArate,
+    );
+
+    /// 枝光ルートの路線図
+    var pointsEdamitsu = <LatLng>[];
+    pointsEdamitsu = await createPolyline('edamitsu/edamitsu.txt', stopListEdamitsu);
+    final polylineEdamitsu = Polyline(
+      polylineId: const PolylineId('Edamitsu'),
+      color: Colors.red,
       width: 3,
-      points: points,
+      points: pointsEdamitsu,
     );
     await AsyncValue.guard(
       () async {
-        state = AsyncValue.data({polyline});
+        state = AsyncValue.data({polylineArate, polylineEdamitsu});
       },
     );
   }
