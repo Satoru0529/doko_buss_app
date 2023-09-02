@@ -1,7 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:buss_app/provider/stops/stops_notifier.dart';
+import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../model/stop_low/stop_low.dart';
+import '../../model/stops/stops.dart';
 import '../../utils/text_utils.dart';
 
 part 'search_provider.g.dart';
@@ -9,15 +10,15 @@ part 'search_provider.g.dart';
 @riverpod
 class SearchNotifier extends _$SearchNotifier {
   @override
-  FutureOr<List<StopLow>> build() {
+  FutureOr<List<Stops>> build() {
     return [];
   }
 
   // List<Stops> searchStops = <Stops>[];
-  List<StopLow> searchStops = <StopLow>[];
+  List<Stops> searchStops = <Stops>[];
   List<String> biGramList = <String>[];
 
-  Future<void> searchStop(String input) async {
+  Future<void> searchStop(String input, BuildContext context) async {
     state = const AsyncValue.loading();
 
     await AsyncValue.guard(
@@ -32,19 +33,26 @@ class SearchNotifier extends _$SearchNotifier {
           /// 文字列のリストを渡して、bi-gram を実行
           biGramList = TextUtils.tokenize(words);
 
-          /// テキスト検索where句を追加
-          Query query = FirebaseFirestore.instance.collection('stop_low');
+          // /// テキスト検索where句を追加
+          // Query query = FirebaseFirestore.instance.collection('stop_low');
+          // for (final word in biGramList) {
+          //   query = query.where('biGramMap.$word', isEqualTo: true);
+          // }
+
+          final stops = ref.watch(stopsNotifierProvider(context)).value;
+
           for (final word in biGramList) {
-            query = query.where('biGramMap.$word', isEqualTo: true);
+            searchStops =
+                stops!.where((stop) => stop.biGramMap[word] == true).toList();
           }
 
-          /// 作成したクエリで取得する
-          final snap = await query.get();
-          searchStops = snap.docs
-              .map(
-                (doc) => StopLow.fromJson(doc.data()! as Map<String, dynamic>),
-              )
-              .toList();
+          // /// 作成したクエリで取得する
+          // final snap = await query.get();
+          // searchStops = snap.docs
+          //     .map(
+          //       (doc) => StopLow.fromJson(doc.data()! as Map<String, dynamic>),
+          //     )
+          //     .toList();
           state = AsyncValue.data(searchStops);
         }
       },

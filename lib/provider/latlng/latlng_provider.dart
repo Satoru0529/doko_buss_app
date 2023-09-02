@@ -4,7 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../model/stop_low/stop_low.dart';
+import '../../model/stops/stops.dart';
 import '../location_provider.dart';
 
 part 'latlng_provider.g.dart';
@@ -21,7 +21,7 @@ class LatLngNotifier extends _$LatLngNotifier {
     return position;
   }
 
-  Future<void> searchPosition(StopLow stopLow) async {
+  Future<void> searchPosition(Stops stops) async {
     state = const AsyncValue.loading();
 
     await AsyncValue.guard(
@@ -31,8 +31,8 @@ class LatLngNotifier extends _$LatLngNotifier {
           CameraUpdate.newCameraPosition(
             CameraPosition(
               target: LatLng(
-                stopLow.stopLat,
-                stopLow.stopLon,
+                stops.stopLat,
+                stops.stopLon,
               ),
               zoom: 16,
             ),
@@ -41,8 +41,8 @@ class LatLngNotifier extends _$LatLngNotifier {
 
         state = AsyncValue.data(
           Position(
-            longitude: stopLow.stopLon,
-            latitude: stopLow.stopLat,
+            longitude: stops.stopLon,
+            latitude: stops.stopLat,
             timestamp: DateTime.now(),
             accuracy: 0,
             altitude: 0,
