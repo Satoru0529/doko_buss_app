@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -9,8 +10,9 @@ import '../provider/search/search_provider.dart';
 import '../provider/stops/stops_notifier.dart';
 import '../provider/text_editing_controller_provider.dart';
 
-class StartPage extends ConsumerWidget {
-  const StartPage({super.key});
+@RoutePage()
+class MapPage extends ConsumerWidget {
+  const MapPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

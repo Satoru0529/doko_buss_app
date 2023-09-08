@@ -17,8 +17,9 @@ Future<void> main() async {
       await Geolocator.requestPermission();
     }
   });
+
   runApp(
-    const ProviderScope(
+    ProviderScope(
       child: App(),
     ),
   );

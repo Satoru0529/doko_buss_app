@@ -6,7 +6,7 @@ part of 'polyline_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$polylineProviderHash() => r'f8c51e1c088321b692668d5e6972943566f44daf';
+String _$polylineProviderHash() => r'df00a4a5a4ce1dae85037477aa610fa8bff5bf66';
 
 /// Copied from Dart SDK
 class _SystemHash {
