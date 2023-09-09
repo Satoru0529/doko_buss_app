@@ -1,9 +1,9 @@
-import 'package:buss_app/provider/stops/stops_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../model/stops/stops.dart';
 import '../../utils/text_utils.dart';
+import '../stops/stops_notifier.dart';
 
 part 'search_provider.g.dart';
 
