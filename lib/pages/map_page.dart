@@ -100,18 +100,26 @@ class MapPage extends ConsumerWidget {
           Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(5, 30, 5, 0),
+                padding: const EdgeInsets.fromLTRB(10, 50, 10, 0),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    hintText: 'テキスト検索(2文字以上入力)',
+                    hintText: 'バス停を検索',
                     filled: true,
                     isDense: true,
                     fillColor: const Color.fromARGB(248, 231, 235, 241),
                     prefixIcon: const Icon(Icons.search),
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: () async {
+                        searchEditingController.clear();
+                        await searchNotifier.searchStop('', context);
+                      },
+                    ),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(32),
                     ),
                   ),
+                  maxLength: 10,
                   controller: searchEditingController,
                   onChanged: (text) async {
                     await searchNotifier.searchStop(text, context);
@@ -119,6 +127,7 @@ class MapPage extends ConsumerWidget {
                   cursorColor: Colors.grey,
                 ),
               ),
+
               /// 検索結果を表示
               searchList.when(
                 loading: () => const Center(
