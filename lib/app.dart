@@ -1,18 +1,15 @@
+import 'package:buss_app/pages/map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'route/app_router.dart';
-
 class App extends ConsumerWidget {
-  App({super.key});
-
-  final _appRouter = AppRouter();
+  const App({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp.router(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      routerConfig: _appRouter.config(),
+      home: MapPage(),
     );
   }
 }
