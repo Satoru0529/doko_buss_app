@@ -10,7 +10,7 @@ class App extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: StartPage(),
+      home: MapPage(),
     );
   }
 }

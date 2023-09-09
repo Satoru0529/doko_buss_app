@@ -3,188 +3,172 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../provider/latlng/latlng_provider.dart';
-import '../provider/map_provider.dart';
 import '../provider/polyline/polyline_provider.dart';
 import '../provider/search/search_provider.dart';
 import '../provider/stops/stops_notifier.dart';
 import '../provider/text_editing_controller_provider.dart';
 
-class StartPage extends ConsumerWidget {
-  const StartPage({super.key});
+class MapPage extends ConsumerWidget {
+  const MapPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final markers = ref.watch(markersStreamProvider);
+    /// edamitsu/stops.txt から取得したバス停のリスト
     final stops = ref.watch(StopsNotifierProvider(context));
+
+    /// TextEditingController <= これいらん
     final searchEditingController = ref.watch(searchTextEditingController);
+
+    /// 検索した際に検索ヒットしたバス停のリスト
     final searchList = ref.watch(searchNotifierProvider);
+
+    /// 検索メソッド
     final searchNotifier = ref.watch(searchNotifierProvider.notifier);
+
+    /// 現在地を取得
     final location = ref.watch(latLngNotifierProvider);
+
+    /// フォーカスする位置を監視する
     final latLngNotifier = ref.watch(latLngNotifierProvider.notifier);
+
+    /// 路線図を表示
     final polyline = ref.watch(polylineProviderProvider(context));
 
-    return DefaultTabController(
-      length: 2,
-      child: SafeArea(
-        child: Scaffold(
-          appBar: const PreferredSize(
-            preferredSize: Size.fromHeight(500),
-            child: ColoredBox(
-              color: Color.fromARGB(244, 93, 91, 91),
-              child: TabBar(
-                tabs: <Widget>[
-                  Tab(
-                    icon: Icon(Icons.search),
-                    text: 'バス停検索',
-                  ),
-                  Tab(
-                    icon: Icon(Icons.map),
-                    text: '路線検索',
-                  ),
-                ],
-              ),
+    return Scaffold(
+      /// Stack を採用
+      /// マップを一番下にして、検索バーやボタンを上に重ねる
+      body: Stack(
+        children: [
+          /// 現在地を GoogleMap に反映
+          location.when(
+            loading: () => const Center(
+              child: CircularProgressIndicator(),
             ),
+            error: (error, stackTrace) => Center(
+              child: Text(error.toString()),
+            ),
+            data: (position) {
+              return GoogleMap(
+                onMapCreated: (controller) {
+                  mapController = controller;
+                },
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(
+                    position?.latitude ?? 36,
+                    position?.longitude ?? 140,
+                  ),
+                  zoom: 16,
+                ),
+                myLocationEnabled: true,
+                mapToolbarEnabled: false,
+
+                /// ポリラインを表示
+                polylines: polyline.when(
+                  data: (polylineData) {
+                    return polylineData;
+                  },
+                  loading: () => {},
+                  error: (_, __) => {},
+                ),
+
+                /// マーカーを表示
+                /// stops は edamitsu/stops.txt から取得したバス停のリスト
+                markers: stops.when(
+                  data: (stops) {
+                    return Set<Marker>.of(
+                      stops.map(
+                        (stop) {
+                          return Marker(
+                            markerId: MarkerId(stop.id),
+                            position: LatLng(stop.stopLat, stop.stopLon),
+                            infoWindow: InfoWindow(
+                              title: stop.stopName,
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                  loading: () => {},
+                  error: (_, __) => {},
+                ),
+              );
+            },
           ),
-          body: Stack(
+
+          /// 検索バー
+          Column(
             children: [
-              location.when(
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 50, 10, 0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    hintText: 'バス停を検索',
+                    filled: true,
+                    isDense: true,
+                    fillColor: const Color.fromARGB(248, 231, 235, 241),
+                    prefixIcon: const Icon(Icons.search),
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: () async {
+                        searchEditingController.clear();
+                        await searchNotifier.searchStop('', context);
+                      },
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(32),
+                    ),
+                  ),
+                  maxLength: 10,
+                  controller: searchEditingController,
+                  onChanged: (text) async {
+                    await searchNotifier.searchStop(text, context);
+                  },
+                  cursorColor: Colors.grey,
+                ),
+              ),
+
+              /// 検索結果を表示
+              searchList.when(
                 loading: () => const Center(
                   child: CircularProgressIndicator(),
                 ),
                 error: (error, stackTrace) => Center(
                   child: Text(error.toString()),
                 ),
-                data: (position) {
-                  return GoogleMap(
-                    onMapCreated: (controller) {
-                      mapController = controller;
-                    },
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(
-                        position?.latitude ?? 36,
-                        position?.longitude ?? 140,
-                      ),
-                      zoom: 16,
-                    ),
-                    myLocationEnabled: true,
-                    mapToolbarEnabled: false,
-
-                    /// ポリラインを表示
-                    polylines: polyline.when(
-                      data: (polylineData) {
-                        return polylineData;
-                      },
-                      loading: () => {},
-                      error: (_, __) => {},
-                    ),
-
-                    /// マーカーを表示
-                    /// stops は edamitsu/stops.txt から取得したバス停のリスト
-                    markers: stops.when(
-                      data: (stops) {
-                        return Set<Marker>.of(
-                          stops.map(
-                            (stop) {
-                              return Marker(
-                                markerId: MarkerId(stop.id),
-                                position: LatLng(stop.stopLat, stop.stopLon),
-                                infoWindow: InfoWindow(
-                                  title: stop.stopName,
-                                ),
-                              );
-                            },
-                          ),
+                data: (list) {
+                  /// 検索結果がない場合は表示しない
+                  if (list.isEmpty) {
+                    return const SizedBox(
+                      height: 0,
+                    );
+                  }
+                  return Card(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: list.length,
+                      itemBuilder: (context, index) {
+                        final stop = list[index];
+                        return Column(
+                          children: [
+                            ListTile(
+                              title: Text(stop.stopName),
+                              onTap: () async {
+                                /// latLngNotifier に選択したバス停の位置情報を渡す
+                                await latLngNotifier.searchPosition(stop);
+                              },
+                            ),
+                          ],
                         );
                       },
-                      loading: () => {},
-                      error: (_, __) => {},
                     ),
                   );
                 },
-              ),
-
-              /// 検索バー
-              ConstrainedBox(
-                constraints:
-                    const BoxConstraints(maxHeight: 400, minHeight: 100),
-                child: TabBarView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: <Widget>[
-                    Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              hintText: 'テキスト検索(2文字以上入力)',
-                              // suffixIcon:
-                              filled: true,
-                              isDense: true,
-                              fillColor:
-                                  const Color.fromARGB(248, 231, 235, 241),
-                              prefixIcon: const Icon(Icons.search),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            controller: searchEditingController,
-                            onChanged: (text) async {
-                              await searchNotifier.searchStop(text, context);
-                            },
-                            cursorColor: Colors.grey,
-                          ),
-                        ),
-                        ConstrainedBox(
-                          constraints: const BoxConstraints(
-                            minHeight: 50,
-                            maxHeight: 100,
-                          ),
-                          child: searchList.when(
-                            loading: () => const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                            error: (error, stackTrace) => Center(
-                              child: Text(error.toString()),
-                            ),
-                            data: (list) {
-                              if (list.isEmpty) {
-                                return const SizedBox();
-                              }
-                              return Card(
-                                child: ListView.builder(
-                                  itemCount: list.length,
-                                  itemBuilder: (context, index) {
-                                    final stop = list[index];
-                                    return Column(
-                                      children: [
-                                        ListTile(
-                                          title: Text(stop.stopName),
-                                          onTap: () async {
-                                            /// latLngNotifier に選択したバス停の位置情報を渡す
-                                            await latLngNotifier
-                                                .searchPosition(stop);
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                ),
-                              );
-                            },
-                          ),
-                        )
-                      ],
-                    ),
-                    const Text(
-                      'サッカー',
-                      style: TextStyle(fontSize: 32),
-                    ),
-                  ],
-                ),
               )
             ],
-          ),
-        ),
+          )
+        ],
       ),
     );
   }
