@@ -1,2 +1,0 @@
-feed_publisher_name,feed_publisher_url,feed_lang,feed_start_date,feed_end_date,feed_version
-鮭川村,http://www.vill.sakegawa.yamagata.jp/,ja,20221201,20231130,2022/12/01改正-見える化ver2.6d
