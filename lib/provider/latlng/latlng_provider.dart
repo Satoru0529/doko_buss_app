@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -15,12 +14,14 @@ GoogleMapController? mapController;
 @riverpod
 class LatLngNotifier extends _$LatLngNotifier {
   @override
-  FutureOr<Position?> build() async {
+  FutureOr<LatLng?> build() async {
     final position = await ref.refresh(locationProvider.future);
-    state = AsyncValue.data(position);
-    return position;
+    final latLng = LatLng(position!.latitude, position.longitude);
+    state = AsyncValue.data(latLng);
+    return latLng;
   }
 
+  /// user の位置を取得
   Future<void> searchPosition(Stops stops) async {
     state = const AsyncValue.loading();
 
@@ -30,26 +31,14 @@ class LatLngNotifier extends _$LatLngNotifier {
         await mapController?.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
-              target: LatLng(
-                stops.stopLat,
-                stops.stopLon,
-              ),
+              target: LatLng(stops.stopLat, stops.stopLon),
               zoom: 16,
             ),
           ),
         );
 
         state = AsyncValue.data(
-          Position(
-            longitude: stops.stopLon,
-            latitude: stops.stopLat,
-            timestamp: DateTime.now(),
-            accuracy: 0,
-            altitude: 0,
-            heading: 0,
-            speed: 0,
-            speedAccuracy: 0,
-          ),
+          LatLng(stops.stopLat, stops.stopLon),
         );
       },
     );
