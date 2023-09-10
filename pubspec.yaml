@@ -33,5 +33,4 @@ flutter:
 
   assets:
     - images/
-    - sakegawa_gtfs/
     - edamitsu/
