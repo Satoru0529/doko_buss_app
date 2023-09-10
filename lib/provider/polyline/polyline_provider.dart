@@ -25,6 +25,7 @@ class PolylineProvider extends _$PolylineProvider {
   final List<Stops> stopListEdamitsu = [];
   final List<Stops> stopListHinode = [];
   final List<Stops> stopListSannouFujimi = [];
+  final List<Stops> stopListSannou = [];
 
   Future<void> readStops(
     BuildContext context,
@@ -52,6 +53,7 @@ class PolylineProvider extends _$PolylineProvider {
       apiKey,
       PointLatLng(stops.first.stopLat, stops.first.stopLon),
       PointLatLng(stops.last.stopLat, stops.last.stopLon),
+      travelMode: TravelMode.walking,
       wayPoints: stops
           .map(
             (e) => PolylineWayPoint(
@@ -63,7 +65,9 @@ class PolylineProvider extends _$PolylineProvider {
 
     if (result.points.isNotEmpty) {
       for (final point in result.points) {
-        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+        polylineCoordinates.add(
+          LatLng(point.latitude, point.longitude),
+        );
       }
     }
     return polylineCoordinates;
@@ -113,13 +117,24 @@ class PolylineProvider extends _$PolylineProvider {
       width: 5,
       points: pointsSannouFujimi,
     );
+
+    /// 山王ルートの路線図
+    var pointsSannou = <LatLng>[];
+    pointsSannou = await createPolyline('edamitsu/sannou.txt', stopListSannou);
+    final polylineSannou = Polyline(
+      polylineId: const PolylineId('Sannou'),
+      color: const Color.fromARGB(255, 200, 34, 229),
+      width: 5,
+      points: pointsSannou,
+    );
     await AsyncValue.guard(
       () async {
         state = AsyncValue.data({
           polylineArate,
           polylineEdamitsu,
           polylineHinode,
-          polylineSannouFujimi
+          polylineSannouFujimi,
+          polylineSannou,
         });
       },
     );
