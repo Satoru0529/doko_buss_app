@@ -23,8 +23,10 @@ class PolylineProvider extends _$PolylineProvider {
   final String apiKey = 'AIzaSyCsi4yLKlnTJb74RpUMfDiXrgwfa_gvsXI';
   final List<Stops> stopListArate = [];
   final List<Stops> stopListEdamitsu = [];
+  final List<Stops> stopListHinode = [];
 
-  Future<void> readStops(BuildContext context, String file, List<Stops> stops) async {
+  Future<void> readStops(
+      BuildContext context, String file, List<Stops> stops) async {
     final preBiGramList = <String>[];
     final assets = await DefaultAssetBundle.of(context).loadString(file);
     assets.split('\n').forEach(
@@ -76,16 +78,29 @@ class PolylineProvider extends _$PolylineProvider {
 
     /// 枝光ルートの路線図
     var pointsEdamitsu = <LatLng>[];
-    pointsEdamitsu = await createPolyline('edamitsu/edamitsu.txt', stopListEdamitsu);
+    pointsEdamitsu =
+        await createPolyline('edamitsu/edamitsu.txt', stopListEdamitsu);
     final polylineEdamitsu = Polyline(
       polylineId: const PolylineId('Edamitsu'),
       color: Colors.red,
       width: 3,
       points: pointsEdamitsu,
     );
+
+    /// 日の出ルートの路線図
+    var pointsHinode = <LatLng>[];
+    pointsHinode =
+        await createPolyline('edamitsu/hinode.txt', stopListHinode);
+    final polylineHinode = Polyline(
+      polylineId: const PolylineId('Hinode'),
+      color: Colors.green,
+      width: 3,
+      points: pointsHinode,
+    );
     await AsyncValue.guard(
       () async {
-        state = AsyncValue.data({polylineArate, polylineEdamitsu});
+        state =
+            AsyncValue.data({polylineArate, polylineEdamitsu, polylineHinode});
       },
     );
   }
