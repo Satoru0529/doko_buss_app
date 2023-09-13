@@ -2,10 +2,12 @@ import 'package:buss_app/widget/search_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../provider/latlng/latlng_provider.dart';
 import '../provider/polyline/polyline_provider.dart';
 import '../provider/stops/stops_notifier.dart';
+import '../widget/time_table_widget.dart';
 
 class MapPage extends ConsumerWidget {
   const MapPage({super.key});
@@ -68,9 +70,20 @@ class MapPage extends ConsumerWidget {
                           return Marker(
                             markerId: MarkerId(stop.id),
                             position: LatLng(stop.stopLat, stop.stopLon),
-                            infoWindow: InfoWindow(
-                              title: stop.stopName,
-                            ),
+                            onTap: () {
+                              // マーカーがタップされたらモーダルを表示
+                              // ignore: inference_failure_on_function_invocation
+                              showMaterialModalBottomSheet(
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(15),
+                                  ),
+                                ),
+                                context: context,
+                                builder: (context) =>
+                                    const TimeTableModalSheet(),
+                              );
+                            },
                           );
                         },
                       ),
