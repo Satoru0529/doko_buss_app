@@ -27,6 +27,21 @@ dev_dependencies:
   json_serializable: ^6.7.1
   pedantic_mono:
   riverpod_generator: 
+  flutter_native_splash: ^2.1.3+1
+
+/// すささんの記事（https://zenn.dev/flutteruniv_dev/articles/20220406-061305-flutter-native-splash?redirected=1）
+/// スプラッシュ生成コマンド (flutter pub run flutter_native_splash:create)
+flutter_native_splash:
+  color: '#0B131B'
+  image: 'images/RiverPotter.jpg'
+  color_dark: '#0B131B'
+  image_dark: 'images/RiverPotter.jpg'
+  fullscreen: true
+  android_12:
+    icon_background_color: '#0B131B'
+    image: 'images/RiverPotter.jpg'
+    icon_background_color_dark: '#0B131B'
+    image_dark: 'images/RiverPotter.jpg'
 
 flutter:
   uses-material-design: true
