@@ -1,2 +1,0 @@
-service_id,monday,tuesday,wednesday,thursday,friday,saturday,sunday,start_date,end_date
-平日,1,1,1,1,1,0,0,20221201,20231130

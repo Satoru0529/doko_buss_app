@@ -1,4 +1,3 @@
-import 'package:buss_app/widget/search_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -7,7 +6,10 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../provider/latlng/latlng_provider.dart';
 import '../provider/polyline/polyline_provider.dart';
 import '../provider/stops/stops_notifier.dart';
+
 import '../widget/time_table_widget.dart';
+import '../widget/search_widget.dart';
+
 
 class MapPage extends ConsumerWidget {
   const MapPage({super.key});

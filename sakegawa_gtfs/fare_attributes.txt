@@ -1,2 +1,0 @@
-fare_id,price,currency_type,payment_method,transfers
-200,200,JPY,0,0
