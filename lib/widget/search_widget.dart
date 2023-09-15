@@ -30,21 +30,24 @@ class SearchWidget extends ConsumerWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(10, 50, 10, 0),
+          padding: const EdgeInsets.fromLTRB(10, 60, 10, 0),
           child: TextFormField(
             decoration: InputDecoration(
               hintText: 'バス停を検索',
               filled: true,
               isDense: true,
               fillColor: const Color.fromARGB(248, 231, 235, 241),
+              counterText: '',
               prefixIcon: const Icon(Icons.search),
-              suffixIcon: IconButton(
-                icon: const Icon(Icons.clear),
-                onPressed: () async {
-                  searchEditingController.clear();
-                  await searchNotifier.searchStop('', context);
-                },
-              ),
+              suffixIcon: searchEditingController.text.isEmpty
+                  ? const SizedBox()
+                  : IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: () async {
+                        searchEditingController.clear();
+                        await searchNotifier.searchStop('', context);
+                      },
+                    ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(32),
               ),
@@ -73,25 +76,37 @@ class SearchWidget extends ConsumerWidget {
                 height: 0,
               );
             }
-            return Card(
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: list.length,
-                itemBuilder: (context, index) {
-                  final stop = list[index];
-                  return Column(
-                    children: [
-                      ListTile(
+            return Padding(
+              padding: const EdgeInsets.all(8),
+
+              /// Card の高さを固定しているが検索リストの量によって高さを調節できるようにしたい
+              child: SizedBox(
+                height: 250,
+                child: Card(
+                  child: ListView.builder(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: list.length,
+                    itemBuilder: (context, index) {
+                      final stop = list[index];
+                      return ListTile(
                         title: Text(stop.stopName),
                         onTap: () async {
+                          FocusScope.of(context).unfocus();
+
+                          /// 検索リストをタップした際に、textFiled の文字をクリアする
+                          await searchNotifier.searchStop('', context);
+
+                          /// 検索リストをタップした際に textEditingController に選択したバス停の名前を渡す
+                          searchEditingController.text = stop.stopName;
+
                           /// latLngNotifier に選択したバス停の位置情報を渡す
                           await latLngNotifier.searchPosition(stop);
                         },
-                      ),
-                    ],
-                  );
-                },
+                      );
+                    },
+                  ),
+                ),
               ),
             );
           },
