@@ -1,6 +1,7 @@
 // ignore_for_file: cascade_invocations
 
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../model/stops/stops.dart';
@@ -13,6 +14,7 @@ class StopsNotifier extends _$StopsNotifier {
   @override
   FutureOr<List<Stops>> build(BuildContext context) async {
     await loadAssetStops(context);
+    await _loadPinAsset();
     return state.when(
       data: (data) => data,
       loading: () => [],
@@ -21,6 +23,7 @@ class StopsNotifier extends _$StopsNotifier {
   }
 
   final List<Stops> stops = [];
+  BitmapDescriptor? markerIcon;
 
   Future<void> loadAssetStops(BuildContext context) async {
     final assets =
@@ -46,5 +49,12 @@ class StopsNotifier extends _$StopsNotifier {
       },
     );
     state = AsyncValue.data(stops);
+  }
+
+  Future<void> _loadPinAsset() async {
+    markerIcon = await BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(size: Size(8, 8)),
+      'images/kkrn_icon_bus_2.png',
+    );
   }
 }
