@@ -8,7 +8,12 @@ import '../provider/stops/stops_notifier.dart';
 import '../widget/search_widget.dart';
 
 class MapPage extends ConsumerWidget {
-  const MapPage({super.key});
+  const MapPage({
+    super.key,
+    required this.deviceHeight,
+  });
+
+  final double deviceHeight;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,6 +27,8 @@ class MapPage extends ConsumerWidget {
     final polyline = ref.watch(polylineProviderProvider(context));
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+
       /// Stack を採用
       /// マップを一番下にして、検索バーやボタンを上に重ねる
       body: Stack(
@@ -82,7 +89,25 @@ class MapPage extends ConsumerWidget {
               );
             },
           ),
+
+          /// 検索 widget
           const SearchWidget(),
+          Positioned(
+            left: 20,
+            top: deviceHeight - 70,
+            child: FloatingActionButton(
+              onPressed: () async {
+                await mapController?.animateCamera(
+                  CameraUpdate.newCameraPosition(
+                    const CameraPosition(
+                      target: LatLng(33.8794067, 130.8178816),
+                      zoom: 16,
+                    ),
+                  ),
+                );
+              },
+            ),
+          )
         ],
       ),
     );
