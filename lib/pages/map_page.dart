@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../provider/latlng/latlng_provider.dart';
 import '../provider/polyline/polyline_provider.dart';
@@ -107,9 +108,43 @@ class MapPage extends ConsumerWidget {
                 );
               },
             ),
+          ),
+          Positioned(
+            right: 20,
+            bottom: 20,
+            child: ClipOval(
+              child: Material(
+                color: Colors.black38,
+                child: InkWell(
+                  splashColor: Colors.black54,
+                  onTap: _launchURL,
+                  child: const SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: Icon(
+                      Icons.message,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           )
         ],
       ),
     );
+  }
+
+  // URLを開く関数
+  Future<void> _launchURL() async {
+    const url =
+        'https://docs.google.com/forms/d/e/1FAIpQLScMkbZAcC-Jy6gAyscSI7KfNkbRQdoqF5c_NF8U9Y6MLtulJg/viewform?usp=sf_link';
+    final uri = Uri.parse(url);
+    if (!await canLaunchUrl(uri)) {
+      // canLaunchUrlを使用
+      await launchUrl(uri); // launchUrlを使用
+    } else {
+      throw 'URLを開けませんでした: $url';
+    }
   }
 }
