@@ -3,14 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 import '../provider/latlng/latlng_provider.dart';
 import '../provider/polyline/polyline_provider.dart';
 import '../provider/stops/stops_notifier.dart';
-
-import '../widget/time_table_widget.dart';
 import '../widget/search_widget.dart';
+import '../widget/time_table_widget.dart';
 
 class MapPage extends ConsumerWidget {
   const MapPage({super.key});
@@ -107,6 +105,7 @@ class MapPage extends ConsumerWidget {
                 color: Colors.black38,
                 child: InkWell(
                   splashColor: Colors.black54,
+                  onTap: _launchURL,
                   child: const SizedBox(
                     width: 50,
                     height: 50,
@@ -115,11 +114,6 @@ class MapPage extends ConsumerWidget {
                       color: Colors.white,
                     ),
                   ),
-                  onTap: () {
-                    _launchURL();
-                    // launchUrl(Uri.parse(
-                    //     'https://docs.google.com/forms/d/e/1FAIpQLScMkbZAcC-Jy6gAyscSI7KfNkbRQdoqF5c_NF8U9Y6MLtulJg/viewform?usp=sf_link'));
-                  },
                 ),
               ),
             ),
