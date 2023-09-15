@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../provider/latlng/latlng_provider.dart';
 import '../provider/polyline/polyline_provider.dart';
 import '../provider/stops/stops_notifier.dart';
 import '../widget/search_widget.dart';
+import '../widget/time_table_widget.dart';
 
 class MapPage extends ConsumerWidget {
   const MapPage({
@@ -34,7 +36,7 @@ class MapPage extends ConsumerWidget {
       /// マップを一番下にして、検索バーやボタンを上に重ねる
       body: Stack(
         children: [
-          /// 現在地を GoogleMap に反映
+          //現在地を GoogleMap に反映
           location.when(
             loading: () => const Center(
               child: CircularProgressIndicator(),
@@ -76,9 +78,20 @@ class MapPage extends ConsumerWidget {
                           return Marker(
                             markerId: MarkerId(stop.id),
                             position: LatLng(stop.stopLat, stop.stopLon),
-                            infoWindow: InfoWindow(
-                              title: stop.stopName,
-                            ),
+                            onTap: () {
+                              // マーカーがタップされたらモーダルを表示
+                              // ignore: inference_failure_on_function_invocation
+                              showMaterialModalBottomSheet(
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(15),
+                                  ),
+                                ),
+                                context: context,
+                                builder: (context) =>
+                                    const TimeTableModalSheet(),
+                              );
+                            },
                           );
                         },
                       ),
