@@ -22,6 +22,7 @@ class MapPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     /// edamitsu/stops.txt から取得したバス停のリスト
     final stops = ref.watch(StopsNotifierProvider(context));
+    final stopsNotifier = ref.watch(StopsNotifierProvider(context).notifier);
 
     /// 現在地を取得
     final location = ref.watch(latLngNotifierProvider);
@@ -78,6 +79,11 @@ class MapPage extends ConsumerWidget {
                           return Marker(
                             markerId: MarkerId(stop.id),
                             position: LatLng(stop.stopLat, stop.stopLon),
+                            icon: stopsNotifier.markerIcon ??
+                                BitmapDescriptor.defaultMarker,
+                            infoWindow: InfoWindow(
+                              title: stop.stopName,
+                            ),
                             onTap: () {
                               // マーカーがタップされたらモーダルを表示
                               // ignore: inference_failure_on_function_invocation
