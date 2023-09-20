@@ -47,6 +47,10 @@ class MapPage extends ConsumerWidget {
             ),
             data: (position) {
               return GoogleMap(
+                /// マップタップ時にテキストフィールドのフォーカスを外す
+                onTap: (argument) {
+                  FocusScope.of(context).unfocus();
+                },
                 onMapCreated: (controller) {
                   mapController = controller;
                 },
@@ -87,6 +91,8 @@ class MapPage extends ConsumerWidget {
                               title: stop.stopName,
                             ),
                             onTap: () {
+                              // マーカーがタップされたらテキストフィールドのフォーカスを外す
+                              FocusScope.of(context).unfocus();
                               // マーカーがタップされたらモーダルを表示
                               // ignore: inference_failure_on_function_invocation
                               showMaterialModalBottomSheet(
