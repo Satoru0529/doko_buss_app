@@ -77,7 +77,7 @@ class MapPage extends ConsumerWidget {
                       stops.map(
                         (stop) {
                           return Marker(
-                            markerId: MarkerId(stop.id),
+                            markerId: MarkerId(stop.stopId),
                             position: LatLng(stop.stopLat, stop.stopLon),
                             icon: stopsNotifier.markerIcon ??
                                 BitmapDescriptor.defaultMarker,

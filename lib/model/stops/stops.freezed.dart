@@ -20,9 +20,6 @@ Stops _$StopsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Stops {
-  /// Doc ID
-  String get id => throw _privateConstructorUsedError;
-
   /// num_1 or num_2 (上り or 下り)
   String get stopId => throw _privateConstructorUsedError;
 
@@ -49,8 +46,7 @@ abstract class $StopsCopyWith<$Res> {
       _$StopsCopyWithImpl<$Res, Stops>;
   @useResult
   $Res call(
-      {String id,
-      String stopId,
+      {String stopId,
       String stopName,
       double stopLat,
       double stopLon,
@@ -70,7 +66,6 @@ class _$StopsCopyWithImpl<$Res, $Val extends Stops>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? stopId = null,
     Object? stopName = null,
     Object? stopLat = null,
@@ -78,10 +73,6 @@ class _$StopsCopyWithImpl<$Res, $Val extends Stops>
     Object? biGramMap = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       stopId: null == stopId
           ? _value.stopId
           : stopId // ignore: cast_nullable_to_non_nullable
@@ -113,8 +104,7 @@ abstract class _$$_StopsCopyWith<$Res> implements $StopsCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
-      String stopId,
+      {String stopId,
       String stopName,
       double stopLat,
       double stopLon,
@@ -130,7 +120,6 @@ class __$$_StopsCopyWithImpl<$Res> extends _$StopsCopyWithImpl<$Res, _$_Stops>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? stopId = null,
     Object? stopName = null,
     Object? stopLat = null,
@@ -138,10 +127,6 @@ class __$$_StopsCopyWithImpl<$Res> extends _$StopsCopyWithImpl<$Res, _$_Stops>
     Object? biGramMap = null,
   }) {
     return _then(_$_Stops(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       stopId: null == stopId
           ? _value.stopId
           : stopId // ignore: cast_nullable_to_non_nullable
@@ -170,8 +155,7 @@ class __$$_StopsCopyWithImpl<$Res> extends _$StopsCopyWithImpl<$Res, _$_Stops>
 @JsonSerializable()
 class _$_Stops implements _Stops {
   const _$_Stops(
-      {this.id = '',
-      this.stopId = '',
+      {this.stopId = '',
       this.stopName = '',
       this.stopLat = 0,
       this.stopLon = 0,
@@ -180,11 +164,6 @@ class _$_Stops implements _Stops {
 
   factory _$_Stops.fromJson(Map<String, dynamic> json) =>
       _$$_StopsFromJson(json);
-
-  /// Doc ID
-  @override
-  @JsonKey()
-  final String id;
 
   /// num_1 or num_2 (上り or 下り)
   @override
@@ -220,7 +199,7 @@ class _$_Stops implements _Stops {
 
   @override
   String toString() {
-    return 'Stops(id: $id, stopId: $stopId, stopName: $stopName, stopLat: $stopLat, stopLon: $stopLon, biGramMap: $biGramMap)';
+    return 'Stops(stopId: $stopId, stopName: $stopName, stopLat: $stopLat, stopLon: $stopLon, biGramMap: $biGramMap)';
   }
 
   @override
@@ -228,7 +207,6 @@ class _$_Stops implements _Stops {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Stops &&
-            (identical(other.id, id) || other.id == id) &&
             (identical(other.stopId, stopId) || other.stopId == stopId) &&
             (identical(other.stopName, stopName) ||
                 other.stopName == stopName) &&
@@ -240,7 +218,7 @@ class _$_Stops implements _Stops {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, stopId, stopName, stopLat,
+  int get hashCode => Object.hash(runtimeType, stopId, stopName, stopLat,
       stopLon, const DeepCollectionEquality().hash(_biGramMap));
 
   @JsonKey(ignore: true)
@@ -259,8 +237,7 @@ class _$_Stops implements _Stops {
 
 abstract class _Stops implements Stops {
   const factory _Stops(
-      {final String id,
-      final String stopId,
+      {final String stopId,
       final String stopName,
       final double stopLat,
       final double stopLon,
@@ -268,10 +245,6 @@ abstract class _Stops implements Stops {
 
   factory _Stops.fromJson(Map<String, dynamic> json) = _$_Stops.fromJson;
 
-  @override
-
-  /// Doc ID
-  String get id;
   @override
 
   /// num_1 or num_2 (上り or 下り)

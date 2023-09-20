@@ -8,8 +8,6 @@ part 'stops.g.dart';
 @freezed
 class Stops with _$Stops {
   const factory Stops({
-    /// Doc ID
-    @Default('') String id,
 
     /// num_1 or num_2 (上り or 下り)
     @Default('') String stopId,
