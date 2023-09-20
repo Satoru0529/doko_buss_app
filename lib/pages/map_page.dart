@@ -58,6 +58,7 @@ class MapPage extends ConsumerWidget {
                   zoom: 16,
                 ),
                 myLocationEnabled: true,
+                myLocationButtonEnabled: false,
                 mapToolbarEnabled: false,
 
                 /// ポリラインを表示
@@ -159,7 +160,7 @@ class MapPage extends ConsumerWidget {
     const url =
         'https://docs.google.com/forms/d/e/1FAIpQLScMkbZAcC-Jy6gAyscSI7KfNkbRQdoqF5c_NF8U9Y6MLtulJg/viewform?usp=sf_link';
     final uri = Uri.parse(url);
-    if (!await canLaunchUrl(uri)) {
+    if (await canLaunchUrl(uri)) {
       // canLaunchUrlを使用
       await launchUrl(uri); // launchUrlを使用
     } else {
