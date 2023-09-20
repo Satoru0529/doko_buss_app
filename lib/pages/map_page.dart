@@ -96,8 +96,9 @@ class MapPage extends ConsumerWidget {
                                   ),
                                 ),
                                 context: context,
-                                builder: (context) =>
-                                    const TimeTableModalSheet(),
+                                builder: (context) => TimeTableModalSheet(
+                                  stopName: stop.stopName,
+                                ),
                               );
                             },
                           );
