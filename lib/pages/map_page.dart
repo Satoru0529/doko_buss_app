@@ -79,8 +79,9 @@ class MapPage extends ConsumerWidget {
                           return Marker(
                             markerId: MarkerId(stop.stopId),
                             position: LatLng(stop.stopLat, stop.stopLon),
-                            icon: stopsNotifier.markerIcon ??
-                                BitmapDescriptor.defaultMarker,
+                            icon: stop.stopId == 'busLocation'
+                                ? stopsNotifier.busLocationIcon!
+                                : stopsNotifier.busStopIcon!,
                             infoWindow: InfoWindow(
                               title: stop.stopName,
                             ),
