@@ -1,10 +1,11 @@
+import 'package:buss_app/provider/zoom/zoom_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../provider/camera_move/camera_move_notifier.dart';
+import '../provider/map_create/map_create_notifier.dart';
 import '../provider/latlng/latlng_provider.dart';
 import '../provider/polyline/polyline_provider.dart';
 import '../provider/stops/stops_notifier.dart';
@@ -31,7 +32,13 @@ class MapPage extends ConsumerWidget {
     /// 路線図を表示
     final polyline = ref.watch(polylineProviderProvider(context));
 
-    final zoom = ref.watch(cameraMoveNotifierProvider);
+    final mapController = ref.watch(cameraMoveNotifierProvider);
+
+    final mapNotifier = ref.watch(cameraMoveNotifierProvider.notifier);
+
+    final zoomController = ref.watch(zoomNotifierProvider);
+
+    final zoomNotifier = ref.watch(zoomNotifierProvider.notifier);
 
     return Focus(
       focusNode: FocusNode(),
@@ -39,7 +46,7 @@ class MapPage extends ConsumerWidget {
         onTap: FocusNode().requestFocus,
         child: Scaffold(
           resizeToAvoidBottomInset: false,
-          
+
           /// Stack を採用
           /// マップを一番下にして、検索バーやボタンを上に重ねる
           body: Stack(
@@ -54,29 +61,25 @@ class MapPage extends ConsumerWidget {
                 ),
                 data: (position) {
                   return GoogleMap(
-                    onMapCreated: (controller) {
-                      mapController = controller;
-                    },
+                    onMapCreated: mapNotifier.getMapController,
                     initialCameraPosition: CameraPosition(
                       target: LatLng(
                         position?.latitude ?? 36,
                         position?.longitude ?? 140,
                       ),
-                      zoom: zoom.when(
-                        data: (data) {
-                          if (data >= 16) {
-                            return data;
-                          } else {
-                            return data;
-                          }
-                        },
-                        loading: () => 16,
-                        error: (_, __) => 16,
-                      ),
+                      zoom: 16,
                     ),
                     myLocationEnabled: true,
                     mapToolbarEnabled: false,
-          
+
+                    /// カメラが移動したらズームレベルを取得
+                    onCameraMoveStarted: () {
+                      final zoom = zoomController.value;
+                      mapController.value!
+                          .getZoomLevel()
+                          .then(zoomNotifier.changeZoom);
+                    },
+
                     /// ポリラインを表示
                     polylines: polyline.when(
                       data: (polylineData) {
@@ -85,7 +88,7 @@ class MapPage extends ConsumerWidget {
                       loading: () => {},
                       error: (_, __) => {},
                     ),
-          
+
                     /// マーカーを表示
                     /// stops は edamitsu/stops.txt から取得したバス停のリスト
                     markers: stops.when(
@@ -126,7 +129,7 @@ class MapPage extends ConsumerWidget {
                   );
                 },
               ),
-          
+
               /// 検索 widget
               const SearchWidget(),
               Positioned(
@@ -134,7 +137,7 @@ class MapPage extends ConsumerWidget {
                 top: deviceHeight - 70,
                 child: FloatingActionButton(
                   onPressed: () async {
-                    await mapController?.animateCamera(
+                    await mapController.value!.animateCamera(
                       CameraUpdate.newCameraPosition(
                         const CameraPosition(
                           target: LatLng(33.8794067, 130.8178816),

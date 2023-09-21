@@ -4,12 +4,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../model/stops/stops.dart';
+import '../map_create/map_create_notifier.dart';
 import '../location_provider.dart';
 
 part 'latlng_provider.g.dart';
-
-/// Global変数
-GoogleMapController? mapController;
 
 @riverpod
 class LatLngNotifier extends _$LatLngNotifier {
@@ -24,6 +22,8 @@ class LatLngNotifier extends _$LatLngNotifier {
   /// user の位置を取得
   Future<void> searchPosition(Stops stops) async {
     state = const AsyncValue.loading();
+
+    final mapController = ref.read(cameraMoveNotifierProvider).value;
 
     await AsyncValue.guard(
       () async {

@@ -6,7 +6,7 @@ part of 'latlng_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$latLngNotifierHash() => r'562ac02d5076ba04274b3999e9d20c401cea4e35';
+String _$latLngNotifierHash() => r'e1827172991b63b41cfbdd640e2c63874f93210a';
 
 /// See also [LatLngNotifier].
 @ProviderFor(LatLngNotifier)
