@@ -14,7 +14,7 @@ class StopsNotifier extends _$StopsNotifier {
   @override
   FutureOr<List<Stops>> build(BuildContext context) async {
     await loadAssetStops(context);
-    await _loadPinAsset();
+    await loadPinAsset();
     return state.when(
       data: (data) => data,
       loading: () => [],
@@ -58,7 +58,7 @@ class StopsNotifier extends _$StopsNotifier {
     state = AsyncValue.data(stops);
   }
 
-  Future<void> _loadPinAsset() async {
+  Future<void> loadPinAsset() async {
     busStopIcon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(size: Size(8, 8)),
       'images/kkrn_icon_bus_2.png',

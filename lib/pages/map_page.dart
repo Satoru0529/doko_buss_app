@@ -7,8 +7,10 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../provider/latlng/latlng_provider.dart';
+import '../provider/map_create/map_create_notifier.dart';
 import '../provider/polyline/polyline_provider.dart';
 import '../provider/stops/stops_notifier.dart';
+import '../provider/zoom/zoom_notifier.dart';
 import '../widget/search_widget.dart';
 import '../widget/time_table_widget.dart';
 
@@ -32,139 +34,154 @@ class MapPage extends ConsumerWidget {
     /// 路線図を表示
     final polyline = ref.watch(polylineProviderProvider(context));
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
+    final mapController = ref.watch(cameraMoveNotifierProvider);
 
-      /// Stack を採用
-      /// マップを一番下にして、検索バーやボタンを上に重ねる
-      body: Stack(
-        children: [
-          //現在地を GoogleMap に反映
-          location.when(
-            loading: () => const Center(
-              child: CircularProgressIndicator(),
-            ),
-            error: (error, stackTrace) => Center(
-              child: Text(error.toString()),
-            ),
-            data: (position) {
-              return GoogleMap(
-                /// マップタップ時にテキストフィールドのフォーカスを外す
-                onTap: (argument) {
-                  FocusScope.of(context).unfocus();
-                },
-                onMapCreated: (controller) {
-                  mapController = controller;
-                },
-                initialCameraPosition: CameraPosition(
-                  target: LatLng(
-                    position?.latitude ?? 36,
-                    position?.longitude ?? 140,
-                  ),
-                  zoom: 16,
+    final mapNotifier = ref.watch(cameraMoveNotifierProvider.notifier);
+
+    final zoomController = ref.watch(zoomNotifierProvider);
+
+    final zoomNotifier = ref.watch(zoomNotifierProvider.notifier);
+
+    return Focus(
+      focusNode: FocusNode(),
+      child: GestureDetector(
+        onTap: FocusNode().requestFocus,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+
+          /// Stack を採用
+          /// マップを一番下にして、検索バーやボタンを上に重ねる
+          body: Stack(
+            children: [
+              ///現在地を GoogleMap に反映
+              location.when(
+                loading: () => const Center(
+                  child: CircularProgressIndicator(),
                 ),
-                myLocationEnabled: true,
-                myLocationButtonEnabled: false,
-                mapToolbarEnabled: false,
-
-                /// ポリラインを表示
-                polylines: polyline.when(
-                  data: (polylineData) {
-                    return polylineData;
-                  },
-                  loading: () => {},
-                  error: (_, __) => {},
+                error: (error, stackTrace) => Center(
+                  child: Text(error.toString()),
                 ),
+                data: (position) {
+                  return GoogleMap(
+                    onMapCreated: mapNotifier.getMapController,
+                    initialCameraPosition: CameraPosition(
+                      target: LatLng(
+                        position?.latitude ?? 36,
+                        position?.longitude ?? 140,
+                      ),
+                      zoom: 16,
+                    ),
+                    myLocationEnabled: true,
+                    mapToolbarEnabled: false,
 
-                /// マーカーを表示
-                /// stops は edamitsu/stops.txt から取得したバス停のリスト
-                markers: stops.when(
-                  data: (stops) {
-                    return Set<Marker>.of(
-                      stops.map(
-                        (stop) {
-                          return Marker(
-                            markerId: MarkerId(stop.stopId),
-                            position: LatLng(stop.stopLat, stop.stopLon),
-                            icon: Platform.isIOS
-                                ? stop.stopId == 'busLocation'
-                                    ? stopsNotifier.iosBussLocationIcon!
-                                    : stopsNotifier.iosBussStopIcon!
-                                : stop.stopId == 'busLocation'
-                                    ? stopsNotifier.androidBussLocationIcon!
-                                    : stopsNotifier.androidBussStopIcon!,
-                            infoWindow: InfoWindow(
-                              title: stop.stopName,
-                            ),
-                            onTap: () {
-                              // マーカーがタップされたらテキストフィールドのフォーカスを外す
-                              FocusScope.of(context).unfocus();
-                              // マーカーがタップされたらモーダルを表示
-                              // ignore: inference_failure_on_function_invocation
-                              showMaterialModalBottomSheet(
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(15),
-                                  ),
+                    /// カメラが移動したらズームレベルを取得
+                    onCameraMoveStarted: () {
+                      mapController.value!.getZoomLevel().then(
+                            zoomNotifier.changeZoom,
+                          );
+                    },
+
+                    /// ポリラインを表示
+                    polylines: polyline.when(
+                      data: (polylineData) {
+                        return polylineData;
+                      },
+                      loading: () => {},
+                      error: (_, __) => {},
+                    ),
+
+                    /// マーカーを表示
+                    /// stops は edamitsu/stops.txt から取得したバス停のリスト
+                    markers: stops.when(
+                      data: (stops) {
+                        return Set<Marker>.of(
+                          stops.map(
+                            (stop) {
+                              return Marker(
+                                markerId: MarkerId(stop.stopId),
+                                position: LatLng(stop.stopLat, stop.stopLon),
+                                icon: Platform.isIOS
+                                  ? stop.stopId == 'busLocation'
+                                      ? stopsNotifier.iosBussLocationIcon!
+                                      : stopsNotifier.iosBussStopIcon!
+                                  : stop.stopId == 'busLocation'
+                                      ? stopsNotifier.androidBussLocationIcon!
+                                      : stopsNotifier.androidBussStopIcon!,
+                                infoWindow: InfoWindow(
+                                  title: stop.stopName,
                                 ),
-                                context: context,
-                                builder: (context) => TimeTableModalSheet(
-                                  stopName: stop.stopName,
-                                ),
+                                onTap: () {
+                                  // マーカーがタップされたらテキストフィールドのフォーカスを外す
+                                  FocusScope.of(context).unfocus();
+                                  // マーカーがタップされたらモーダルを表示
+                                  // ignore: inference_failure_on_function_invocation
+                                  showMaterialModalBottomSheet(
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(15),
+                                      ),
+                                    ),
+                                    context: context,
+                                    builder: (context) => TimeTableModalSheet(
+                                      stopName: stop.stopName,
+                                    ),
+                                  );
+                                },
                               );
                             },
-                          );
-                        },
+                          ),
+                        );
+                      },
+                      loading: () => {},
+                      error: (_, __) => {},
+                    ),
+                    onCameraMove: (position) {},
+                  );
+                },
+              ),
+
+              /// 検索 widget
+              const SearchWidget(),
+              Positioned(
+                left: 20,
+                top: deviceHeight - 70,
+                child: FloatingActionButton(
+                  onPressed: () async {
+                    await mapController.value!.animateCamera(
+                      CameraUpdate.newCameraPosition(
+                        const CameraPosition(
+                          target: LatLng(33.8794067, 130.8178816),
+                          zoom: 16,
+                        ),
                       ),
                     );
                   },
-                  loading: () => {},
-                  error: (_, __) => {},
-                ),
-              );
-            },
-          ),
-
-          /// 検索 widget
-          const SearchWidget(),
-          Positioned(
-            left: 20,
-            top: deviceHeight - 70,
-            child: FloatingActionButton(
-              onPressed: () async {
-                await mapController?.animateCamera(
-                  CameraUpdate.newCameraPosition(
-                    const CameraPosition(
-                      target: LatLng(33.8794067, 130.8178816),
-                      zoom: 16,
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-          Positioned(
-            right: 20,
-            bottom: 20,
-            child: ClipOval(
-              child: Material(
-                color: Colors.black38,
-                child: InkWell(
-                  splashColor: Colors.black54,
-                  onTap: _launchURL,
-                  child: const SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: Icon(
-                      Icons.message,
-                      color: Colors.white,
-                    ),
-                  ),
                 ),
               ),
-            ),
-          )
-        ],
+              Positioned(
+                right: 20,
+                bottom: 20,
+                child: ClipOval(
+                  child: Material(
+                    color: Colors.black38,
+                    child: InkWell(
+                      splashColor: Colors.black54,
+                      onTap: _launchURL,
+                      child: const SizedBox(
+                        width: 50,
+                        height: 50,
+                        child: Icon(
+                          Icons.message,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
