@@ -5,8 +5,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../provider/map_create/map_create_notifier.dart';
 import '../provider/latlng/latlng_provider.dart';
+import '../provider/map_create/map_create_notifier.dart';
 import '../provider/polyline/polyline_provider.dart';
 import '../provider/stops/stops_notifier.dart';
 import '../widget/search_widget.dart';
@@ -51,7 +51,7 @@ class MapPage extends ConsumerWidget {
           /// マップを一番下にして、検索バーやボタンを上に重ねる
           body: Stack(
             children: [
-              //現在地を GoogleMap に反映
+              ///現在地を GoogleMap に反映
               location.when(
                 loading: () => const Center(
                   child: CircularProgressIndicator(),
@@ -74,10 +74,9 @@ class MapPage extends ConsumerWidget {
 
                     /// カメラが移動したらズームレベルを取得
                     onCameraMoveStarted: () {
-                      final zoom = zoomController.value;
-                      mapController.value!
-                          .getZoomLevel()
-                          .then(zoomNotifier.changeZoom);
+                      mapController.value!.getZoomLevel().then(
+                            zoomNotifier.changeZoom,
+                          );
                     },
 
                     /// ポリラインを表示

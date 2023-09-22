@@ -7,10 +7,21 @@ part 'zoom_notifier.g.dart';
 class ZoomNotifier extends _$ZoomNotifier {
   @override
   FutureOr<double> build() {
-    return 16;
+    return state.when(
+      data: (data) => data,
+      loading: () => 0,
+      error: (_, __) => 0,
+    );
   }
 
   Future<void> changeZoom(double zoom) async {
+    state = const AsyncValue.loading();
+
+    if (zoom < 16) {
+      print('aaa');
+    } else {
+      print('bbb');
+    }
     state = AsyncValue.data(zoom);
   }
 }

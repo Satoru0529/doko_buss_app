@@ -52,6 +52,8 @@ class StopsNotifier extends _$StopsNotifier {
     state = AsyncValue.data(stops);
   }
 
+  Future<void> a() async {}
+
   Future<void> loadPinAsset() async {
     final zoom = ref.read(zoomNotifierProvider).value;
       markerIcon = await BitmapDescriptor.fromAssetImage(
