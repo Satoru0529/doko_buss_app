@@ -1,5 +1,6 @@
 // ignore_for_file: cascade_invocations
 
+import 'package:buss_app/provider/zoom/zoom_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -14,7 +15,7 @@ class StopsNotifier extends _$StopsNotifier {
   @override
   FutureOr<List<Stops>> build(BuildContext context) async {
     await loadAssetStops(context);
-    await _loadPinAsset();
+    await loadPinAsset();
     return state.when(
       data: (data) => data,
       loading: () => [],
