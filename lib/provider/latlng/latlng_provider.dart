@@ -4,8 +4,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../model/stops/stops.dart';
-import '../map_create/map_create_notifier.dart';
 import '../location_provider.dart';
+import '../map_create/map_create_notifier.dart';
 
 part 'latlng_provider.g.dart';
 

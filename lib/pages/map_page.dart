@@ -1,4 +1,3 @@
-import 'package:buss_app/provider/zoom/zoom_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -9,6 +8,7 @@ import '../provider/latlng/latlng_provider.dart';
 import '../provider/map_create/map_create_notifier.dart';
 import '../provider/polyline/polyline_provider.dart';
 import '../provider/stops/stops_notifier.dart';
+import '../provider/zoom/zoom_notifier.dart';
 import '../widget/search_widget.dart';
 import '../widget/time_table_widget.dart';
 
@@ -87,37 +87,40 @@ class MapPage extends ConsumerWidget {
                       loading: () => {},
                       error: (_, __) => {},
                     ),
-                /// マーカーを表示
-                /// stops は edamitsu/stops.txt から取得したバス停のリスト
-                markers: stops.when(
-                  data: (stops) {
-                    return Set<Marker>.of(
-                      stops.map(
-                        (stop) {
-                          return Marker(
-                            markerId: MarkerId(stop.stopId),
-                            position: LatLng(stop.stopLat, stop.stopLon),
-                            icon: stop.stopId == 'busLocation'
-                                ? stopsNotifier.busLocationIcon!
-                                : stopsNotifier.busStopIcon!,
-                            infoWindow: InfoWindow(
-                              title: stop.stopName,
-                            ),
-                            onTap: () {
-                              // マーカーがタップされたらテキストフィールドのフォーカスを外す
-                              FocusScope.of(context).unfocus();
-                              // マーカーがタップされたらモーダルを表示
-                              // ignore: inference_failure_on_function_invocation
-                              showMaterialModalBottomSheet(
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(15),
-                                  ),
+
+                    /// マーカーを表示
+                    /// stops は edamitsu/stops.txt から取得したバス停のリスト
+                    markers: stops.when(
+                      data: (stops) {
+                        return Set<Marker>.of(
+                          stops.map(
+                            (stop) {
+                              return Marker(
+                                markerId: MarkerId(stop.stopId),
+                                position: LatLng(stop.stopLat, stop.stopLon),
+                                icon: stop.stopId == 'busLocation'
+                                    ? stopsNotifier.busLocationIcon!
+                                    : stopsNotifier.busStopIcon!,
+                                infoWindow: InfoWindow(
+                                  title: stop.stopName,
                                 ),
-                                context: context,
-                                builder: (context) => TimeTableModalSheet(
-                                  stopName: stop.stopName,
-                                ),
+                                onTap: () {
+                                  // マーカーがタップされたらテキストフィールドのフォーカスを外す
+                                  FocusScope.of(context).unfocus();
+                                  // マーカーがタップされたらモーダルを表示
+                                  // ignore: inference_failure_on_function_invocation
+                                  showMaterialModalBottomSheet(
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(15),
+                                      ),
+                                    ),
+                                    context: context,
+                                    builder: (context) => TimeTableModalSheet(
+                                      stopName: stop.stopName,
+                                    ),
+                                  );
+                                },
                               );
                             },
                           ),
