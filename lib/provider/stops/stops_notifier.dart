@@ -26,6 +26,12 @@ class StopsNotifier extends _$StopsNotifier {
   BitmapDescriptor? busStopIcon;
   BitmapDescriptor? busLocationIcon;
 
+  BitmapDescriptor? iosBussStopIcon;
+  BitmapDescriptor? androidBussStopIcon;
+
+  BitmapDescriptor? iosBussLocationIcon;
+  BitmapDescriptor? androidBussLocationIcon;
+
   Future<void> loadAssetStops(BuildContext context) async {
     final assets =
         await DefaultAssetBundle.of(context).loadString('edamitsu/stops.txt');
@@ -60,6 +66,24 @@ class StopsNotifier extends _$StopsNotifier {
     busLocationIcon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(size: Size(8, 8)),
       'images/kkrn_icon_bus_1.png',
+    );
+
+    iosBussStopIcon = await BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(size: Size(8, 8)),
+      'images/stop_icon_ios.png',
+    );
+    androidBussStopIcon = await BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(size: Size(8, 8)),
+      'images/stop_icon_android.png',
+    );
+
+    iosBussLocationIcon = await BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(size: Size(8, 8)),
+      'images/buss_icon_ios.png',
+    );
+    androidBussLocationIcon = await BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(size: Size(8, 8)),
+      'images/buss_icon_android.png',
     );
   }
 }

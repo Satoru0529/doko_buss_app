@@ -37,8 +37,8 @@ class SearchWidget extends ConsumerWidget {
                 BoxShadow(
                   spreadRadius: 2,
                   blurRadius: 3,
-                  color: Colors.black26,
-                  offset: Offset(2, 2),
+                  color: Colors.black12,
+                  offset: Offset(0, 1),
                 ),
               ],
               borderRadius: BorderRadius.circular(50),
