@@ -87,35 +87,37 @@ class MapPage extends ConsumerWidget {
                       loading: () => {},
                       error: (_, __) => {},
                     ),
-
-                    /// マーカーを表示
-                    /// stops は edamitsu/stops.txt から取得したバス停のリスト
-                    markers: stops.when(
-                      data: (stops) {
-                        return Set<Marker>.of(
-                          stops.map(
-                            (stop) {
-                              return Marker(
-                                markerId: MarkerId(stop.stopId),
-                                position: LatLng(stop.stopLat, stop.stopLon),
-                                icon: stopsNotifier.markerIcon!,
-                                infoWindow: InfoWindow(
-                                  title: stop.stopName,
+                /// マーカーを表示
+                /// stops は edamitsu/stops.txt から取得したバス停のリスト
+                markers: stops.when(
+                  data: (stops) {
+                    return Set<Marker>.of(
+                      stops.map(
+                        (stop) {
+                          return Marker(
+                            markerId: MarkerId(stop.stopId),
+                            position: LatLng(stop.stopLat, stop.stopLon),
+                            icon: stop.stopId == 'busLocation'
+                                ? stopsNotifier.busLocationIcon!
+                                : stopsNotifier.busStopIcon!,
+                            infoWindow: InfoWindow(
+                              title: stop.stopName,
+                            ),
+                            onTap: () {
+                              // マーカーがタップされたらテキストフィールドのフォーカスを外す
+                              FocusScope.of(context).unfocus();
+                              // マーカーがタップされたらモーダルを表示
+                              // ignore: inference_failure_on_function_invocation
+                              showMaterialModalBottomSheet(
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(15),
+                                  ),
                                 ),
-                                onTap: () {
-                                  // マーカーがタップされたらモーダルを表示
-                                  // ignore: inference_failure_on_function_invocation
-                                  showMaterialModalBottomSheet(
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(15),
-                                      ),
-                                    ),
-                                    context: context,
-                                    builder: (context) =>
-                                        const TimeTableModalSheet(),
-                                  );
-                                },
+                                context: context,
+                                builder: (context) => TimeTableModalSheet(
+                                  stopName: stop.stopName,
+                                ),
                               );
                             },
                           ),
@@ -180,7 +182,7 @@ class MapPage extends ConsumerWidget {
     const url =
         'https://docs.google.com/forms/d/e/1FAIpQLScMkbZAcC-Jy6gAyscSI7KfNkbRQdoqF5c_NF8U9Y6MLtulJg/viewform?usp=sf_link';
     final uri = Uri.parse(url);
-    if (!await canLaunchUrl(uri)) {
+    if (await canLaunchUrl(uri)) {
       // canLaunchUrlを使用
       await launchUrl(uri); // launchUrlを使用
     } else {

@@ -31,33 +31,61 @@ class SearchWidget extends ConsumerWidget {
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(10, 60, 10, 0),
-          child: TextFormField(
-            decoration: InputDecoration(
-              hintText: 'バス停を検索',
-              filled: true,
-              isDense: true,
-              fillColor: const Color.fromARGB(248, 231, 235, 241),
-              counterText: '',
-              prefixIcon: const Icon(Icons.search),
-              suffixIcon: searchEditingController.text.isEmpty
-                  ? const SizedBox()
-                  : IconButton(
-                      icon: const Icon(Icons.clear),
-                      onPressed: () async {
-                        searchEditingController.clear();
-                        await searchNotifier.searchStop('', context);
-                      },
-                    ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(32),
-              ),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              boxShadow: const [
+                BoxShadow(
+                  spreadRadius: 2,
+                  blurRadius: 3,
+                  color: Colors.black26,
+                  offset: Offset(2, 2),
+                ),
+              ],
+              borderRadius: BorderRadius.circular(50),
             ),
-            maxLength: 10,
-            controller: searchEditingController,
-            onChanged: (text) async {
-              await searchNotifier.searchStop(text, context);
-            },
-            cursorColor: Colors.grey,
+            child: TextFormField(
+              decoration: InputDecoration(
+                hintText: 'バス停を検索',
+                filled: true,
+                isDense: true,
+                fillColor: Colors.white,
+                counterText: '',
+                prefixIcon: const Icon(Icons.search),
+                suffixIcon: searchEditingController.text.isEmpty
+                    ? const SizedBox()
+                    : IconButton(
+                        icon: const Icon(Icons.clear),
+                        onPressed: () async {
+                          searchEditingController.clear();
+                          await searchNotifier.searchStop('', context);
+                        },
+                      ),
+                border: InputBorder.none, // 枠線なし
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide.none, // 枠線なし
+                  borderRadius: BorderRadius.circular(32),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide.none, // 枠線なし
+                  borderRadius: BorderRadius.circular(32),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide.none, // 枠線なし
+                  borderRadius: BorderRadius.circular(32),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide.none, // 枠線なし
+                  borderRadius: BorderRadius.circular(32),
+                ),
+                contentPadding: const EdgeInsets.all(16),
+              ),
+              maxLength: 10,
+              controller: searchEditingController,
+              onChanged: (text) async {
+                await searchNotifier.searchStop(text, context);
+              },
+              cursorColor: Colors.grey,
+            ),
           ),
         ),
 

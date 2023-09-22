@@ -24,7 +24,8 @@ class StopsNotifier extends _$StopsNotifier {
   }
 
   final List<Stops> stops = [];
-  BitmapDescriptor? markerIcon;
+  BitmapDescriptor? busStopIcon;
+  BitmapDescriptor? busLocationIcon;
 
   Future<void> loadAssetStops(BuildContext context) async {
     final assets =
@@ -52,13 +53,14 @@ class StopsNotifier extends _$StopsNotifier {
     state = AsyncValue.data(stops);
   }
 
-  Future<void> a() async {}
-
-  Future<void> loadPinAsset() async {
-    final zoom = ref.read(zoomNotifierProvider).value;
-      markerIcon = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(size: Size(8, 8)),
-        'images/kkrn_icon_bus_2.png',
-      );
+  Future<void> _loadPinAsset() async {
+    busStopIcon = await BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(size: Size(8, 8)),
+      'images/kkrn_icon_bus_2.png',
+    );
+    busLocationIcon = await BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(size: Size(8, 8)),
+      'images/kkrn_icon_bus_1.png',
+    );
   }
 }
