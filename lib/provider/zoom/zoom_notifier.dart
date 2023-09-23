@@ -1,3 +1,5 @@
+import 'package:buss_app/provider/stops/stops_notifier.dart';
+import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'zoom_notifier.g.dart';
@@ -14,14 +16,17 @@ class ZoomNotifier extends _$ZoomNotifier {
     );
   }
 
-  Future<void> changeZoom(double zoom) async {
+  Future<void> changeZoom(double zoom, BuildContext context) async {
     state = const AsyncValue.loading();
-
-    if (zoom < 16) {
-      print('aaa');
-    } else {
-      print('bbb');
-    }
-    state = AsyncValue.data(zoom);
+    await AsyncValue.guard(() async {
+      final stopsNotifier = ref.watch(stopsNotifierProvider(context).notifier);
+      
+      if (zoom < 16) {
+        // await stopsNotifier.deleteStops();
+      } else {
+        // await stopsNotifier.fetchStops(stops);
+      }
+      state = AsyncValue.data(zoom);
+    });
   }
 }

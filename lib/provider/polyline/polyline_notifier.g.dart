@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'polyline_provider.dart';
+part of 'polyline_notifier.dart';
 
 // **************************************************************************
 // RiverpodGenerator

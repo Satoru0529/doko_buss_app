@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-import '../provider/latlng/latlng_provider.dart';
+import '../provider/latlng/latlng_notifier.dart';
 import '../provider/map_create/map_create_notifier.dart';
-import '../provider/polyline/polyline_provider.dart';
+import '../provider/polyline/polyline_notifier.dart';
 import '../provider/stops/stops_notifier.dart';
 import '../provider/zoom/zoom_notifier.dart';
 import '../widget/search_widget.dart';
@@ -55,12 +54,6 @@ class MapPage extends ConsumerWidget {
             children: [
               ///現在地を GoogleMap に反映
               location.when(
-                loading: () => const Center(
-                  child: CircularProgressIndicator(),
-                ),
-                error: (error, stackTrace) => Center(
-                  child: Text(error.toString()),
-                ),
                 data: (position) {
                   return GoogleMap(
                     onMapCreated: mapNotifier.getMapController,
@@ -77,8 +70,10 @@ class MapPage extends ConsumerWidget {
                     /// カメラが移動したらズームレベルを取得
                     onCameraMoveStarted: () {
                       mapController.value!.getZoomLevel().then(
-                            zoomNotifier.changeZoom,
-                          );
+                        (value) {
+                          zoomNotifier.changeZoom(value, context);
+                        },
+                      );
                     },
 
                     /// ポリラインを表示
@@ -135,13 +130,20 @@ class MapPage extends ConsumerWidget {
                       loading: () => {},
                       error: (_, __) => {},
                     ),
-                    onCameraMove: (position) {},
                   );
                 },
+                loading: () => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                error: (error, stackTrace) => Center(
+                  child: Text(error.toString()),
+                ),
               ),
 
               /// 検索 widget
               const SearchWidget(),
+
+              /// 枝光周辺に移動するボタン
               Positioned(
                 left: 20,
                 top: deviceHeight - 70,
@@ -158,6 +160,8 @@ class MapPage extends ConsumerWidget {
                   },
                 ),
               ),
+
+              /// フィードバック画面に遷移するボタン
               Positioned(
                 right: 20,
                 bottom: 20,
@@ -166,7 +170,9 @@ class MapPage extends ConsumerWidget {
                     color: Colors.black38,
                     child: InkWell(
                       splashColor: Colors.black54,
-                      onTap: _launchURL,
+                      onTap: () async {
+                        await stopsNotifier.launchURL();
+                      },
                       child: const SizedBox(
                         width: 50,
                         height: 50,
@@ -184,18 +190,5 @@ class MapPage extends ConsumerWidget {
         ),
       ),
     );
-  }
-
-  // URLを開く関数
-  Future<void> _launchURL() async {
-    const url =
-        'https://docs.google.com/forms/d/e/1FAIpQLScMkbZAcC-Jy6gAyscSI7KfNkbRQdoqF5c_NF8U9Y6MLtulJg/viewform?usp=sf_link';
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      // canLaunchUrlを使用
-      await launchUrl(uri); // launchUrlを使用
-    } else {
-      throw 'URLを開けませんでした: $url';
-    }
   }
 }

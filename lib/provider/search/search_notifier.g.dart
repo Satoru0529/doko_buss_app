@@ -1,26 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'latlng_provider.dart';
+part of 'search_notifier.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$latLngNotifierHash() => r'e1827172991b63b41cfbdd640e2c63874f93210a';
+String _$searchNotifierHash() => r'f31e7ac335bb5268fd8500d4b191b6a85b83ac2d';
 
-/// See also [LatLngNotifier].
-@ProviderFor(LatLngNotifier)
-final latLngNotifierProvider =
-    AutoDisposeAsyncNotifierProvider<LatLngNotifier, LatLng?>.internal(
-  LatLngNotifier.new,
-  name: r'latLngNotifierProvider',
+/// See also [SearchNotifier].
+@ProviderFor(SearchNotifier)
+final searchNotifierProvider =
+    AutoDisposeAsyncNotifierProvider<SearchNotifier, List<Stops>>.internal(
+  SearchNotifier.new,
+  name: r'searchNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$latLngNotifierHash,
+      : _$searchNotifierHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$LatLngNotifier = AutoDisposeAsyncNotifier<LatLng?>;
+typedef _$SearchNotifier = AutoDisposeAsyncNotifier<List<Stops>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
