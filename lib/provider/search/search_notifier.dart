@@ -5,7 +5,7 @@ import '../../model/stops/stops.dart';
 import '../../utils/text_utils.dart';
 import '../stops/stops_notifier.dart';
 
-part 'search_provider.g.dart';
+part 'search_notifier.g.dart';
 
 @riverpod
 class SearchNotifier extends _$SearchNotifier {

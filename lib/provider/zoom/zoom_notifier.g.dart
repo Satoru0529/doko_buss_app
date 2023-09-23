@@ -6,7 +6,7 @@ part of 'zoom_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$zoomNotifierHash() => r'3af26cf6131b4f6cb2412dc4949d5768b87b62e4';
+String _$zoomNotifierHash() => r'c4b4e3772dbf8a00d5802e1f63d5c198607a8e42';
 
 /// 画面のズームレンズを管理する
 ///

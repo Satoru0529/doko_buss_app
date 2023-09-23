@@ -6,7 +6,7 @@ part of 'stops_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$stopsNotifierHash() => r'991e95e63fa20e92917ef0391d8bb351cd544710';
+String _$stopsNotifierHash() => r'40ea168a451d34ec0db70988f0bca287df8cc549';
 
 /// Copied from Dart SDK
 class _SystemHash {

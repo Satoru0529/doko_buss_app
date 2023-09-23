@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../model/stops/stops.dart';
 
-part 'polyline_provider.g.dart';
+part 'polyline_notifier.g.dart';
 
 @riverpod
 class PolylineProvider extends _$PolylineProvider {

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../model/stops/stops.dart';
 import '../../utils/text_utils.dart';
@@ -61,5 +62,32 @@ class StopsNotifier extends _$StopsNotifier {
       const ImageConfiguration(size: Size(8, 8)),
       'images/kkrn_icon_bus_1.png',
     );
+  }
+
+  Future<void> deleteStops() async {
+    stops.clear();
+    state = AsyncValue.data(stops);
+  }
+
+  Future<void> fetchStops(List<Stops> stops) async {
+    state = const AsyncValue.loading();
+    await AsyncValue.guard(
+      () async {
+        state = AsyncValue.data(stops);
+      },
+    );
+  } 
+
+  // URLを開く関数
+  Future<void> launchURL() async {
+    const url =
+        'https://docs.google.com/forms/d/e/1FAIpQLScMkbZAcC-Jy6gAyscSI7KfNkbRQdoqF5c_NF8U9Y6MLtulJg/viewform?usp=sf_link';
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      // canLaunchUrlを使用
+      await launchUrl(uri); // launchUrlを使用
+    } else {
+      throw 'URLを開けませんでした: $url';
+    }
   }
 }
