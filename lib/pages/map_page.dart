@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -98,9 +100,13 @@ class MapPage extends ConsumerWidget {
                               return Marker(
                                 markerId: MarkerId(stop.stopId),
                                 position: LatLng(stop.stopLat, stop.stopLon),
-                                icon: stop.stopId == 'busLocation'
-                                    ? stopsNotifier.busLocationIcon!
-                                    : stopsNotifier.busStopIcon!,
+                                icon: Platform.isIOS
+                                  ? stop.stopId == 'busLocation'
+                                      ? stopsNotifier.iosBussLocationIcon!
+                                      : stopsNotifier.iosBussStopIcon!
+                                  : stop.stopId == 'busLocation'
+                                      ? stopsNotifier.androidBussLocationIcon!
+                                      : stopsNotifier.androidBussStopIcon!,
                                 infoWindow: InfoWindow(
                                   title: stop.stopName,
                                 ),
