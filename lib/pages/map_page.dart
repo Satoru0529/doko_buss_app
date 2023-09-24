@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:buss_app/widget/speed_dial_fab_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -64,6 +65,8 @@ class MapPage extends ConsumerWidget {
                       ),
                       zoom: 16,
                     ),
+                    myLocationEnabled: true,
+                    myLocationButtonEnabled: false,
                     mapToolbarEnabled: false,
                     zoomControlsEnabled: false,
 
@@ -143,48 +146,8 @@ class MapPage extends ConsumerWidget {
               /// 検索 widget
               const SearchWidget(),
 
-              /// 枝光周辺に移動するボタン
-              Positioned(
-                left: 20,
-                top: deviceHeight - 70,
-                child: FloatingActionButton(
-                  onPressed: () async {
-                    await mapController.value!.animateCamera(
-                      CameraUpdate.newCameraPosition(
-                        const CameraPosition(
-                          target: LatLng(33.8794067, 130.8178816),
-                          zoom: 16,
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-
-              /// フィードバック画面に遷移するボタン
-              Positioned(
-                right: 20,
-                bottom: 20,
-                child: ClipOval(
-                  child: Material(
-                    color: Colors.black38,
-                    child: InkWell(
-                      splashColor: Colors.black54,
-                      onTap: () async {
-                        await stopsNotifier.launchURL();
-                      },
-                      child: const SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: Icon(
-                          Icons.message,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              )
+              /// FAB
+              const SpeedDialFabWidget(),
             ],
           ),
         ),
