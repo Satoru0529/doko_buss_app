@@ -50,7 +50,10 @@ class SearchWidget extends ConsumerWidget {
                 isDense: true,
                 fillColor: Colors.white,
                 counterText: '',
-                prefixIcon: const Icon(Icons.search),
+                prefixIcon: const Icon(
+                  Icons.search,
+                  color: Colors.blue,
+                ),
                 suffixIcon: searchEditingController.text.isEmpty
                     ? const SizedBox()
                     : IconButton(
