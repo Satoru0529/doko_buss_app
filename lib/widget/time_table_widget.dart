@@ -8,42 +8,77 @@ class TimeTableModalSheet extends ConsumerWidget {
   final Stops stop;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SafeArea(
-      top: false,
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Text(
-                stop.stopName,
-                style:
-                    const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+    return SizedBox(
+      height: 600,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: Colors.blue.shade300,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(15),
+            topRight: Radius.circular(15),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Align(
+                child: Container(
+                  width: 100,
+                  height: 5,
+                  decoration: const BoxDecoration(
+                      color: Colors.white38,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(16),
+                      )),
+                ),
               ),
-            ),
-            const CustomCard(
-              title: 'バス停A',
-              leadingText: '09:00',
-            ),
-            const CustomCard(
-              title: 'バス停B',
-              leadingText: '09:30',
-            ),
-            const CustomCard(
-              title: 'バス停C',
-              leadingText: '10:00',
-            ),
-            const CustomCard(
-              title: 'バス停D',
-              leadingText: '10:30',
-            ),
-            const CustomCard(
-              title: 'バス停E',
-              leadingText: '10:45',
-            ),
-          ],
+              const SizedBox(
+                height: 10,
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.location_on,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      stop.stopName,
+                      style: const TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const CustomCard(
+                title: '荒手路線',
+                leadingText: '09:00',
+              ),
+              const CustomCard(
+                title: '枝光路線',
+                leadingText: '09:30',
+              ),
+              const CustomCard(
+                title: '荒手路線',
+                leadingText: '10:00',
+              ),
+              const CustomCard(
+                title: '枝光路線',
+                leadingText: '10:30',
+              ),
+              const CustomCard(
+                title: '荒手路線',
+                leadingText: '10:45',
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -65,7 +100,7 @@ class CustomCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(6), // 丸い形状
       ),
-      margin: const EdgeInsets.all(8), // カード間の余白
+      margin: const EdgeInsets.all(5), // カード間の余白
       child: ListTile(
         title: Text(
           title,

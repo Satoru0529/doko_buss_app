@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:buss_app/widget/time_line_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -100,9 +101,13 @@ class GoogleMapWidget extends ConsumerWidget {
                             ),
                           ),
                           context: context,
-                          builder: (context) => TimeTableModalSheet(
-                            stop: stop,
-                          ),
+                          builder: (context) => stop.stopId == 'busLocation'
+                              ? TimeLineModalSheet(
+                                  stop: stop,
+                                )
+                              : TimeTableModalSheet(
+                                  stop: stop,
+                                ),
                         );
                       },
                     );
