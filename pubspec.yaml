@@ -39,15 +39,15 @@ dev_dependencies:
 # スプラッシュ生成コマンド (flutter pub run flutter_native_splash:create)
 flutter_native_splash:
   color: '#0B131B'
-  image: 'images/RiverPotter.jpg'
+  image: 'images/app_icon_simple.png'
   color_dark: '#0B131B'
-  image_dark: 'images/RiverPotter.jpg'
+  image_dark: 'images/app_icon_simple.png'
   fullscreen: true
   android_12:
     icon_background_color: '#0B131B'
-    image: 'images/RiverPotter.jpg'
+    image: 'images/app_icon_simple.png'
     icon_background_color_dark: '#0B131B'
-    image_dark: 'images/RiverPotter.jpg'
+    image_dark: 'images/app_icon_simple.png'
 
 flutter:
   uses-material-design: true
@@ -59,4 +59,4 @@ flutter:
 flutter_icons:       
   android: true
   ios: true
-  image_path:  'images/app_icon.png'
+  image_path:  'images/app_icon_simple.png'
