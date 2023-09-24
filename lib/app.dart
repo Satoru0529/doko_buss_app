@@ -8,12 +8,9 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    /// デバイスの高さを取得
-    final deviceHeight = MediaQuery.of(context).size.height;
-
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MapPage(deviceHeight: deviceHeight),
+      home: MapPage(),
     );
   }
 }

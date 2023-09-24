@@ -43,7 +43,7 @@ class PolylineProvider extends _$PolylineProvider {
 
   /// PolylinePoints を使って、バス停の緯度経度を元に Polyline を作成
   /// 返り値は List<LatLng> で、Polyline を作成するための緯度経度のリストを返す
-  Future<List<LatLng>> createPolyline(String file) async {
+  Future<List<LatLng>> createPolyline(String file, TravelMode travel) async {
     final stops = await readStops(context, file);
     final polylineCoordinates = <LatLng>[];
     final polylinePoints = PolylinePoints();
@@ -51,7 +51,7 @@ class PolylineProvider extends _$PolylineProvider {
       apiKey,
       PointLatLng(stops.first.stopLat, stops.first.stopLon),
       PointLatLng(stops.last.stopLat, stops.last.stopLon),
-      travelMode: TravelMode.walking,
+      travelMode: travel,
       wayPoints: stops
           .map(
             (e) => PolylineWayPoint(
@@ -75,7 +75,10 @@ class PolylineProvider extends _$PolylineProvider {
   Future<void> getRoutes() async {
     /// 荒手ルートの路線図
     var pointsArate = <LatLng>[];
-    pointsArate = await createPolyline('edamitsu/arate.txt');
+    pointsArate = await createPolyline(
+      'edamitsu/arate.txt',
+      TravelMode.driving,
+    );
     final polylineArate = Polyline(
       polylineId: const PolylineId('Arate'),
       color: Colors.blue,
@@ -85,7 +88,10 @@ class PolylineProvider extends _$PolylineProvider {
 
     /// 枝光ルートの路線図
     var pointsEdamitsu = <LatLng>[];
-    pointsEdamitsu = await createPolyline('edamitsu/edamitsu.txt');
+    pointsEdamitsu = await createPolyline(
+      'edamitsu/edamitsu.txt',
+      TravelMode.driving,
+    );
     final polylineEdamitsu = Polyline(
       polylineId: const PolylineId('Edamitsu'),
       color: Colors.red,
@@ -95,7 +101,10 @@ class PolylineProvider extends _$PolylineProvider {
 
     /// 日の出ルートの路線図
     var pointsHinode = <LatLng>[];
-    pointsHinode = await createPolyline('edamitsu/hinode.txt');
+    pointsHinode = await createPolyline(
+      'edamitsu/hinode.txt',
+      TravelMode.driving,
+    );
     final polylineHinode = Polyline(
       polylineId: const PolylineId('Hinode'),
       color: Colors.green,
@@ -103,10 +112,11 @@ class PolylineProvider extends _$PolylineProvider {
       points: pointsHinode,
     );
 
-    /// 山王富士見ルートの路線図
+    /// 山王藤見ルートの路線図
     var pointsSannouFujimi = <LatLng>[];
     pointsSannouFujimi = await createPolyline(
       'edamitsu/sannou_fujimi.txt',
+      TravelMode.walking,
     );
     final polylineSannouFujimi = Polyline(
       polylineId: const PolylineId('SannouFujimi'),
@@ -117,7 +127,10 @@ class PolylineProvider extends _$PolylineProvider {
 
     /// 山王ルートの路線図
     var pointsSannou = <LatLng>[];
-    pointsSannou = await createPolyline('edamitsu/sannou.txt');
+    pointsSannou = await createPolyline(
+      'edamitsu/sannou.txt',
+      TravelMode.walking,
+    );
     final polylineSannou = Polyline(
       polylineId: const PolylineId('Sannou'),
       color: const Color.fromARGB(255, 200, 34, 229),

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -17,7 +16,6 @@ class LatLngNotifier extends _$LatLngNotifier {
     final position = await ref.refresh(locationProvider.future);
     final latLng = LatLng(position!.latitude, position.longitude);
     state = AsyncValue.data(latLng);
-    FlutterNativeSplash.remove();
     return latLng;
   }
 

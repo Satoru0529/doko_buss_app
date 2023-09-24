@@ -88,20 +88,6 @@ class StopsNotifier extends _$StopsNotifier {
     );
   }
 
-  Future<void> deleteStops() async {
-    stops.clear();
-    state = AsyncValue.data(stops);
-  }
-
-  Future<void> fetchStops(List<Stops> stops) async {
-    state = const AsyncValue.loading();
-    await AsyncValue.guard(
-      () async {
-        state = AsyncValue.data(stops);
-      },
-    );
-  } 
-
   // URLを開く関数
   Future<void> launchURL() async {
     const url =
@@ -110,8 +96,6 @@ class StopsNotifier extends _$StopsNotifier {
     if (await canLaunchUrl(uri)) {
       // canLaunchUrlを使用
       await launchUrl(uri); // launchUrlを使用
-    } else {
-      throw 'URLを開けませんでした: $url';
-    }
+    } else {}
   }
 }
