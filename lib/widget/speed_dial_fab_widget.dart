@@ -17,10 +17,12 @@ class SpeedDialFabWidget extends ConsumerWidget {
       right: 20,
       bottom: 20,
       child: SpeedDial(
+        activeIcon: Icons.close,
+        backgroundColor: Colors.blue.shade300,
         children: [
           SpeedDialChild(
-            child: const Icon(Icons.access_time),
-            label: '枝光周辺',
+            child: const Icon(Icons.location_on),
+            label: '枝光周辺に移動',
             onTap: () async {
               await mapController.value!.animateCamera(
                 CameraUpdate.newCameraPosition(
@@ -40,34 +42,11 @@ class SpeedDialFabWidget extends ConsumerWidget {
             },
           ),
         ],
+        child: const Icon(
+          Icons.info,
+          size: 30,
+        ),
       ),
     );
   }
 }
-
-
-
-              // /// フィードバック画面に遷移するボタン
-              // Positioned(
-              //   right = 20,
-              //   bottom = 20,
-              //   child = ClipOval(
-              //     child: Material(
-              //       color: Colors.black38,
-              //       child: InkWell(
-              //         splashColor: Colors.black54,
-              //         onTap: () async {
-                       
-              //         },
-              //         child: const SizedBox(
-              //           width: 50,
-              //           height: 50,
-              //           child: Icon(
-              //             Icons.message,
-              //             color: Colors.white,
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // )
