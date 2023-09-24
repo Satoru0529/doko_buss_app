@@ -59,13 +59,13 @@ class MapPage extends ConsumerWidget {
                     onMapCreated: mapNotifier.getMapController,
                     initialCameraPosition: CameraPosition(
                       target: LatLng(
-                        position?.latitude ?? 36,
-                        position?.longitude ?? 140,
+                        position?.latitude ?? 33.8794067,
+                        position?.longitude ?? 130.8178816,
                       ),
                       zoom: 16,
                     ),
-                    myLocationEnabled: true,
                     mapToolbarEnabled: false,
+                    zoomControlsEnabled: false,
 
                     /// カメラが移動したらズームレベルを取得
                     onCameraMoveStarted: () {
@@ -96,12 +96,12 @@ class MapPage extends ConsumerWidget {
                                 markerId: MarkerId(stop.stopId),
                                 position: LatLng(stop.stopLat, stop.stopLon),
                                 icon: Platform.isIOS
-                                  ? stop.stopId == 'busLocation'
-                                      ? stopsNotifier.iosBussLocationIcon!
-                                      : stopsNotifier.iosBussStopIcon!
-                                  : stop.stopId == 'busLocation'
-                                      ? stopsNotifier.androidBussLocationIcon!
-                                      : stopsNotifier.androidBussStopIcon!,
+                                    ? stop.stopId == 'busLocation'
+                                        ? stopsNotifier.iosBussLocationIcon!
+                                        : stopsNotifier.iosBussStopIcon!
+                                    : stop.stopId == 'busLocation'
+                                        ? stopsNotifier.androidBussLocationIcon!
+                                        : stopsNotifier.androidBussStopIcon!,
                                 infoWindow: InfoWindow(
                                   title: stop.stopName,
                                 ),
@@ -118,7 +118,7 @@ class MapPage extends ConsumerWidget {
                                     ),
                                     context: context,
                                     builder: (context) => TimeTableModalSheet(
-                                      stopName: stop.stopName,
+                                      stop: stop,
                                     ),
                                   );
                                 },
