@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../model/stops/stops.dart';
+
 class TimeTableModalSheet extends ConsumerWidget {
-  const TimeTableModalSheet({super.key, required this.stopName});
-  final String stopName;
+  const TimeTableModalSheet({super.key, required this.stop});
+  final Stops stop;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
@@ -16,7 +18,7 @@ class TimeTableModalSheet extends ConsumerWidget {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Text(
-                stopName,
+                stop.stopName,
                 style:
                     const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               ),
