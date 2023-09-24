@@ -43,7 +43,7 @@ class SpeedDialFabWidget extends ConsumerWidget {
           ),
         ],
         child: const Icon(
-          Icons.info,
+          Icons.menu,
           size: 30,
         ),
       ),
