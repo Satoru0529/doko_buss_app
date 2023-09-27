@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:timelines/timelines.dart';
 
 import '../model/stops/stops.dart';
@@ -56,10 +55,11 @@ class TimeLineModalSheet extends ConsumerWidget {
                   width: 100,
                   height: 5,
                   decoration: const BoxDecoration(
-                      color: Colors.white38,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(16),
-                      )),
+                    color: Colors.white38,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(16),
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(
