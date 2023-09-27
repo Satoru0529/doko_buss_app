@@ -39,15 +39,15 @@ dev_dependencies:
 # すささんの記事（https://zenn.dev/flutteruniv_dev/articles/20220406-061305-flutter-native-splash?redirected=1）
 # スプラッシュ生成コマンド (flutter pub run flutter_native_splash:create)
 flutter_native_splash:
-  color: '#0B131B'
+  color: '#6293C4'
   image: 'images/app_icon_simple.png'
-  color_dark: '#0B131B'
+  color_dark: '#6293C4'
   image_dark: 'images/app_icon_simple.png'
   fullscreen: true
   android_12:
-    icon_background_color: '#0B131B'
+    icon_background_color: '#6293C4'
     image: 'images/app_icon_simple.png'
-    icon_background_color_dark: '#0B131B'
+    icon_background_color_dark: '#6293C4'
     image_dark: 'images/app_icon_simple.png'
 
 flutter:
