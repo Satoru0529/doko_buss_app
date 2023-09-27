@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../model/stops/stops.dart';
+import '../../utils/api_key.dart';
 
 part 'polyline_notifier.g.dart';
 
@@ -20,9 +21,6 @@ class PolylineProvider extends _$PolylineProvider {
       error: (_, __) => {},
     );
   }
-
-  /// todo Google Maps Platform API Key ↓これを非表示にする
-  final String apiKey = 'AIzaSyCsi4yLKlnTJb74RpUMfDiXrgwfa_gvsXI';
 
   /// edamitsu フォルダからバス停の緯度経度を取得
   /// 返り値は List<Stops> で、バス停の緯度経度をリストにして返す
