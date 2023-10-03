@@ -75,7 +75,7 @@ class StopsNotifier extends _$StopsNotifier {
     );
     androidBussStopIcon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(size: Size(8, 8)),
-      'images/stop_icon_android.png',
+      'images/stop_icon_android.jpeg',
     );
 
     iosBussLocationIcon = await BitmapDescriptor.fromAssetImage(
@@ -93,7 +93,7 @@ class StopsNotifier extends _$StopsNotifier {
     const url =
         'https://docs.google.com/forms/d/e/1FAIpQLScMkbZAcC-Jy6gAyscSI7KfNkbRQdoqF5c_NF8U9Y6MLtulJg/viewform?usp=sf_link';
     final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
+    if (!await canLaunchUrl(uri)) {
       // canLaunchUrlを使用
       await launchUrl(uri); // launchUrlを使用
     } else {}

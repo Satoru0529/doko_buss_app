@@ -1,4 +1,4 @@
-package com.example.buss_app
+package com.riverpotter.buss_app
 
 import io.flutter.embedding.android.FlutterActivity
 

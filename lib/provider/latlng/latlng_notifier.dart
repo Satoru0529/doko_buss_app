@@ -14,6 +14,9 @@ class LatLngNotifier extends _$LatLngNotifier {
   @override
   FutureOr<LatLng?> build() async {
     final position = await ref.refresh(locationProvider.future);
+    if (position == null) {
+      return const LatLng(33.8794067, 130.8178816);
+    }
     final latLng = LatLng(position!.latitude, position.longitude);
     state = AsyncValue.data(latLng);
     return latLng;
