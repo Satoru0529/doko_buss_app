@@ -75,7 +75,7 @@ class StopsNotifier extends _$StopsNotifier {
     );
     androidBussStopIcon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(size: Size(8, 8)),
-      'images/stop_icon_android.jpeg',
+      'images/stop_icon_android.png',
     );
 
     iosBussLocationIcon = await BitmapDescriptor.fromAssetImage(
