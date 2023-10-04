@@ -1,16 +1,16 @@
 import 'dart:io';
 
-import 'package:buss_app/widget/time_line_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-import '../provider/latlng/latlng_notifier.dart';
-import '../provider/map_create/map_create_notifier.dart';
-import '../provider/polyline/polyline_notifier.dart';
-import '../provider/stops/stops_notifier.dart';
-import '../provider/zoom/zoom_notifier.dart';
+import '../../../provider/latlng/latlng_notifier.dart';
+import '../../../provider/map_create/map_create_notifier.dart';
+import '../../../provider/polyline/polyline_notifier.dart';
+import '../../../provider/stops/stops_notifier.dart';
+import '../../../provider/zoom/zoom_notifier.dart';
+import 'time_line_widget.dart';
 import 'time_table_widget.dart';
 
 class GoogleMapWidget extends ConsumerWidget {

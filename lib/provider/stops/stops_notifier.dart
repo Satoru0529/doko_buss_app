@@ -59,6 +59,10 @@ class StopsNotifier extends _$StopsNotifier {
     state = AsyncValue.data(stops);
   }
 
+  // Future<void> loadBusLocation() async {
+  //   final assets
+  // }
+
   Future<void> loadPinAsset() async {
     busStopIcon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(size: Size(8, 8)),

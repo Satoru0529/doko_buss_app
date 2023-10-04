@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../provider/map_create/map_create_notifier.dart';
-import '../provider/stops/stops_notifier.dart';
+import '../../../provider/map_create/map_create_notifier.dart';
+import '../../../provider/stops/stops_notifier.dart';
 
 class SpeedDialFabWidget extends ConsumerWidget {
   const SpeedDialFabWidget({super.key});
