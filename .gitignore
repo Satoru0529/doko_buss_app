@@ -31,7 +31,9 @@ migrate_working_dir/
 .pub/
 /build/
 **/.fvm/flutter_sdk
-/lib/utils/api_key.dart
+
+# リリースビルドの際はコメントアウト
+# /lib/utils/api_key.dart
 
 # Symbolication related
 app.*.symbols
