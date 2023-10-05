@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'pages/map/map_page.dart';
+import 'pages/map_page.dart';
 
 class App extends ConsumerWidget {
   const App({super.key});
