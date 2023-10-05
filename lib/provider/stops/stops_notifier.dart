@@ -15,6 +15,7 @@ class StopsNotifier extends _$StopsNotifier {
   @override
   FutureOr<List<Stops>> build(BuildContext context) async {
     await loadAssetStops(context);
+    await loadBusLocation();
     await loadPinAsset();
     return state.when(
       data: (data) => data,
@@ -24,6 +25,7 @@ class StopsNotifier extends _$StopsNotifier {
   }
 
   final List<Stops> stops = [];
+  final List<Stops> busLocation = [];
   BitmapDescriptor? busStopIcon;
   BitmapDescriptor? busLocationIcon;
 
@@ -59,9 +61,29 @@ class StopsNotifier extends _$StopsNotifier {
     state = AsyncValue.data(stops);
   }
 
-  // Future<void> loadBusLocation() async {
-  //   final assets
-  // }
+  Future<void> loadBusLocation() async {
+    final assets = await DefaultAssetBundle.of(context)
+        .loadString('edamitsu/bus_location.txt');
+    assets.split('\n').forEach(
+      (element) async {
+        final newStop = Stops(
+          stopId: element.split(',')[0],
+          stopName: element.split(',')[1],
+          stopLat: double.parse(element.split(',')[2]),
+          stopLon: double.parse(element.split(',')[3]),
+        );
+        busLocation.add(newStop);
+      },
+    );
+    // for (var i = 0; i < busLocation.length; i++) {
+    //   final bussLocation = busLocation[i];
+    //   await Future.delayed(const Duration(seconds: 3), () {
+    //     stops.add(bussLocation);
+    //     state = AsyncValue.data(stops);
+    //   });
+    //   stops.removeLast();
+    // }
+  }
 
   Future<void> loadPinAsset() async {
     busStopIcon = await BitmapDescriptor.fromAssetImage(
