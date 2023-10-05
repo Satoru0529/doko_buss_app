@@ -22,8 +22,7 @@ StopTimes _$StopTimesFromJson(Map<String, dynamic> json) {
 mixin _$StopTimes {
   String get id => throw _privateConstructorUsedError;
   String get tripId => throw _privateConstructorUsedError;
-  int get arrivalTime => throw _privateConstructorUsedError;
-  int get departureTime => throw _privateConstructorUsedError;
+  String get arrivalTime => throw _privateConstructorUsedError;
   String get stopId => throw _privateConstructorUsedError;
   int get stopSequence => throw _privateConstructorUsedError;
   String get stopHeadsign => throw _privateConstructorUsedError;
@@ -44,8 +43,7 @@ abstract class $StopTimesCopyWith<$Res> {
   $Res call(
       {String id,
       String tripId,
-      int arrivalTime,
-      int departureTime,
+      String arrivalTime,
       String stopId,
       int stopSequence,
       String stopHeadsign,
@@ -69,7 +67,6 @@ class _$StopTimesCopyWithImpl<$Res, $Val extends StopTimes>
     Object? id = null,
     Object? tripId = null,
     Object? arrivalTime = null,
-    Object? departureTime = null,
     Object? stopId = null,
     Object? stopSequence = null,
     Object? stopHeadsign = null,
@@ -88,11 +85,7 @@ class _$StopTimesCopyWithImpl<$Res, $Val extends StopTimes>
       arrivalTime: null == arrivalTime
           ? _value.arrivalTime
           : arrivalTime // ignore: cast_nullable_to_non_nullable
-              as int,
-      departureTime: null == departureTime
-          ? _value.departureTime
-          : departureTime // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       stopId: null == stopId
           ? _value.stopId
           : stopId // ignore: cast_nullable_to_non_nullable
@@ -127,8 +120,7 @@ abstract class _$$_StopTimesCopyWith<$Res> implements $StopTimesCopyWith<$Res> {
   $Res call(
       {String id,
       String tripId,
-      int arrivalTime,
-      int departureTime,
+      String arrivalTime,
       String stopId,
       int stopSequence,
       String stopHeadsign,
@@ -150,7 +142,6 @@ class __$$_StopTimesCopyWithImpl<$Res>
     Object? id = null,
     Object? tripId = null,
     Object? arrivalTime = null,
-    Object? departureTime = null,
     Object? stopId = null,
     Object? stopSequence = null,
     Object? stopHeadsign = null,
@@ -169,11 +160,7 @@ class __$$_StopTimesCopyWithImpl<$Res>
       arrivalTime: null == arrivalTime
           ? _value.arrivalTime
           : arrivalTime // ignore: cast_nullable_to_non_nullable
-              as int,
-      departureTime: null == departureTime
-          ? _value.departureTime
-          : departureTime // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       stopId: null == stopId
           ? _value.stopId
           : stopId // ignore: cast_nullable_to_non_nullable
@@ -205,7 +192,6 @@ class _$_StopTimes implements _StopTimes {
       {this.id = '',
       this.tripId = '',
       this.arrivalTime = 0,
-      this.departureTime = 0,
       this.stopId = '',
       this.stopSequence = 0,
       this.stopHeadsign = '',
@@ -223,10 +209,7 @@ class _$_StopTimes implements _StopTimes {
   final String tripId;
   @override
   @JsonKey()
-  final int arrivalTime;
-  @override
-  @JsonKey()
-  final int departureTime;
+  final String arrivalTime;
   @override
   @JsonKey()
   final String stopId;
@@ -245,7 +228,7 @@ class _$_StopTimes implements _StopTimes {
 
   @override
   String toString() {
-    return 'StopTimes(id: $id, tripId: $tripId, arrivalTime: $arrivalTime, departureTime: $departureTime, stopId: $stopId, stopSequence: $stopSequence, stopHeadsign: $stopHeadsign, pickupType: $pickupType, dropOffType: $dropOffType)';
+    return 'StopTimes(id: $id, tripId: $tripId, arrivalTime: $arrivalTime, stopId: $stopId, stopSequence: $stopSequence, stopHeadsign: $stopHeadsign, pickupType: $pickupType, dropOffType: $dropOffType)';
   }
 
   @override
@@ -257,8 +240,6 @@ class _$_StopTimes implements _StopTimes {
             (identical(other.tripId, tripId) || other.tripId == tripId) &&
             (identical(other.arrivalTime, arrivalTime) ||
                 other.arrivalTime == arrivalTime) &&
-            (identical(other.departureTime, departureTime) ||
-                other.departureTime == departureTime) &&
             (identical(other.stopId, stopId) || other.stopId == stopId) &&
             (identical(other.stopSequence, stopSequence) ||
                 other.stopSequence == stopSequence) &&
@@ -272,17 +253,8 @@ class _$_StopTimes implements _StopTimes {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      tripId,
-      arrivalTime,
-      departureTime,
-      stopId,
-      stopSequence,
-      stopHeadsign,
-      pickupType,
-      dropOffType);
+  int get hashCode => Object.hash(runtimeType, id, tripId, arrivalTime, stopId,
+      stopSequence, stopHeadsign, pickupType, dropOffType);
 
   @JsonKey(ignore: true)
   @override
@@ -302,8 +274,7 @@ abstract class _StopTimes implements StopTimes {
   const factory _StopTimes(
       {final String id,
       final String tripId,
-      final int arrivalTime,
-      final int departureTime,
+      final String arrivalTime,
       final String stopId,
       final int stopSequence,
       final String stopHeadsign,
@@ -318,9 +289,7 @@ abstract class _StopTimes implements StopTimes {
   @override
   String get tripId;
   @override
-  int get arrivalTime;
-  @override
-  int get departureTime;
+  String get arrivalTime;
   @override
   String get stopId;
   @override
