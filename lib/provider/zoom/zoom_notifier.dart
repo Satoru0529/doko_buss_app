@@ -1,6 +1,7 @@
-import 'package:buss_app/provider/stops/stops_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../stops/stops_notifier.dart';
 
 part 'zoom_notifier.g.dart';
 
@@ -20,7 +21,7 @@ class ZoomNotifier extends _$ZoomNotifier {
     state = const AsyncValue.loading();
     await AsyncValue.guard(() async {
       final stopsNotifier = ref.watch(stopsNotifierProvider(context).notifier);
-      
+
       if (zoom < 16) {
         // await stopsNotifier.deleteStops();
       } else {

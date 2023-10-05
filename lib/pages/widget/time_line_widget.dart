@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timelines/timelines.dart';
 
-import '../model/stops/stops.dart';
+import '../../model/stops/stops.dart';
 
 class TimeLine {
   TimeLine({required this.time, required this.stopName});

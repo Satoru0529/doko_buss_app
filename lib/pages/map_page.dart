@@ -1,9 +1,9 @@
-import 'package:buss_app/widget/google_map_widget.dart';
-import 'package:buss_app/widget/speed_dial_fab_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../widget/search_widget.dart';
+import 'widget/google_map_widget.dart';
+import 'widget/search_widget.dart';
+import 'widget/speed_dial_fab_widget.dart';
 
 class MapPage extends ConsumerWidget {
   const MapPage({super.key});
