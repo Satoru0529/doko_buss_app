@@ -4,6 +4,10 @@
   - バスの現在地をリアルタイムで確認できるアプリです。
   - 北九州市八幡東区枝光地区を対象としています。
 
+<img src="images/map_screen.jpg" width="250">
+<img src="images/stop_times_sheet.jpg" width="250">
+<img src="images/stops_sheet.jpg" width="250">
+
 ## 今後の実装予定
   - バスの現在地をリアルタイムで取得し、アプリのマップ上に表示
     - バス一台ごとに GPS を発信できるデバイスを取り付け、そのデバイスからデータを取得する実装
@@ -36,6 +40,8 @@
   - firebase_core: ^2.15.0
   - flutter:
     sdk: flutter
+  - flutter_launcher_icons: ^0.13.1
+  - flutter_native_splash: ^2.1.3+1
   - flutter_polyline_points: ^1.0.0
   - flutter_riverpod: ^2.3.6
   - freezed_annotation: ^2.4.1
@@ -44,11 +50,13 @@
   - google_maps_flutter: ^2.2.8
   - json_annotation: ^4.8.1
   - riverpod_annotation: ^2.1.2
+  - timelines: ^0.1.0
+  - url_launcher: ^6.0.9
 
 - dev_dep
-  - build_runner: 
+  - build_runner:
   - flutter_lints: ^2.0.0
   - freezed: ^2.4.2
   - json_serializable: ^6.7.1
   - pedantic_mono:
-  - riverpod_generator: 
+  - riverpod_generator:
