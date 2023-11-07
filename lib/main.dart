@@ -6,7 +6,6 @@ import 'app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Future(() async {
     final permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
