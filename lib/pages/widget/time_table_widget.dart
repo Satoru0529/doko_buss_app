@@ -1,7 +1,7 @@
+import 'package:buss_app/model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../model/stops/stops.dart';
 
 class TimeTableModalSheet extends ConsumerWidget {
   const TimeTableModalSheet({super.key, required this.stop});
