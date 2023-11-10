@@ -53,7 +53,7 @@ class GoogleMapWidget extends ConsumerWidget {
 
           /// カメラが移動したらズームレベルを取得
           onCameraMoveStarted: () {
-            mapController.value!.getZoomLevel().then(
+            mapController!.getZoomLevel().then(
               (value) {
                 zoomNotifier.changeZoom(value, context);
               },

@@ -26,12 +26,12 @@ class LatLngNotifier extends _$LatLngNotifier {
   Future<void> searchPosition(Stops stops) async {
     state = const AsyncValue.loading();
 
-    final mapController = ref.read(cameraMoveNotifierProvider).value;
+    final mapController = ref.read(cameraMoveNotifierProvider);
 
     await AsyncValue.guard(
       () async {
         /// マーカーの位置に移動
-        await mapController?.animateCamera(
+        await mapController!.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
               target: LatLng(stops.stopLat, stops.stopLon),

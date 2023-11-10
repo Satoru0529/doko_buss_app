@@ -24,7 +24,7 @@ class SpeedDialFabWidget extends ConsumerWidget {
             child: const Icon(Icons.location_on),
             label: '枝光周辺に移動',
             onTap: () async {
-              await mapController.value!.animateCamera(
+              await mapController!.animateCamera(
                 CameraUpdate.newCameraPosition(
                   const CameraPosition(
                     target: LatLng(33.8794067, 130.8178816),

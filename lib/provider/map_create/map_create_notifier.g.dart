@@ -7,13 +7,13 @@ part of 'map_create_notifier.dart';
 // **************************************************************************
 
 String _$cameraMoveNotifierHash() =>
-    r'6d55a3812ede5bb1315656c928866df1efde32f2';
+    r'ffcdabe0854b3d3cd0a156fdb09a1be2ca4b19f5';
 
 /// GoogleMapController を管理する
 ///
 /// Copied from [CameraMoveNotifier].
 @ProviderFor(CameraMoveNotifier)
-final cameraMoveNotifierProvider = AutoDisposeAsyncNotifierProvider<
+final cameraMoveNotifierProvider = AutoDisposeNotifierProvider<
     CameraMoveNotifier, GoogleMapController?>.internal(
   CameraMoveNotifier.new,
   name: r'cameraMoveNotifierProvider',
@@ -24,6 +24,6 @@ final cameraMoveNotifierProvider = AutoDisposeAsyncNotifierProvider<
   allTransitiveDependencies: null,
 );
 
-typedef _$CameraMoveNotifier = AutoDisposeAsyncNotifier<GoogleMapController?>;
+typedef _$CameraMoveNotifier = AutoDisposeNotifier<GoogleMapController?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
