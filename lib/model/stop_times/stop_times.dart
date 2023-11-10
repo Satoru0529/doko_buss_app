@@ -8,7 +8,7 @@ class StopTimes with _$StopTimes {
   const factory StopTimes({
     @Default('') String id,
     @Default('') String tripId,
-    @Default(0) String arrivalTime,
+    @Default('') String arrivalTime,
     @Default('') String stopId,
     @Default(0) int stopSequence,
     @Default('') String stopHeadsign,
