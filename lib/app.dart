@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'pages/map_page.dart';
+import 'router/router.dart';
 
 class App extends ConsumerWidget {
   const App({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const MaterialApp(
+    /// GoRouter を用いたルーティング
+    final router = ref.watch(routerProvider);
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      /// TODO Theme を決めたい
-      home: MapPage(),
+      routerConfig: router,
+
+      // TODO Theme を決めたい
     );
   }
 }
