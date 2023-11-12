@@ -9,6 +9,7 @@ part 'trips.g.dart';
 @freezed
 class Trips with _$Trips {
   const factory Trips({
+    /// TODO エンティティの説明を書く
     @Default('') String id,
     @Default('') String routeId,
     @Default('') String tripId,
