@@ -39,10 +39,11 @@ class GoogleMapWidget extends ConsumerWidget {
       data: (position) {
         return GoogleMap(
           onMapCreated: mapNotifier.getMapController,
+
           initialCameraPosition: CameraPosition(
             target: LatLng(
-              position?.latitude ?? 33.8794067,
-              position?.longitude ?? 130.8178816,
+              position.latitude,
+              position.longitude,
             ),
             zoom: 16,
           ),
