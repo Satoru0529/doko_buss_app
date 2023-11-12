@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../../utils/json_converter.dart';
+import '../../util/json_converter.dart';
 
 part 'trips.freezed.dart';
 part 'trips.g.dart';

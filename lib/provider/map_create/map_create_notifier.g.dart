@@ -7,7 +7,7 @@ part of 'map_create_notifier.dart';
 // **************************************************************************
 
 String _$cameraMoveNotifierHash() =>
-    r'ffcdabe0854b3d3cd0a156fdb09a1be2ca4b19f5';
+    r'0d96faced043cf83bf45f754a3088bc44d036153';
 
 /// GoogleMapController を管理する
 ///

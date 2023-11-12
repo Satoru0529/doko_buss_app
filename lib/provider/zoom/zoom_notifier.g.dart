@@ -6,14 +6,14 @@ part of 'zoom_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$zoomNotifierHash() => r'14bef5e3f19a12405e906191349773ce6a7d0f85';
+String _$zoomNotifierHash() => r'47d039d239d6464358a7da29aa600ec70da539f9';
 
 /// 画面のズームレンズを管理する
 ///
 /// Copied from [ZoomNotifier].
 @ProviderFor(ZoomNotifier)
 final zoomNotifierProvider =
-    AutoDisposeAsyncNotifierProvider<ZoomNotifier, double>.internal(
+    AutoDisposeNotifierProvider<ZoomNotifier, double>.internal(
   ZoomNotifier.new,
   name: r'zoomNotifierProvider',
   debugGetCreateSourceHash:
@@ -22,6 +22,6 @@ final zoomNotifierProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$ZoomNotifier = AutoDisposeAsyncNotifier<double>;
+typedef _$ZoomNotifier = AutoDisposeNotifier<double>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
