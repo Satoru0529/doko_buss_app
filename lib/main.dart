@@ -6,6 +6,8 @@ import 'app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  /// 位置情報サービスが有効かの確認
   await Future(() async {
     final permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
