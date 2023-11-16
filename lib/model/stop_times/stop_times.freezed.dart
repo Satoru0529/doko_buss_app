@@ -191,7 +191,7 @@ class _$_StopTimes implements _StopTimes {
   const _$_StopTimes(
       {this.id = '',
       this.tripId = '',
-      this.arrivalTime = 0,
+      this.arrivalTime = '',
       this.stopId = '',
       this.stopSequence = 0,
       this.stopHeadsign = '',

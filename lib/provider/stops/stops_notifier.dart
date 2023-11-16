@@ -6,7 +6,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../model/stops/stops.dart';
-import '../../utils/text_utils.dart';
+import '../../util/assets/assets.gen.dart';
+import '../../util/text_utils.dart';
 
 part 'stops_notifier.g.dart';
 
@@ -37,7 +38,7 @@ class StopsNotifier extends _$StopsNotifier {
 
   Future<void> loadAssetStops(BuildContext context) async {
     final assets =
-        await DefaultAssetBundle.of(context).loadString('edamitsu/stops.txt');
+        await DefaultAssetBundle.of(context).loadString(Assets.edamitsu.stops);
     assets.split('\n').forEach(
       (element) async {
         final noBlankName =
@@ -63,7 +64,7 @@ class StopsNotifier extends _$StopsNotifier {
 
   Future<void> loadBusLocation() async {
     final assets = await DefaultAssetBundle.of(context)
-        .loadString('edamitsu/bus_location.txt');
+        .loadString(Assets.edamitsu.busLocation);
     assets.split('\n').forEach(
       (element) async {
         final newStop = Stops(
@@ -75,14 +76,6 @@ class StopsNotifier extends _$StopsNotifier {
         busLocation.add(newStop);
       },
     );
-    // for (var i = 0; i < busLocation.length; i++) {
-    //   final bussLocation = busLocation[i];
-    //   await Future.delayed(const Duration(seconds: 3), () {
-    //     stops.add(bussLocation);
-    //     state = AsyncValue.data(stops);
-    //   });
-    //   stops.removeLast();
-    // }
   }
 
   Future<void> loadPinAsset() async {

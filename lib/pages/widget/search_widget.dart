@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../provider/latlng/latlng_notifier.dart';
 import '../../provider/search/search_notifier.dart';
 import '../../provider/stops/stops_notifier.dart';
-import '../../provider/text_editing_controller_provider.dart';
+import '../../provider/text_controller/text_editing_controller_provider.dart';
 
 class SearchWidget extends ConsumerWidget {
   const SearchWidget({super.key});
@@ -15,7 +15,7 @@ class SearchWidget extends ConsumerWidget {
     final stops = ref.watch(StopsNotifierProvider(context));
 
     /// TextEditingController <= これいらん
-    final searchEditingController = ref.watch(searchTextEditingController);
+    final searchEditingController = ref.watch(searchTextControllerNotifierProvider);
 
     /// 検索した際に検索ヒットしたバス停のリスト
     final searchList = ref.watch(searchNotifierProvider);

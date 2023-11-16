@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../model/stops/stops.dart';
-import '../../utils/text_utils.dart';
+import '../../util/text_utils.dart';
 import '../stops/stops_notifier.dart';
 
 part 'search_notifier.g.dart';

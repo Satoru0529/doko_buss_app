@@ -10,7 +10,6 @@ import '../../provider/map_create/map_create_notifier.dart';
 import '../../provider/polyline/polyline_notifier.dart';
 import '../../provider/stops/stops_notifier.dart';
 import '../../provider/zoom/zoom_notifier.dart';
-import 'time_line_widget.dart';
 import 'time_table_widget.dart';
 
 class GoogleMapWidget extends ConsumerWidget {
@@ -39,10 +38,11 @@ class GoogleMapWidget extends ConsumerWidget {
       data: (position) {
         return GoogleMap(
           onMapCreated: mapNotifier.getMapController,
+
           initialCameraPosition: CameraPosition(
             target: LatLng(
-              position?.latitude ?? 33.8794067,
-              position?.longitude ?? 130.8178816,
+              position.latitude,
+              position.longitude,
             ),
             zoom: 16,
           ),
@@ -53,7 +53,7 @@ class GoogleMapWidget extends ConsumerWidget {
 
           /// カメラが移動したらズームレベルを取得
           onCameraMoveStarted: () {
-            mapController.value!.getZoomLevel().then(
+            mapController!.getZoomLevel().then(
               (value) {
                 zoomNotifier.changeZoom(value, context);
               },
@@ -76,16 +76,44 @@ class GoogleMapWidget extends ConsumerWidget {
               return Set<Marker>.of(
                 stops.map(
                   (stop) {
+                    /// TODO バス停かバスの現在地かの判定を厳密にする
+                    if (stop.stopId != 'busLocation') {
+                      return Marker(
+                        markerId: MarkerId(stop.stopId),
+                        position: LatLng(stop.stopLat, stop.stopLon),
+
+                        /// TODO icon の設定をスマートにする
+                        icon: Platform.isIOS
+                            ? stopsNotifier.iosBussStopIcon!
+                            : stopsNotifier.androidBussStopIcon!,
+                        infoWindow: InfoWindow(
+                          title: stop.stopName,
+                        ),
+                        onTap: () {
+                          // マーカーがタップされたらテキストフィールドのフォーカスを外す
+                          FocusScope.of(context).unfocus();
+                          // マーカーがタップされたらモーダルを表示
+                          // ignore: inference_failure_on_function_invocation
+                          showMaterialModalBottomSheet(
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(15),
+                              ),
+                            ),
+                            context: context,
+                            builder: (context) => TimeTableModalSheet(
+                              stop: stop,
+                            ),
+                          );
+                        },
+                      );
+                    }
                     return Marker(
                       markerId: MarkerId(stop.stopId),
                       position: LatLng(stop.stopLat, stop.stopLon),
                       icon: Platform.isIOS
-                          ? stop.stopId == 'busLocation'
-                              ? stopsNotifier.iosBussLocationIcon!
-                              : stopsNotifier.iosBussStopIcon!
-                          : stop.stopId == 'busLocation'
-                              ? stopsNotifier.androidBussLocationIcon!
-                              : stopsNotifier.androidBussStopIcon!,
+                          ? stopsNotifier.iosBussLocationIcon!
+                          : stopsNotifier.androidBussStopIcon!,
                       infoWindow: InfoWindow(
                         title: stop.stopName,
                       ),
@@ -101,13 +129,9 @@ class GoogleMapWidget extends ConsumerWidget {
                             ),
                           ),
                           context: context,
-                          builder: (context) => stop.stopId == 'busLocation'
-                              ? TimeLineModalSheet(
-                                  stop: stop,
-                                )
-                              : TimeTableModalSheet(
-                                  stop: stop,
-                                ),
+                          builder: (context) => TimeTableModalSheet(
+                            stop: stop,
+                          ),
                         );
                       },
                     );

@@ -12,13 +12,8 @@ part 'latlng_notifier.g.dart';
 @riverpod
 class LatLngNotifier extends _$LatLngNotifier {
   @override
-  FutureOr<LatLng?> build() async {
-    final position = await ref.refresh(locationProvider.future);
-    if (position == null) {
-      return const LatLng(33.8794067, 130.8178816);
-    }
-    final latLng = LatLng(position.latitude, position.longitude);
-    state = AsyncValue.data(latLng);
+  FutureOr<LatLng> build() async {
+    final latLng = await ref.refresh(locationProvider.future);
     return latLng;
   }
 
@@ -26,12 +21,12 @@ class LatLngNotifier extends _$LatLngNotifier {
   Future<void> searchPosition(Stops stops) async {
     state = const AsyncValue.loading();
 
-    final mapController = ref.read(cameraMoveNotifierProvider).value;
+    final mapController = ref.read(cameraMoveNotifierProvider);
 
     await AsyncValue.guard(
       () async {
         /// マーカーの位置に移動
-        await mapController?.animateCamera(
+        await mapController!.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
               target: LatLng(stops.stopLat, stops.stopLon),

@@ -4,7 +4,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../model/stops/stops.dart';
-import '../../utils/api_key.dart';
+import '../../util/api_key.dart';
+import '../../util/assets/assets.gen.dart';
 
 part 'polyline_notifier.g.dart';
 
@@ -74,7 +75,7 @@ class PolylineProvider extends _$PolylineProvider {
     /// 荒手ルートの路線図
     var pointsArate = <LatLng>[];
     pointsArate = await createPolyline(
-      'edamitsu/arate.txt',
+      Assets.edamitsu.arate,
       TravelMode.driving,
     );
     final polylineArate = Polyline(
@@ -87,7 +88,7 @@ class PolylineProvider extends _$PolylineProvider {
     /// 枝光ルートの路線図
     var pointsEdamitsu = <LatLng>[];
     pointsEdamitsu = await createPolyline(
-      'edamitsu/edamitsu.txt',
+      Assets.edamitsu.edamitsu,
       TravelMode.driving,
     );
     final polylineEdamitsu = Polyline(
@@ -100,7 +101,7 @@ class PolylineProvider extends _$PolylineProvider {
     /// 日の出ルートの路線図
     var pointsHinode = <LatLng>[];
     pointsHinode = await createPolyline(
-      'edamitsu/hinode.txt',
+      Assets.edamitsu.hinode,
       TravelMode.driving,
     );
     final polylineHinode = Polyline(
@@ -113,7 +114,7 @@ class PolylineProvider extends _$PolylineProvider {
     /// 山王藤見ルートの路線図
     var pointsSannouFujimi = <LatLng>[];
     pointsSannouFujimi = await createPolyline(
-      'edamitsu/sannou_fujimi.txt',
+      Assets.edamitsu.sannouFujimi,
       TravelMode.walking,
     );
     final polylineSannouFujimi = Polyline(
@@ -126,7 +127,7 @@ class PolylineProvider extends _$PolylineProvider {
     /// 山王ルートの路線図
     var pointsSannou = <LatLng>[];
     pointsSannou = await createPolyline(
-      'edamitsu/sannou.txt',
+      Assets.edamitsu.sannou,
       TravelMode.walking,
     );
     final polylineSannou = Polyline(

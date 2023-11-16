@@ -7,15 +7,9 @@ part 'map_create_notifier.g.dart';
 @riverpod
 class CameraMoveNotifier extends _$CameraMoveNotifier {
   @override
-  FutureOr<GoogleMapController?> build() async {
+  GoogleMapController? build() {
     return null;
   }
 
-  Future<void> getMapController(GoogleMapController controller) async {
-    state = const AsyncValue.loading();
-
-    await AsyncValue.guard(() async {
-      state = AsyncValue.data(controller);
-    });
-  }
+  void getMapController(GoogleMapController controller) => state = controller;
 }

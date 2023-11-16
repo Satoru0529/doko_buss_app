@@ -9,7 +9,7 @@ part of 'stop_times.dart';
 _$_StopTimes _$$_StopTimesFromJson(Map<String, dynamic> json) => _$_StopTimes(
       id: json['id'] as String? ?? '',
       tripId: json['tripId'] as String? ?? '',
-      arrivalTime: json['arrivalTime'] as String? ?? 0,
+      arrivalTime: json['arrivalTime'] as String? ?? '',
       stopId: json['stopId'] as String? ?? '',
       stopSequence: json['stopSequence'] as int? ?? 0,
       stopHeadsign: json['stopHeadsign'] as String? ?? '',

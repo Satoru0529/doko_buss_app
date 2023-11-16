@@ -20,6 +20,7 @@ Trips _$TripsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Trips {
+  /// TODO エンティティの説明を書く
   String get id => throw _privateConstructorUsedError;
   String get routeId => throw _privateConstructorUsedError;
   String get tripId => throw _privateConstructorUsedError;
@@ -199,6 +200,7 @@ class _$_Trips implements _Trips {
   factory _$_Trips.fromJson(Map<String, dynamic> json) =>
       _$$_TripsFromJson(json);
 
+  /// TODO エンティティの説明を書く
   @override
   @JsonKey()
   final String id;
@@ -284,6 +286,8 @@ abstract class _Trips implements Trips {
   factory _Trips.fromJson(Map<String, dynamic> json) = _$_Trips.fromJson;
 
   @override
+
+  /// TODO エンティティの説明を書く
   String get id;
   @override
   String get routeId;
