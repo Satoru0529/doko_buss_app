@@ -1,3 +1,4 @@
+// Supabase で bi-gram 検索ができるようになったら削除
 // ignore: avoid_classes_with_only_static_members
 class TextUtils {
   ///   - 冒頭の改行
