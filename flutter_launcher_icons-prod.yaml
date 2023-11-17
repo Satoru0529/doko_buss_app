@@ -1,0 +1,4 @@
+flutter_icons:       
+  android: true
+  ios: true
+  image_path:  'Assets/launcher_icon/app_icon_simple.png'
