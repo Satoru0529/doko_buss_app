@@ -28,9 +28,6 @@ if (keystorePropertiesFile.exists()) {
 }
 
 apply plugin: 'com.android.application'
-// START: FlutterFire Configuration
-apply plugin: 'com.google.gms.google-services'
-// END: FlutterFire Configuration
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
@@ -61,6 +58,10 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode 4
         versionName flutterVersionName
+
+        /// 環境分け
+        applicationIdSuffix appIdSuffix
+        resValue "string", "app_name", appName
     }
 
     signingConfigs {
@@ -87,4 +88,12 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+
+task copySources(type: Copy) {
+    from "src/$flavor/res"
+    into 'src/main/res'
+}
+tasks.whenTaskAdded { task ->
+    task.dependsOn copySources
 }

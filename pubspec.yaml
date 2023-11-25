@@ -29,6 +29,9 @@ dependencies:
   timelines: ^0.1.0
   url_launcher: ^6.0.9
 
+  # 環境分けができているか確認するためのパッケージ
+  package_info_plus: ^4.2.0
+
 dev_dependencies:
   build_runner: 
   flutter_gen_runner: ^5.3.2
@@ -43,15 +46,15 @@ dev_dependencies:
 # スプラッシュ生成コマンド (flutter pub run flutter_native_splash:create)
 flutter_native_splash:
   color: '#6293C4'
-  image: 'Assets/images/app_icon_simple.png'
+  image: 'Assets/launcher_icon/app_icon_simple.png'
   color_dark: '#6293C4'
-  image_dark: 'Assets/images/app_icon_simple.png'
+  image_dark: 'Assets/launcher_icon/app_icon_simple.png'
   fullscreen: true
   android_12:
     icon_background_color: '#6293C4'
-    image: 'Assets/images/app_icon_simple.png'
+    image: 'Assets/launcher_icon/app_icon_simple.png'
     icon_background_color_dark: '#6293C4'
-    image_dark: 'Assets/images/app_icon_simple.png'
+    image_dark: 'Assets/launcher_icon/app_icon_simple.png'
 
 flutter:
   uses-material-design: true
@@ -59,11 +62,6 @@ flutter:
   assets:
     - Assets/images/
     - edamitsu/
-
-flutter_icons:       
-  android: true
-  ios: true
-  image_path:  'Assets/images/app_icon_simple.png'
 
 flutter_gen:
   output: lib/util/assets/
