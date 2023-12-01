@@ -4,7 +4,7 @@
   - バスの現在地をリアルタイムで確認できるアプリです。
   - 北九州市八幡東区枝光地区を対象としています。
 
-<img src="images/map_screen.jpg" width="250"> <img src="images/stop_times_sheet.jpg" width="250"> <img src="images/stops_sheet.jpg" width="250">
+<img src="Assets/images/map_screen.jpg" width="250"> <img src="Assets/images/stop_times_sheet.jpg" width="250"> <img src="Assets/images/stops_sheet.jpg" width="250">
 
 ## 今後の実装予定
   - バスの現在地をリアルタイムで取得し、アプリのマップ上に表示
